@@ -1,20 +1,23 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
-	public float moveSpeed = 5f;
-	public float turnSpeed = 100f;
+	[Min(0f)] public float moveSpeed = 5f;
+	[Min(0f)] public float turnSpeed = 5f;
 
 	[Header("Camera Settings")]
-	public bool thirdPersonView;
-	public float firstPersonY = 1.5f;
-	public float thirdPersonDistance = 3f;
+	[Min(0f)] public float cameraDistance = 3f;
+	[Range(-90f, 0f)] public float minVerticalLookAngle = -90f;
+	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
 
+	private Vector2 moveInput;
 	private Vector2 targetVelocity;
+	private float currentVerticalLookAngle;
 
 	private Camera _camera;
 	private Camera Camera
@@ -26,6 +29,18 @@ public class PlayerController : MonoBehaviour
 			if (_camera == null)
 				Debug.LogError("Camera not found in children of PlayerController.");
 			return _camera;
+		}
+	}
+	private Transform _head;
+	private Transform Head
+	{
+		get
+		{
+			if (_head == null)
+				_head = Camera.transform.parent;
+			if (_head == null || _head == transform)
+				Debug.LogError("Head (Camera parrent) not found in PlayerController.");
+			return _head;
 		}
 	}
 	private Rigidbody _rb;
@@ -63,13 +78,13 @@ public class PlayerController : MonoBehaviour
 		sprintAction.Enable();
 		interactAction.Enable();
 
-		moveAction.performed += OnMove;
-		moveAction.canceled += OnMove;
-		lookAction.performed += OnLook;
-		lookAction.canceled += OnLook;
-		jumpAction.performed += OnJump;
-		sprintAction.performed += OnSprint;
-		interactAction.performed += OnInteract;
+		moveAction.performed += OnMoveInput;
+		moveAction.canceled += OnMoveInput;
+		lookAction.performed += OnLookInput;
+		lookAction.canceled += OnLookInput;
+		jumpAction.performed += OnJumpInput;
+		sprintAction.performed += OnSprintInput;
+		interactAction.performed += OnInteractInput;
 	}
 	void OnDisable()
 	{
@@ -82,32 +97,46 @@ public class PlayerController : MonoBehaviour
 
 	void OnValidate()
 	{
-		Camera.transform.localPosition = thirdPersonView ? Vector3.back * thirdPersonDistance : new Vector3(0, firstPersonY, 0);
+		Camera.transform.localPosition = Vector3.back * cameraDistance;
 	}
 
 	private void FixedUpdate() =>
 		Rb.linearVelocity = new(targetVelocity.x, Rb.linearVelocity.y, targetVelocity.y);
 
-	void OnMove(CallbackContext context)
+	void OnMoveInput(CallbackContext context)
+	{
+		moveInput = context.ReadValue<Vector2>();
+		UpdateVelocity();
+	}
+
+	void OnLookInput(CallbackContext context)
 	{
 		Vector2 input = context.ReadValue<Vector2>();
-		Vector3 moveDirection = (transform.forward * input.y + transform.right * input.x);
+
+		transform.Rotate(Vector3.up, input.x * turnSpeed * Time.fixedDeltaTime);
+
+		currentVerticalLookAngle -= input.y * turnSpeed * Time.fixedDeltaTime;
+		currentVerticalLookAngle = Mathf.Clamp(currentVerticalLookAngle, minVerticalLookAngle, maxVerticalLookAngle);
+		Head.localRotation = Quaternion.Euler(currentVerticalLookAngle, 0f, 0f);
+
+		UpdateVelocity();
+	}
+
+	void UpdateVelocity()
+	{
+		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x);
 		targetVelocity = new Vector2(moveDirection.x, moveDirection.z) * moveSpeed;
 	}
 
-	void OnLook(CallbackContext context)
+	void OnJumpInput(CallbackContext context)
 	{
 	}
 
-	void OnJump(CallbackContext context)
+	void OnSprintInput(CallbackContext context)
 	{
 	}
 
-	void OnSprint(CallbackContext context)
-	{
-	}
-
-	void OnInteract(CallbackContext context)
+	void OnInteractInput(CallbackContext context)
 	{
 	}
 }
