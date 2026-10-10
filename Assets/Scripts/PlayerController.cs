@@ -6,7 +6,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
-	[Min(0f)] public float moveSpeed = 5f;
+	[Min(0f)] public float walkSpeed = 5f;
 	[Min(0f)] public float sprintSpeed = 10f;
 	[Min(0f)] public float jumpForce = 5f;
 	[Min(0f)] public float groundedDistance = 0.1f;
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
 
 	private Vector2 moveInput;
+	private bool isSprinting;
 	private Vector2 targetVelocity;
 	private float currentVerticalLookAngle;
 
@@ -98,6 +99,7 @@ public class PlayerController : MonoBehaviour
 		lookAction.canceled += OnLookInput;
 		jumpAction.performed += OnJumpInput;
 		sprintAction.performed += OnSprintInput;
+		sprintAction.canceled += OnSprintInput;
 		interactAction.performed += OnInteractInput;
 	}
 	void OnDisable()
@@ -137,6 +139,7 @@ public class PlayerController : MonoBehaviour
 	void UpdateVelocity()
 	{
 		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x);
+		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
 		targetVelocity = new Vector2(moveDirection.x, moveDirection.z) * moveSpeed;
 	}
 
@@ -149,6 +152,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnSprintInput(CallbackContext context)
 	{
+		isSprinting = context.ReadValueAsButton();
+		UpdateVelocity();
 	}
 
 	void OnInteractInput(CallbackContext context)
