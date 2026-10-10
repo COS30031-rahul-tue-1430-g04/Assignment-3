@@ -158,5 +158,6 @@ public class PlayerController : MonoBehaviour
 
 	void OnInteractInput(CallbackContext context)
 	{
+		Debug.Log("Interact input received.");
 	}
 }
