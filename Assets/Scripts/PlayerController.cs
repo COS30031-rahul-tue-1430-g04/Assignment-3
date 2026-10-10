@@ -7,10 +7,13 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
 	[Min(0f)] public float moveSpeed = 5f;
-	[Min(0f)] public float turnSpeed = 5f;
+	[Min(0f)] public float sprintSpeed = 10f;
+	[Min(0f)] public float jumpForce = 5f;
+	[Min(0f)] public float groundedDistance = 0.1f;
 
 	[Header("Camera Settings")]
 	[Min(0f)] public float cameraDistance = 3f;
+	[Min(0f)] public float mouseSensitivity = 5f;
 	[Range(-90f, 0f)] public float minVerticalLookAngle = -90f;
 	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
 
@@ -40,6 +43,18 @@ public class PlayerController : MonoBehaviour
 			if (_head == null || _head == transform)
 				Debug.LogError("Head (Camera parrent) not found in PlayerController.");
 			return _head;
+		}
+	}
+	private Transform _feet;
+	private Transform Feet
+	{
+		get
+		{
+			if (_feet == null)
+				_feet = transform.Find("Feet");
+			if (_feet == null)
+				Debug.LogError("Feet not found.");
+			return _feet;
 		}
 	}
 	private Rigidbody _rb;
@@ -110,9 +125,9 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector2 input = context.ReadValue<Vector2>();
 
-		transform.Rotate(Vector3.up, input.x * turnSpeed * Time.fixedDeltaTime);
+		transform.Rotate(Vector3.up, input.x * mouseSensitivity * Time.fixedDeltaTime);
 
-		currentVerticalLookAngle -= input.y * turnSpeed * Time.fixedDeltaTime;
+		currentVerticalLookAngle -= input.y * mouseSensitivity * Time.fixedDeltaTime;
 		currentVerticalLookAngle = Mathf.Clamp(currentVerticalLookAngle, minVerticalLookAngle, maxVerticalLookAngle);
 		Head.localRotation = Quaternion.Euler(currentVerticalLookAngle, 0f, 0f);
 
@@ -127,6 +142,9 @@ public class PlayerController : MonoBehaviour
 
 	void OnJumpInput(CallbackContext context)
 	{
+		if (!Physics.Raycast(Feet.position, Vector3.down, groundedDistance))
+			return;
+		Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 	}
 
 	void OnSprintInput(CallbackContext context)
