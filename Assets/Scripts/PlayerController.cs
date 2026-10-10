@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -95,10 +94,8 @@ public class PlayerController : MonoBehaviour
 		interactAction.Disable();
 	}
 
-	void OnValidate()
-	{
+	void OnValidate() =>
 		Camera.transform.localPosition = Vector3.back * cameraDistance;
-	}
 
 	private void FixedUpdate() =>
 		Rb.linearVelocity = new(targetVelocity.x, Rb.linearVelocity.y, targetVelocity.y);
