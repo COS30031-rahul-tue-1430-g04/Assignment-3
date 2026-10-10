@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SphereCollider))]
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
@@ -17,10 +20,14 @@ public class PlayerController : MonoBehaviour
 	[Range(-90f, 0f)] public float minVerticalLookAngle = -90f;
 	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
 
+	[Header("Interaction Settings")]
+	[Min(0f)] public float interactionRadius = 5f;
+
 	private Vector2 moveInput;
 	private bool isSprinting;
 	private Vector2 targetVelocity;
 	private float currentVerticalLookAngle;
+	private readonly List<Interactable> nearbyInteractables = new();
 
 	private Camera _camera;
 	private Camera Camera
@@ -68,6 +75,16 @@ public class PlayerController : MonoBehaviour
 			return _rb;
 		}
 	}
+	private SphereCollider _triggureCollider;
+	private SphereCollider TriggerCollider
+	{
+		get
+		{
+			if (_triggureCollider == null && !TryGetComponent<SphereCollider>(out _triggureCollider))
+				Debug.LogError("SphereCollider not found on PlayerController.");
+			return _triggureCollider;
+		}
+	}
 
 	private InputAction moveAction;
 	private InputAction lookAction;
@@ -111,8 +128,11 @@ public class PlayerController : MonoBehaviour
 		interactAction.Disable();
 	}
 
-	void OnValidate() =>
+	void OnValidate()
+	{
 		Camera.transform.localPosition = Vector3.back * cameraDistance;
+		TriggerCollider.radius = interactionRadius;
+	}
 
 	private void FixedUpdate() =>
 		Rb.linearVelocity = new(targetVelocity.x, Rb.linearVelocity.y, targetVelocity.y);
@@ -156,8 +176,25 @@ public class PlayerController : MonoBehaviour
 		UpdateVelocity();
 	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.TryGetComponent(out Interactable interactable))
+			nearbyInteractables.Add(interactable);
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.TryGetComponent(out Interactable interactable))
+			nearbyInteractables.Remove(interactable);
+	}
+
 	void OnInteractInput(CallbackContext context)
 	{
-		Debug.Log("Interact input received.");
+		Interactable interactable = nearbyInteractables
+			.OrderBy(i => Vector3.Distance(transform.position, i.transform.position))
+			.FirstOrDefault();
+
+		if (interactable)
+			interactable.Interact(gameObject);
 	}
 }
