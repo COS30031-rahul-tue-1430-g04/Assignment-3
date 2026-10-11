@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -6}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -655,7 +655,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403181980}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -738,11 +738,12 @@ MonoBehaviour:
   sprintSpeed: 10
   jumpForce: 5
   groundedDistance: 0.1
-  cameraDistance: 6
+  cameraDistance: 0
   mouseSensitivity: 5
-  minVerticalLookAngle: -40
-  maxVerticalLookAngle: 70
+  minVerticalLookAngle: -90
+  maxVerticalLookAngle: 90
   interactionRadius: 2.35
+  gameManager: {fileID: 11400000, guid: c70667aff7f3737468ea75f59d1654cc, type: 2}
 --- !u!135 &1403181987
 SphereCollider:
   m_ObjectHideFlags: 0
