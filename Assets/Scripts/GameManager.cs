@@ -25,6 +25,8 @@ public class GameManager : ScriptableObject
 		}
 	}
 
+	public int CurrentLevel { get; private set; } = 1;
+
 	void OnValidate()
 	{
 		if (_currentState != _previousState)
