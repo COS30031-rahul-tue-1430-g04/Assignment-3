@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
 	[Header("Interaction Settings")]
 	[Min(0f)] public float interactionRadius = 5f;
 
+	[Header("References")]
+	public GameManager gameManager;
+
 	private Vector2 moveInput;
 	private bool isSprinting;
 	private Vector2 targetVelocity;
@@ -102,8 +105,41 @@ public class PlayerController : MonoBehaviour
 		interactAction = InputSystem.actions.FindAction("Interact");
 	}
 
+	void Start()
+	{
+		OnGameStateChanged(gameManager.CurrentState);
+	}
+
 	void OnEnable()
 	{
+		gameManager.OnGameStateChanged += OnGameStateChanged;
+	}
+	void OnDisable()
+	{
+		gameManager.OnGameStateChanged -= OnGameStateChanged;
+	}
+
+	void OnValidate()
+	{
+		Camera.transform.localPosition = Vector3.back * cameraDistance;
+		TriggerCollider.radius = interactionRadius;
+	}
+
+	private void FixedUpdate() =>
+		Rb.linearVelocity = new(targetVelocity.x, Rb.linearVelocity.y, targetVelocity.y);
+
+	void OnGameStateChanged(GameManager.GameState newState)
+	{
+		if (newState == GameManager.GameState.Gameplay)
+			EnablePlayerControl();
+		else
+			DisablePlayerControl();
+	}
+
+	void EnablePlayerControl()
+	{
+		Cursor.lockState = CursorLockMode.Locked;
+
 		moveAction.Enable();
 		lookAction.Enable();
 		jumpAction.Enable();
@@ -119,23 +155,25 @@ public class PlayerController : MonoBehaviour
 		sprintAction.canceled += OnSprintInput;
 		interactAction.performed += OnInteractInput;
 	}
-	void OnDisable()
+	void DisablePlayerControl()
 	{
+		Cursor.lockState = CursorLockMode.None;
+
 		moveAction.Disable();
 		lookAction.Disable();
 		jumpAction.Disable();
 		sprintAction.Disable();
 		interactAction.Disable();
-	}
 
-	void OnValidate()
-	{
-		Camera.transform.localPosition = Vector3.back * cameraDistance;
-		TriggerCollider.radius = interactionRadius;
+		moveAction.performed -= OnMoveInput;
+		moveAction.canceled -= OnMoveInput;
+		lookAction.performed -= OnLookInput;
+		lookAction.canceled -= OnLookInput;
+		jumpAction.performed -= OnJumpInput;
+		sprintAction.performed -= OnSprintInput;
+		sprintAction.canceled -= OnSprintInput;
+		interactAction.performed -= OnInteractInput;
 	}
-
-	private void FixedUpdate() =>
-		Rb.linearVelocity = new(targetVelocity.x, Rb.linearVelocity.y, targetVelocity.y);
 
 	void OnMoveInput(CallbackContext context)
 	{
