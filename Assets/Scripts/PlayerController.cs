@@ -228,11 +228,11 @@ public class PlayerController : MonoBehaviour
 
 	void OnInteractInput(CallbackContext context)
 	{
-		Interactable interactable = nearbyInteractables
-			.OrderBy(i => Vector3.Distance(transform.position, i.transform.position))
-			.FirstOrDefault();
+		IEnumerable<Interactable> interactables = nearbyInteractables
+			.OrderBy(i => Vector3.Distance(transform.position, i.transform.position));
 
-		if (interactable)
-			interactable.Interact(gameObject);
+		foreach (Interactable interactable in interactables)
+			if (interactable.TryInteract(gameObject))
+				break;
 	}
 }

@@ -8,7 +8,7 @@ public class GameManager : ScriptableObject
 	public enum GameState
 	{
 		Gameplay,
-		ObjectInteraction,
+		AssetMenu,
 		Menu
 	}
 
@@ -34,5 +34,11 @@ public class GameManager : ScriptableObject
 		}
 	}
 
+	public void InvokeAssetFound(Asset asset)
+	{
+		AssetFound?.Invoke(asset);
+	}
+
 	public event Action<GameState> OnGameStateChanged;
+	public event Action<Asset> AssetFound;
 }
