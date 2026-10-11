@@ -4,9 +4,9 @@ using UnityEngine;
 [Serializable]
 public class Asset
 {
-	[SerializeField] private string name;
-	[SerializeField] [TextArea] private string explanation;
-	[SerializeField] private bool councilOwned;
+	public string name;
+	[TextArea] public string explanation;
+	public bool councilOwned;
 
 	public event Action<Asset> OnAssetFound;
 	public event Action<Asset> OnAssetAnswered;
