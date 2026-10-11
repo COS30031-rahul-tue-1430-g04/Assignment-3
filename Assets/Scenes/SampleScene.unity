@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 1383649775}
   - component: {fileID: 1383649774}
   m_Layer: 0
-  m_Name: TestRecieveEvent
+  m_Name: LevelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -437,8 +437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d6c6d2a4428474db4f7c8818c001b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestRecieveEvent
-  gameManager: {fileID: 11400000, guid: c70667aff7f3737468ea75f59d1654cc, type: 2}
-  assetsFound: 0
+  assetsAnswered: 0
+  totalAssets: 0
 --- !u!4 &1383649775
 Transform:
   m_ObjectHideFlags: 0
@@ -583,7 +583,6 @@ MonoBehaviour:
     name: Test Asset
     explanation: This is a test explanation
     councilOwned: 1
-  gameManager: {fileID: 11400000, guid: c70667aff7f3737468ea75f59d1654cc, type: 2}
 --- !u!1001 &2688256604131596127
 PrefabInstance:
   m_ObjectHideFlags: 0
