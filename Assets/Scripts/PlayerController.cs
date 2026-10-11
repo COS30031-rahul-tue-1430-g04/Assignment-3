@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
 	[Header("Interaction Settings")]
 	[Min(0f)] public float interactionRadius = 5f;
 
-	[Header("References")]
-	public GameManager gameManager;
 
 	private Vector2 moveInput;
 	private bool isSprinting;
@@ -107,16 +105,16 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
-		OnGameStateChanged(gameManager.CurrentState);
+		OnGameStateChanged(GameManager.Instance.CurrentState);
 	}
 
 	void OnEnable()
 	{
-		gameManager.OnGameStateChanged += OnGameStateChanged;
+		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
 	}
 	void OnDisable()
 	{
-		gameManager.OnGameStateChanged -= OnGameStateChanged;
+		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
 	}
 
 	void OnValidate()

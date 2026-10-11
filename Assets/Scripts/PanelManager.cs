@@ -20,7 +20,6 @@ public class PanelManager : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI feedbackText;
 	[SerializeField] private Image feedbackBackground;
 	[SerializeField] private TextMeshProUGUI explanationText;
-	[SerializeField] private GameManager gameManager;
 
 	private Asset currentAsset = null;
 
@@ -28,8 +27,7 @@ public class PanelManager : MonoBehaviour
 	{
 		if (
 			interactionPanel == null || nameText == null || questionText == null ||
-			feedbackPanel == null || feedbackText == null || explanationText == null ||
-			gameManager == null
+			feedbackPanel == null || feedbackText == null || explanationText == null
 		)
 		{
 			Debug.LogError("PanelManager: One or more serialized fields are not assigned.");
@@ -62,7 +60,7 @@ public class PanelManager : MonoBehaviour
 		currentAsset = asset;
 		asset.OnAssetFound -= OnAssetFound;
 
-		gameManager.CurrentState = GameManager.GameState.AssetMenu;
+		GameManager.Instance.CurrentState = GameManager.GameState.AssetMenu;
 	}
 
 	public void OnInteractionPanelButtonClicked(bool selectedCouncil)
@@ -99,6 +97,6 @@ public class PanelManager : MonoBehaviour
 		if (!CheckSerializedFields()) return;
 
 		feedbackPanel.SetActive(false);
-		gameManager.CurrentState = GameManager.GameState.Gameplay;
+		GameManager.Instance.CurrentState = GameManager.GameState.Gameplay;
 	}
 }

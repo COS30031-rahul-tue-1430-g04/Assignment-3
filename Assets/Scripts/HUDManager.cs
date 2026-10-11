@@ -10,7 +10,6 @@ public class HUDManager : MonoBehaviour
 	[SerializeField] private TMP_Text progressText;
 	[SerializeField] private TMP_Text levelText;
 	[SerializeField] private Slider progressBar;
-	[SerializeField] private GameManager gameManager;
 
 
 	private int totalAssets = 0;
@@ -42,7 +41,7 @@ public class HUDManager : MonoBehaviour
 		foreach (Asset asset in assets.Select(a => a.asset))
 			asset.OnAssetAnswered += OnAssetAnswered;
 
-		levelText.text = $"Level: {gameManager.CurrentLevel}";
+		levelText.text = $"Level: {GameManager.Instance.CurrentLevel}";
 		scoreText.text = $"Score: {score}";
 		progressText.text = $"Assets Found: {answeredAssets}/{totalAssets}";
 	}
