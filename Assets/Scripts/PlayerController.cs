@@ -103,18 +103,15 @@ public class PlayerController : MonoBehaviour
 		interactAction = InputSystem.actions.FindAction("Interact");
 	}
 
-	void Start()
-	{
-		OnGameStateChanged(GameManager.Instance.CurrentState);
-	}
-
 	void OnEnable()
 	{
 		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+		OnGameStateChanged(GameManager.Instance.CurrentState);
 	}
 	void OnDisable()
 	{
 		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+		DisablePlayerControl();
 	}
 
 	void OnValidate()

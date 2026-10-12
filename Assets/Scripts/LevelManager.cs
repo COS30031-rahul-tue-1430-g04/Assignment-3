@@ -20,6 +20,11 @@ public class LevelManager : MonoBehaviour
 			asset.OnAssetAnswered += OnAssetAnswered;
 	}
 
+	void Start()
+	{
+		GameManager.Instance.CurrentState = GameManager.GameState.Gameplay;
+	}
+
 	void OnAssetAnswered(bool correct)
 	{
 		assetsAnswered++;

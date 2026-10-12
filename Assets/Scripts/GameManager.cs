@@ -20,7 +20,8 @@ public class GameManager : ScriptableObject
 	{
 		Gameplay,
 		AssetMenu,
-		Menu
+		Menu,
+		Paused
 	}
 
 	[SerializeField]
