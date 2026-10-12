@@ -104,8 +104,11 @@ public class AssetPanelManager : MonoBehaviour
 		SetOptionalText(interestingFactText, "Did you know? ", asset.interestingFact);
 		SetOptionalText(interactionHintText, "", asset.interactionHint);
 
-		assetIconImage.sprite = asset.icon;
-		assetIconImage.enabled = asset.icon != null;
+		if (assetIconImage != null)
+		{
+			assetIconImage.sprite = asset.icon;
+			assetIconImage.enabled = asset.icon != null;
+		}
 
 		interactionPanel.SetActive(true);
 		feedbackPanel.SetActive(false);
