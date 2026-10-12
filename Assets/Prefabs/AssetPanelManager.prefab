@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 6133211830820829357}
   - component: {fileID: 1461039845276394007}
   m_Layer: 5
-  m_Name: PanelManager
+  m_Name: AssetPanelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -408,7 +408,6 @@ MonoBehaviour:
   feedbackText: {fileID: 2094849533044034771}
   feedbackBackground: {fileID: 3034956077559101955}
   explanationText: {fileID: 4334546707709167567}
-  gameManager: {fileID: 11400000, guid: c70667aff7f3737468ea75f59d1654cc, type: 2}
 --- !u!1 &3276672904598499968
 GameObject:
   m_ObjectHideFlags: 0

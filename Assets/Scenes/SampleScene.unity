@@ -796,11 +796,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2753327650931523891, guid: d1fd324b2d75ae9469de5d6457a3935a, type: 3}
       propertyPath: m_Name
-      value: PanelManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3992076274130424632, guid: d1fd324b2d75ae9469de5d6457a3935a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: AssetPanelManager
       objectReference: {fileID: 0}
     - target: {fileID: 6133211830820829357, guid: d1fd324b2d75ae9469de5d6457a3935a, type: 3}
       propertyPath: m_Pivot.x
