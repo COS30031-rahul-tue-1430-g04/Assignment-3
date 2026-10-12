@@ -47,15 +47,6 @@ public class AssetPanelManager : MonoBehaviour
 			nameText == null ||
 			questionText == null ||
 
-			categoryText == null ||
-			descriptionText == null ||
-			locationText == null ||
-			purposeText == null ||
-			responsibilityText == null ||
-			interestingFactText == null ||
-			interactionHintText == null ||
-			assetIconImage == null ||
-
 			feedbackPanel == null ||
 			feedbackText == null ||
 			feedbackBackground == null ||
