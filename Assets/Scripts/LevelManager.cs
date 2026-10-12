@@ -4,31 +4,40 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-	[SerializeField] private int assetsAnswered = 0;
-	[SerializeField] private int totalAssets;
+	public LevelStatsManager levelStats;
 
-	public event Action OnAllAssetsAnswered;
+	public event Action OnLevelFinished;
+
+	private bool CheckSerializedFields()
+	{
+		if (levelStats == null)
+		{
+			Debug.LogError("LevelManager: One or more serialized fields are not assigned.");
+			return false;
+		}
+		return true;
+	}
 
 	void Awake()
 	{
+		if (!CheckSerializedFields()) return;
+
 		InteractableAsset[] assets = FindObjectsByType<InteractableAsset>(
 			FindObjectsInactive.Include,
 			FindObjectsSortMode.None
 		);
-		totalAssets = assets.Length;
+		levelStats.StoreAndNew(assets.Length);
 		foreach (Asset asset in assets.Select(a => a.asset))
 			asset.OnAssetAnswered += OnAssetAnswered;
 	}
 
-	void Start()
-	{
+	void Start() =>
 		GameManager.Instance.CurrentState = GameManager.GameState.Gameplay;
-	}
 
 	void OnAssetAnswered(bool correct)
 	{
-		assetsAnswered++;
-		if (assetsAnswered >= totalAssets)
-			OnAllAssetsAnswered?.Invoke();
+		levelStats.UpdateStats(correct);
+		if (levelStats.CurrentLevelStats.AssetsAnswered >= levelStats.CurrentLevelStats.TotalAssets)
+			OnLevelFinished?.Invoke();
 	}
 }

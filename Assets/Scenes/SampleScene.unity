@@ -531,8 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d6c6d2a4428474db4f7c8818c001b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestRecieveEvent
-  assetsAnswered: 0
-  totalAssets: 0
+  levelStats: {fileID: 11400000, guid: fc00c854d344641418a0e74944ee7f38, type: 2}
 --- !u!4 &1383649775
 Transform:
   m_ObjectHideFlags: 0

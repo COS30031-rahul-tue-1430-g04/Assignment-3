@@ -35,7 +35,7 @@ public class LevelTransitionManager : MonoBehaviour
 	{
 		if (!CheckSerializedFields()) return;
 
-		levelManager.OnAllAssetsAnswered += () =>
+		levelManager.OnLevelFinished += () =>
 		{
 			readyToTransition = true;
 			if (GameManager.Instance.CurrentState == GameManager.GameState.Gameplay)

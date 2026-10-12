@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
@@ -11,11 +9,6 @@ public class HUDManager : MonoBehaviour
 	[SerializeField] private TMP_Text progressText;
 	[SerializeField] private TMP_Text levelText;
 	[SerializeField] private Slider progressBar;
-
-
-	private int totalAssets = 0;
-	private int answeredAssets = 0;
-	private int score = 0;
 
 	bool CheckSerializedFields()
 	{
@@ -30,29 +23,15 @@ public class HUDManager : MonoBehaviour
 		return true;
 	}
 
-	void Awake()
+	void Awake() =>
+		LevelStatsManager.OnUpdated += OnAssetAnswered;
+
+	void OnAssetAnswered(LevelStats stats)
 	{
 		if (!CheckSerializedFields()) return;
 
-		InteractableAsset[] assets = FindObjectsByType<InteractableAsset>(
-			FindObjectsInactive.Include,
-			FindObjectsSortMode.None
-		);
-		totalAssets = assets.Length;
-		foreach (Asset asset in assets.Select(a => a.asset))
-			asset.OnAssetAnswered += OnAssetAnswered;
-
-		levelText.text = $"Level: {SceneManager.GetActiveScene().buildIndex}";
-		scoreText.text = $"Score: {score}";
-		progressText.text = $"Assets Found: {answeredAssets}/{totalAssets}";
-	}
-
-	void OnAssetAnswered(bool correct)
-	{
-		if (!CheckSerializedFields()) return;
-
-		scoreText.text = $"Score: {(score += correct ? 100 : -50)}";
-		progressText.text = $"Assets Found: {++answeredAssets}/{totalAssets}";
-		progressBar.value = (float)answeredAssets / totalAssets;
+		scoreText.text = $"Score: {stats.Score}";
+		progressText.text = $"Assets Found: {stats.AssetsAnswered}/{stats.TotalAssets}";
+		progressBar.value = (float)stats.AssetsAnswered / stats.TotalAssets;
 	}
 }
