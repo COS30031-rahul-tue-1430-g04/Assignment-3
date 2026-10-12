@@ -1131,8 +1131,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
     realWorldPurpose: 
-    responsibilityDetails: 
-    interestingFact: 
+    responsibilityDetails: To exist
+    interestingFact: 3D object
     interactionHint: Press the Interact key to inspect.
   interactionEnabled: 1
 --- !u!1001 &1968806062
