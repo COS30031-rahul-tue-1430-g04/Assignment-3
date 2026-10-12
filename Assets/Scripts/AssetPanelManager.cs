@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class PanelManager : MonoBehaviour
+public class AssetPanelManager : MonoBehaviour
 {
 	[Header("Settings")]
 	[SerializeField] private string questionString;

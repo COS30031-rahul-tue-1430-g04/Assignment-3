@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
@@ -41,7 +42,7 @@ public class HUDManager : MonoBehaviour
 		foreach (Asset asset in assets.Select(a => a.asset))
 			asset.OnAssetAnswered += OnAssetAnswered;
 
-		levelText.text = $"Level: {GameManager.Instance.CurrentLevel}";
+		levelText.text = $"Level: {SceneManager.GetActiveScene().buildIndex}";
 		scoreText.text = $"Score: {score}";
 		progressText.text = $"Assets Found: {answeredAssets}/{totalAssets}";
 	}

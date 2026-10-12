@@ -66,6 +66,6 @@ public class PauseManager : MonoBehaviour
 	public void MainMenu()
 	{
 		GameManager.Instance.CurrentState = GameManager.GameState.Menu;
-		SceneManager.LoadScene(0); // Loads scene at 0. This will be the main menu when added.
+		SceneManager.LoadScene(0);
 	}
 }

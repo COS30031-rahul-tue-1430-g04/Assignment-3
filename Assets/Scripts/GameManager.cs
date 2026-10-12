@@ -32,12 +32,10 @@ public class GameManager : ScriptableObject
 		get => _currentState;
 		set
 		{
-			OnGameStateChanged?.Invoke(value);
 			_currentState = value;
+			OnGameStateChanged?.Invoke(_currentState);
 		}
 	}
-
-	public int CurrentLevel { get; private set; } = 1;
 
 	void OnValidate()
 	{
