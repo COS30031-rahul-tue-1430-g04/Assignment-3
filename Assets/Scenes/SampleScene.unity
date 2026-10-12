@@ -403,7 +403,6 @@ GameObject:
   m_Component:
   - component: {fileID: 807831085}
   - component: {fileID: 807831088}
-  - component: {fileID: 807831087}
   - component: {fileID: 807831086}
   - component: {fileID: 807831089}
   m_Layer: 0
@@ -472,14 +471,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &807831087
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807831084}
-  m_Enabled: 1
 --- !u!20 &807831088
 Camera:
   m_ObjectHideFlags: 0
@@ -1413,15 +1404,15 @@ MonoBehaviour:
     name: Test Asset
     explanation: This is a test explanation
     councilOwned: 1
-  assetCategory: General
-  assetDescription: This is a cube
-  locationDescription: It is located in the park
-  question: Who is responsible for maintaining this asset?
-  realWorldPurpose: To interact with
-  responsibilityDetails: To exist
-  interestingFact: 3D object
-  interactionHint: Press the Interact key to inspect.
-  assetIcon: {fileID: 0}
+    category: General
+    description: 
+    locationDescription: 
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: 
+    responsibilityDetails: 
+    interestingFact: 
+    interactionHint: Press the Interact key to inspect.
   interactionEnabled: 1
 --- !u!1001 &1968806062
 PrefabInstance:
@@ -1465,7 +1456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3992076274130424632, guid: d1fd324b2d75ae9469de5d6457a3935a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4190308162077300443, guid: d1fd324b2d75ae9469de5d6457a3935a, type: 3}
       propertyPath: m_SizeDelta.x
