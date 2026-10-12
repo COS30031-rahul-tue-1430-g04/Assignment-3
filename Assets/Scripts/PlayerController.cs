@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
 	[Header("Interaction Settings")]
 	[Min(0f)] public float interactionRadius = 5f;
 
-	[Header("References")]
-	public GameManager gameManager;
 
 	private Vector2 moveInput;
 	private bool isSprinting;
@@ -105,18 +103,15 @@ public class PlayerController : MonoBehaviour
 		interactAction = InputSystem.actions.FindAction("Interact");
 	}
 
-	void Start()
-	{
-		OnGameStateChanged(gameManager.CurrentState);
-	}
-
 	void OnEnable()
 	{
-		gameManager.OnGameStateChanged += OnGameStateChanged;
+		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+		OnGameStateChanged(GameManager.Instance.CurrentState);
 	}
 	void OnDisable()
 	{
-		gameManager.OnGameStateChanged -= OnGameStateChanged;
+		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+		DisablePlayerControl();
 	}
 
 	void OnValidate()
@@ -228,11 +223,11 @@ public class PlayerController : MonoBehaviour
 
 	void OnInteractInput(CallbackContext context)
 	{
-		Interactable interactable = nearbyInteractables
-			.OrderBy(i => Vector3.Distance(transform.position, i.transform.position))
-			.FirstOrDefault();
+		IEnumerable<Interactable> interactables = nearbyInteractables
+			.OrderBy(i => Vector3.Distance(transform.position, i.transform.position));
 
-		if (interactable)
-			interactable.Interact(gameObject);
+		foreach (Interactable interactable in interactables)
+			if (interactable.TryInteract(gameObject))
+				break;
 	}
 }

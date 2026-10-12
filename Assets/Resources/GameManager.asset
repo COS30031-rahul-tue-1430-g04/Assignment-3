@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fbefebe1790af74a8930bb985dccb2c, type: 3}
   m_Name: GameManager
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  _currentState: 0
+  _currentState: 3

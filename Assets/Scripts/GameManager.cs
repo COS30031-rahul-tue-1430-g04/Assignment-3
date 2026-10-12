@@ -5,11 +5,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameManager", menuName = "ScriptableObjects/GameManager", order = 1)]
 public class GameManager : ScriptableObject
 {
+	private static GameManager _instance;
+	public static GameManager Instance
+	{
+		get
+		{
+			if (_instance == null)
+				_instance = Resources.Load<GameManager>("GameManager");
+			return _instance;
+		}
+	}
+
 	public enum GameState
 	{
 		Gameplay,
-		ObjectInteraction,
-		Menu
+		AssetMenu,
+		Menu,
+		Paused
 	}
 
 	[SerializeField]
@@ -20,8 +32,8 @@ public class GameManager : ScriptableObject
 		get => _currentState;
 		set
 		{
-			OnGameStateChanged?.Invoke(value);
 			_currentState = value;
+			OnGameStateChanged?.Invoke(_currentState);
 		}
 	}
 

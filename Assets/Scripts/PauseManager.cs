@@ -1,0 +1,71 @@
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using static UnityEngine.InputSystem.InputAction;
+public class PauseManager : MonoBehaviour
+{
+	[Header("References")]
+	[SerializeField] private GameObject pausePanel;
+
+	private bool isPaused = false;
+	private InputAction pauseAction;
+	private GameManager.GameState previousState = GameManager.GameState.Gameplay;
+
+	bool CheckSerializedFields()
+	{
+		if (pausePanel == null)
+		{
+			Debug.LogError("PauseManager: One or more serialized fields are not assigned.");
+			return false;
+		}
+		return true;
+	}
+
+	void Awake()
+	{
+		if (!CheckSerializedFields()) return;
+
+		pausePanel.SetActive(false);
+		pauseAction = InputSystem.actions.FindAction("Pause");
+		Time.timeScale = 1f;
+	}
+
+	void OnEnable()
+	{
+		pauseAction.Enable();
+		pauseAction.performed += TogglePause;
+	}
+	void OnDisable()
+	{
+		pauseAction.performed -= TogglePause;
+		pauseAction.Disable();
+	}
+	void TogglePause(CallbackContext _) => TogglePause();
+	public void TogglePause()
+	{
+		if (!CheckSerializedFields()) return;
+
+		if (isPaused = !isPaused)
+		{
+			pausePanel.SetActive(true);
+			previousState = GameManager.Instance.CurrentState;
+			GameManager.Instance.CurrentState = GameManager.GameState.Paused;
+		}
+		else
+		{
+			pausePanel.SetActive(false);
+			GameManager.Instance.CurrentState = previousState;
+		}
+	}
+
+	public void RestartLevel()
+	{
+		GameManager.Instance.CurrentState = GameManager.GameState.Gameplay;
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+	public void MainMenu()
+	{
+		GameManager.Instance.CurrentState = GameManager.GameState.Menu;
+		SceneManager.LoadScene(0);
+	}
+}
