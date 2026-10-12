@@ -7,10 +7,10 @@ using UnityEngine;
 public class LevelStats
 {
 	public LevelStats(int totalAssets) => TotalAssets = totalAssets;
-	public int TotalAssets { get; }
-	public int AssetsAnswered { get; private set; } = 0;
-	public int AssetsAnsweredCorrectly { get; private set; } = 0;
-	public int Score { get; private set; } = 0;
+	[field: SerializeField] public int TotalAssets { get; }
+	[field: SerializeField] public int AssetsAnswered { get; private set; } = 0;
+	[field: SerializeField] public int AssetsAnsweredCorrectly { get; private set; } = 0;
+	[field: SerializeField] public int Score { get; private set; } = 0;
 
 	public void UpdateStats(bool correct)
 	{
@@ -25,8 +25,8 @@ public class LevelStats
 [CreateAssetMenu(fileName = "LevelStatsManager", menuName = "ScriptableObjects/LevelStatsManager", order = 1)]
 public class LevelStatsManager : ScriptableObject
 {
-	public LevelStats CurrentLevelStats { get; private set; } = new(0);
-	public List<LevelStats> PastLevelStats { get; private set; } = new();
+	[field: SerializeField] public LevelStats CurrentLevelStats { get; private set; } = new(0);
+	[field: SerializeField] public List<LevelStats> PastLevelStats { get; private set; } = new();
 	public int TotalAssets => CurrentLevelStats.TotalAssets + PastLevelStats.Sum(s => s.TotalAssets);
 	public int TotalAssetsAnswered => CurrentLevelStats.AssetsAnswered + PastLevelStats.Sum(s => s.AssetsAnswered);
 	public int TotalAssetsAnsweredCorrectly => CurrentLevelStats.AssetsAnsweredCorrectly + PastLevelStats.Sum(s => s.AssetsAnsweredCorrectly);

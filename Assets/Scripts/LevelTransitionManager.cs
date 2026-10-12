@@ -19,6 +19,7 @@ public class LevelTransitionManager : MonoBehaviour
 	public float fadeDuration = 0.5f;
 
 	bool readyToTransition = false;
+	bool fieldsAssigned = false;
 
 	private bool CheckSerializedFields()
 	{
@@ -28,23 +29,30 @@ public class LevelTransitionManager : MonoBehaviour
 			Debug.LogError("LevelTransitionManager: One or more serialized fields are not assigned.");
 			return false;
 		}
+		fieldsAssigned = true;
 		return true;
 	}
 
-	private void Awake()
+	private void OnEnable()
 	{
 		if (!CheckSerializedFields()) return;
-
-		levelManager.OnLevelFinished += () =>
-		{
-			readyToTransition = true;
-			if (GameManager.Instance.CurrentState == GameManager.GameState.Gameplay)
-			{
-				GameManager.Instance.CurrentState = GameManager.GameState.Menu;
-				ShowLevelComplete();
-			}
-		};
+		levelManager.OnLevelFinished += OnLevelFinished;
 		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+	}
+	private void OnDisable()
+	{
+		if (!fieldsAssigned) return;
+		levelManager.OnLevelFinished -= OnLevelFinished;
+		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+	}
+	private void OnLevelFinished()
+	{
+		readyToTransition = true;
+		if (GameManager.Instance.CurrentState == GameManager.GameState.Gameplay)
+		{
+			GameManager.Instance.CurrentState = GameManager.GameState.Menu;
+			ShowLevelComplete();
+		}
 	}
 
 	private void OnGameStateChanged(GameManager.GameState state)
@@ -63,7 +71,7 @@ public class LevelTransitionManager : MonoBehaviour
 
 	private void Start()
 	{
-		if (!CheckSerializedFields()) return;
+		if (!fieldsAssigned) return;
 
 		levelCompletePanel.SetActive(false);
 		backgroundOverlay.alpha = 1f;
@@ -84,7 +92,7 @@ public class LevelTransitionManager : MonoBehaviour
 	}
 	public void ShowLevelComplete()
 	{
-		if (!CheckSerializedFields()) return;
+		if (!fieldsAssigned) return;
 		
 		levelCompletePanel.SetActive(true);
 		panelTransform.localScale = Vector3.zero;
@@ -94,7 +102,7 @@ public class LevelTransitionManager : MonoBehaviour
 	}
 	private IEnumerator AnimateLevelComplete()
 	{		
-		if (!CheckSerializedFields()) yield break;
+		if (!fieldsAssigned) yield break;
 
 		float duration = 1.5f;
 
@@ -121,7 +129,7 @@ public class LevelTransitionManager : MonoBehaviour
 
 	private IEnumerator FadeAndLoad(int sceneIndex)
 	{
-		if (!CheckSerializedFields()) yield break;
+		if (!fieldsAssigned) yield break;
 		levelCompletePanel.SetActive(false);
 
 		float startAlpha = backgroundOverlay.alpha;

@@ -23,8 +23,10 @@ public class HUDManager : MonoBehaviour
 		return true;
 	}
 
-	void Awake() =>
+	void OnEnable() =>
 		LevelStatsManager.OnUpdated += OnAssetAnswered;
+	private void OnDisable() =>
+		LevelStatsManager.OnUpdated -= OnAssetAnswered;
 
 	void OnAssetAnswered(LevelStats stats)
 	{
