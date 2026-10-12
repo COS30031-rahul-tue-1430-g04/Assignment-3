@@ -591,6 +591,7 @@ GameObject:
   - component: {fileID: 1403181987}
   - component: {fileID: 1403181981}
   - component: {fileID: 1403181986}
+  - component: {fileID: 1403181988}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -765,6 +766,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2.35
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1403181988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403181980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd80d561b5ff594eb9f166d92fe31e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
+  playerCamera: {fileID: 330585545}
+  interactionUI: {fileID: 0}
+  interactionDistance: 3
+  interactableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1639388478
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,6 +829,7 @@ GameObject:
   - component: {fileID: 1941823412}
   - component: {fileID: 1941823411}
   - component: {fileID: 1941823415}
+  - component: {fileID: 1941823416}
   m_Layer: 0
   m_Name: TestInteractable
   m_TagString: Untagged
@@ -922,6 +942,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7030ea17f4ebfd447a3e67b891db9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoggingInteractable
+--- !u!114 &1941823416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941823410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8086f77b19b38043a1fd7daf38074ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  assetName: New Asset
+  question: Who generally looks after this asset?
+  correctClassification: 0
+  correctExplanation: CORRECT EXPLANATION
+  incorrectExplanation: INCORRECT EXPLANATION
+  pointsForCorrectAnswer: 100
+  pointsForIncorrectAnswer: -50
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
