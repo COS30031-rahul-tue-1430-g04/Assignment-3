@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +12,10 @@ public class AssetPanelManager : MonoBehaviour
 		"Who is responsible for maintaining this asset?";
 
 	public Color correctBackgroundColor =
-		new Color(0.75f, 0.90f, 0.75f);
+		new(0.75f, 0.90f, 0.75f);
 
 	public Color incorrectBackgroundColor =
-		new Color(0.95f, 0.75f, 0.75f);
+		new(0.95f, 0.75f, 0.75f);
 
 	[Header("Interaction Panel")]
 	[SerializeField] private GameObject interactionPanel;
@@ -38,18 +39,17 @@ public class AssetPanelManager : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI explanationText;
 
 	private Asset currentAsset;
-	private InteractableAsset currentInteractable;
-
-	private readonly Dictionary<Asset, InteractableAsset>
-		interactableLookup = new();
+	private IEnumerable<Asset> assets;
 
 	private bool CheckSerializedFields()
 	{
 		if (interactionPanel == null ||
 			nameText == null ||
 			questionText == null ||
+
 			feedbackPanel == null ||
 			feedbackText == null ||
+			feedbackBackground == null ||
 			explanationText == null)
 		{
 			Debug.LogError(
@@ -71,127 +71,49 @@ public class AssetPanelManager : MonoBehaviour
 		interactionPanel.SetActive(false);
 		feedbackPanel.SetActive(false);
 
-		InteractableAsset[] assets =
-			FindObjectsByType<InteractableAsset>(
-				FindObjectsInactive.Include,
-				FindObjectsSortMode.None
-			);
-
-		foreach (InteractableAsset interactable in assets)
-		{
-			if (interactable.asset == null)
-				continue;
-
-			Asset data = interactable.asset;
-
-			if (interactableLookup.ContainsKey(data))
-			{
-				Debug.LogWarning(
-					$"Asset data '{data.name}' is assigned to multiple " +
-					"InteractableAsset components. Each world object " +
-					"should have its own Asset data.",
-					interactable
-				);
-			}
-
-			interactableLookup[data] = interactable;
-
-			// Prevent duplicate subscriptions.
-			data.OnAssetFound -= OnAssetFound;
-			data.OnAssetFound += OnAssetFound;
-		}
+		assets = FindObjectsByType<InteractableAsset>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+			.Where(interactable => interactable.asset != null)
+			.Select(interactable => interactable.asset);
+	}
+	private void OnEnable()
+	{
+		foreach (Asset asset in assets)
+			asset.OnAssetFound += OnAssetFound;
 	}
 
-	private void OnAssetFound(Asset data)
+	private void OnAssetFound(Asset asset)
 	{
-		if (!CheckSerializedFields() || data == null)
+		if (!CheckSerializedFields() || asset == null)
 			return;
 
-		currentAsset = data;
-		currentInteractable = null;
+		currentAsset = asset;
 
-		interactableLookup.TryGetValue(
-			data,
-			out currentInteractable
-		);
-
-		nameText.text = string.IsNullOrWhiteSpace(data.name)
+		nameText.text = string.IsNullOrWhiteSpace(asset.name)
 			? "Unknown Asset"
-			: data.name;
+			: asset.name;
 
-		questionText.text =
-			currentInteractable != null &&
-			!string.IsNullOrWhiteSpace(
-				currentInteractable.question)
-				? currentInteractable.question
-				: defaultQuestion;
+		questionText.text = string.IsNullOrWhiteSpace(asset.question)
+			? defaultQuestion
+			: asset.question;
 
-		SetOptionalText(
-			categoryText,
-			"Category: ",
-			GetValue(a => a.assetCategory)
-		);
-
-		SetOptionalText(
-			descriptionText,
-			"",
-			GetValue(a => a.assetDescription)
-		);
-
-		SetOptionalText(
-			locationText,
-			"Location: ",
-			GetValue(a => a.locationDescription)
-		);
-
-		SetOptionalText(
-			purposeText,
-			"Purpose: ",
-			GetValue(a => a.realWorldPurpose)
-		);
-
-		SetOptionalText(
-			responsibilityText,
-			"Responsibility: ",
-			GetValue(a => a.responsibilityDetails)
-		);
-
-		SetOptionalText(
-			interestingFactText,
-			"Did you know? ",
-			GetValue(a => a.interestingFact)
-		);
-
-		SetOptionalText(
-			interactionHintText,
-			"",
-			GetValue(a => a.interactionHint)
-		);
+		SetOptionalText(categoryText, "Category: ", asset.category);
+		SetOptionalText(descriptionText, "", asset.description);
+		SetOptionalText(locationText, "Location: ", asset.locationDescription);
+		SetOptionalText(purposeText, "Purpose: ", asset.realWorldPurpose);
+		SetOptionalText(responsibilityText, "Responsibility: ", asset.responsibilityDetails);
+		SetOptionalText(interestingFactText, "Did you know? ", asset.interestingFact);
+		SetOptionalText(interactionHintText, "", asset.interactionHint);
 
 		if (assetIconImage != null)
 		{
-			Sprite icon = currentInteractable != null
-				? currentInteractable.assetIcon
-				: null;
-
-			assetIconImage.sprite = icon;
-			assetIconImage.enabled = icon != null;
+			assetIconImage.sprite = asset.icon;
+			assetIconImage.enabled = asset.icon != null;
 		}
 
 		interactionPanel.SetActive(true);
 		feedbackPanel.SetActive(false);
 
-		GameManager.Instance.CurrentState =
-			GameManager.GameState.AssetMenu;
-	}
-
-	private string GetValue(
-		System.Func<InteractableAsset, string> selector)
-	{
-		if (currentInteractable == null)
-			return null;
-
-		return selector(currentInteractable);
+		GameManager.Instance.CurrentState = GameManager.GameState.AssetMenu;
 	}
 
 	private void SetOptionalText(
@@ -226,11 +148,8 @@ public class AssetPanelManager : MonoBehaviour
 			return;
 		}
 
-		Asset answeredAsset = currentAsset;
-		InteractableAsset answeredInteractable =
-			currentInteractable;
 
-		bool isCorrect = answeredAsset.Answer(selectedCouncil);
+		bool isCorrect = currentAsset.Answer(selectedCouncil);
 
 		interactionPanel.SetActive(false);
 		feedbackPanel.SetActive(true);
@@ -246,33 +165,26 @@ public class AssetPanelManager : MonoBehaviour
 				: incorrectBackgroundColor;
 		}
 
-		string explanation = answeredAsset.explanation;
+		string explanation = currentAsset.explanation;
 
-		if (answeredInteractable != null)
-		{
-			explanation = AppendInformation(
-				explanation,
-				answeredInteractable.responsibilityDetails
-			);
 
-			explanation = AppendInformation(
-				explanation,
-				string.IsNullOrWhiteSpace(
-					answeredInteractable.interestingFact)
-					? null
-					: "Did you know? " +
-					  answeredInteractable.interestingFact
-			);
-		}
+		explanation = AppendInformation(
+			explanation,
+			currentAsset.responsibilityDetails
+		);
+
+		explanation = AppendInformation(
+			explanation,
+			string.IsNullOrWhiteSpace(
+				currentAsset.interestingFact)
+				? null
+				: "Did you know? " +
+					currentAsset.interestingFact
+		);
 
 		explanationText.text = explanation;
 
-		// The object has already been found, so stop listening
-		// for another found event from this asset.
-		answeredAsset.OnAssetFound -= OnAssetFound;
-
 		currentAsset = null;
-		currentInteractable = null;
 	}
 
 	private string AppendInformation(
@@ -299,12 +211,10 @@ public class AssetPanelManager : MonoBehaviour
 			GameManager.GameState.Gameplay;
 	}
 
-	private void OnDestroy()
+	private void OnDisable()
 	{
-		foreach (Asset data in interactableLookup.Keys)
-		{
-			if (data != null)
-				data.OnAssetFound -= OnAssetFound;
-		}
+		if (assets == null) return;
+		foreach (Asset asset in assets)
+			asset.OnAssetFound -= OnAssetFound;
 	}
 }
