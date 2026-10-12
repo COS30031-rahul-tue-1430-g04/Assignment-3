@@ -859,9 +859,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a81794438ffa7c44866acea54e93372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndGameManager
-  finalScoreText: {fileID: 0}
-  finalExploredText: {fileID: 0}
-  finalAnsweredText: {fileID: 0}
+  finalScoreText: {fileID: 158772943}
+  finalExploredText: {fileID: 2076746250}
+  finalAnsweredText: {fileID: 1347170668}
+  levelStats: {fileID: 11400000, guid: fc00c854d344641418a0e74944ee7f38, type: 2}
 --- !u!1 &1347170666
 GameObject:
   m_ObjectHideFlags: 0
