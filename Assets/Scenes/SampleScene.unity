@@ -1126,8 +1126,8 @@ MonoBehaviour:
     explanation: This is a test explanation
     councilOwned: 1
     category: General
-    description: 
-    locationDescription: 
+    description: This is a cube
+    locationDescription: It is located in the park
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
     realWorldPurpose: 
