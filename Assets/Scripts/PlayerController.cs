@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Interactor))]
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
@@ -74,7 +73,7 @@ public class PlayerController : MonoBehaviour
 	{
 		get
 		{
-			if (_interactor == null && !TryGetComponent(out _interactor))
+			if (_interactor == null && !Head.TryGetComponent(out _interactor))
 				Debug.LogError("Interactor not found on PlayerController.");
 			return _interactor;
 		}

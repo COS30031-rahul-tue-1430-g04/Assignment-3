@@ -4,7 +4,7 @@ public class InteractableAsset : Interactable
 {
 	public Asset asset;
 
-	protected override void Interact(GameObject interactor)
+	public override void Interact(GameObject interactor)
 	{
 		CanInteract = false;
 		asset.Find();

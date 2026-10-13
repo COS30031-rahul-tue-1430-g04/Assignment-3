@@ -1,39 +1,51 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-
-[RequireComponent(typeof(SphereCollider))]
 public class Interactor : MonoBehaviour
 {
 	public float interactionRadius = 5f;
-
-	private SphereCollider _triggureCollider;
-	private SphereCollider TriggerCollider
+	private int inRangeLayer;
+	private int interactableLayer;
+	private int uninteractableLayer;
+	private int InteractableLayerMask => 1 << interactableLayer | 1 << inRangeLayer;
+	private Interactable _currentInteractable = null;
+	private Interactable CurrentInteractable
 	{
-		get
+		get => _currentInteractable;
+		set
 		{
-			if (_triggureCollider == null && !TryGetComponent(out _triggureCollider))
-				Debug.LogError("SphereCollider not found on Interactor.");
-			return _triggureCollider;
+			if (_currentInteractable != value)
+			{
+				if (_currentInteractable != null)
+					_currentInteractable.gameObject.layer =
+						_currentInteractable.CanInteract ? interactableLayer : uninteractableLayer;
+				if (value != null)
+					value.gameObject.layer = inRangeLayer;
+				_currentInteractable = value;
+			}
 		}
 	}
 
-
-
-	private readonly Dictionary<Transform, Action<GameObject>> interactables = new();
-	public void Interact() => interactables
-			.OrderBy(kvp => Vector3.Distance(transform.position, kvp.Key.position))
-			.FirstOrDefault()
-			.Value?.Invoke(gameObject);
-	public void RegisterInteractable(Action<GameObject> interactAction, Transform interactableTransform) =>
-		interactables[interactableTransform] = interactAction;
-	public void UnregisterInteractable(Transform interactableTransform) =>
-		interactables.Remove(interactableTransform);
-
-	private void OnValidate()
+	public void Interact()
 	{
-		TriggerCollider.radius = interactionRadius;
+		if (CurrentInteractable != null)
+			CurrentInteractable.Interact(gameObject);
+	}
+
+	private void OnEnable()
+	{
+		interactableLayer = LayerMask.NameToLayer("Interactable");
+		inRangeLayer = LayerMask.NameToLayer("InRangeInteractable");
+		uninteractableLayer = LayerMask.NameToLayer("Uninteractable");
+	}
+
+	private void Update()
+	{
+		CurrentInteractable = null;
+		if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactionRadius, InteractableLayerMask))
+		{
+			Interactable hitInteractable = hit.collider.GetComponent<Interactable>();
+			if (hitInteractable != null && hitInteractable.CanInteract)
+				CurrentInteractable = hitInteractable;
+		}
 	}
 }
