@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 	{
 		get
 		{
-			if (_interactor == null && !TryGetComponent<Interactor>(out _interactor))
+			if (_interactor == null && !TryGetComponent(out _interactor))
 				Debug.LogError("Interactor not found on PlayerController.");
 			return _interactor;
 		}
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
 		jumpAction.performed += OnJumpInput;
 		sprintAction.performed += OnSprintInput;
 		sprintAction.canceled += OnSprintInput;
-		interactAction.performed += context => Interactor.Interact();
+		interactAction.performed += OnInteractInput;
 	}
 	void DisablePlayerControl()
 	{
@@ -159,8 +159,10 @@ public class PlayerController : MonoBehaviour
 		jumpAction.performed -= OnJumpInput;
 		sprintAction.performed -= OnSprintInput;
 		sprintAction.canceled -= OnSprintInput;
-		interactAction.performed -= context => Interactor.Interact();
+		interactAction.performed -= OnInteractInput;
 	}
+
+	void OnInteractInput(CallbackContext _) => Interactor.Interact();
 
 	void OnMoveInput(CallbackContext context)
 	{
