@@ -4,7 +4,7 @@ using UnityEngine;
 public class MiniMapCameraFollow : MonoBehaviour
 {
 	[Header("References")]
-	[SerializeField] private Transform player;
+	[SerializeField] private Transform followTransform;
 
 	[Header("Map Settings")]
 	[Min(5f)]
@@ -29,13 +29,13 @@ public class MiniMapCameraFollow : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		if (player == null)
+		if (followTransform == null)
 			return;
 
-		Vector3 targetPosition = new Vector3(
-			player.position.x,
-			player.position.y + height,
-			player.position.z
+		Vector3 targetPosition = new(
+			followTransform.position.x,
+			followTransform.position.y + height,
+			followTransform.position.z
 		);
 
 		if (followSmoothness <= 0f)
