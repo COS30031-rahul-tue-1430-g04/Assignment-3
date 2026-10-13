@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(SphereCollider))]
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
@@ -20,15 +17,10 @@ public class PlayerController : MonoBehaviour
 	[Range(-90f, 0f)] public float minVerticalLookAngle = -90f;
 	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
 
-	[Header("Interaction Settings")]
-	[Min(0f)] public float interactionRadius = 5f;
-
-
 	private Vector2 moveInput;
 	private bool isSprinting;
 	private Vector2 targetVelocity;
 	private float currentVerticalLookAngle;
-	private readonly List<Interactable> nearbyInteractables = new();
 
 	private Camera _camera;
 	private Camera Camera
@@ -76,14 +68,14 @@ public class PlayerController : MonoBehaviour
 			return _rb;
 		}
 	}
-	private SphereCollider _triggureCollider;
-	private SphereCollider TriggerCollider
+	private Interactor _interactor;
+	private Interactor Interactor
 	{
 		get
 		{
-			if (_triggureCollider == null && !TryGetComponent<SphereCollider>(out _triggureCollider))
-				Debug.LogError("SphereCollider not found on PlayerController.");
-			return _triggureCollider;
+			if (_interactor == null && !Head.TryGetComponent(out _interactor))
+				Debug.LogError("Interactor not found on PlayerController.");
+			return _interactor;
 		}
 	}
 
@@ -117,7 +109,6 @@ public class PlayerController : MonoBehaviour
 	void OnValidate()
 	{
 		Camera.transform.localPosition = Vector3.back * cameraDistance;
-		TriggerCollider.radius = interactionRadius;
 	}
 
 	private void FixedUpdate() =>
@@ -170,6 +161,8 @@ public class PlayerController : MonoBehaviour
 		interactAction.performed -= OnInteractInput;
 	}
 
+	void OnInteractInput(CallbackContext _) => Interactor.Interact();
+
 	void OnMoveInput(CallbackContext context)
 	{
 		moveInput = context.ReadValue<Vector2>();
@@ -207,27 +200,5 @@ public class PlayerController : MonoBehaviour
 	{
 		isSprinting = context.ReadValueAsButton();
 		UpdateVelocity();
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.TryGetComponent(out Interactable interactable))
-			nearbyInteractables.Add(interactable);
-	}
-
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.TryGetComponent(out Interactable interactable))
-			nearbyInteractables.Remove(interactable);
-	}
-
-	void OnInteractInput(CallbackContext context)
-	{
-		IEnumerable<Interactable> interactables = nearbyInteractables
-			.OrderBy(i => Vector3.Distance(transform.position, i.transform.position));
-
-		foreach (Interactable interactable in interactables)
-			if (interactable.TryInteract(gameObject))
-				break;
 	}
 }

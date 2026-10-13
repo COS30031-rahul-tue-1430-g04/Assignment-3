@@ -2,15 +2,8 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-	protected abstract void Interact(GameObject interactor);
-	protected virtual bool CanInteract(GameObject interactor) => true;
-	public bool TryInteract(GameObject interactor)
-	{
-		if (CanInteract(interactor))
-		{
-			Interact(interactor);
-			return true;
-		}
-		return false;
-	}
+	public abstract void Interact(GameObject interactor);
+	public bool CanInteract { get; protected set; } = true;
+	private void OnEnable() =>
+		gameObject.layer = LayerMask.NameToLayer("Interactable");
 }
