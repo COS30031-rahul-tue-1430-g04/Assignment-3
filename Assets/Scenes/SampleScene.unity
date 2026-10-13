@@ -852,7 +852,7 @@ GameObject:
   - component: {fileID: 1941823412}
   - component: {fileID: 1941823411}
   - component: {fileID: 1941823415}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
