@@ -127,7 +127,6 @@ public class PlayerController : MonoBehaviour
 		Cursor.lockState = CursorLockMode.Locked;
 
 		moveAction.Enable();
-		lookAction.Enable();
 		jumpAction.Enable();
 		sprintAction.Enable();
 		interactAction.Enable();
@@ -146,7 +145,6 @@ public class PlayerController : MonoBehaviour
 		Cursor.lockState = CursorLockMode.None;
 
 		moveAction.Disable();
-		lookAction.Disable();
 		jumpAction.Disable();
 		sprintAction.Disable();
 		interactAction.Disable();
