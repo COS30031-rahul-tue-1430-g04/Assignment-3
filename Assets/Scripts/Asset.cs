@@ -1,23 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
 public class Asset
 {
-	public static HashSet<Asset> assets = new();
-	public static void RegisterAsset(Asset asset)
-	{
-		assets.Add(asset);
-		OnRegisterChanged?.Invoke();
-	}
-	public static void UnregisterAsset(Asset asset)
-	{
-		assets.Remove(asset);
-		OnRegisterChanged?.Invoke();
-	}
-	public static event Action OnRegisterChanged;
-
 	public string name;
 	[TextArea] public string explanation;
 	[SerializeField] private bool councilOwned;
