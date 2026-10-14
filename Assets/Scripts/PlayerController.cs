@@ -173,9 +173,9 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector2 input = context.ReadValue<Vector2>();
 
-		transform.Rotate(Vector3.up, input.x * mouseSensitivity * Time.fixedDeltaTime);
+		transform.Rotate(Vector3.up, input.x * mouseSensitivity);
 
-		currentVerticalLookAngle -= input.y * mouseSensitivity * Time.fixedDeltaTime;
+		currentVerticalLookAngle -= input.y * mouseSensitivity;
 		currentVerticalLookAngle = Mathf.Clamp(currentVerticalLookAngle, minVerticalLookAngle, maxVerticalLookAngle);
 		Head.localRotation = Quaternion.Euler(currentVerticalLookAngle, 0f, 0f);
 

@@ -113,7 +113,7 @@ MonoBehaviour:
   jumpForce: 5
   groundedDistance: 0.1
   cameraDistance: 0
-  mouseSensitivity: 5
+  mouseSensitivity: 0.1
   minVerticalLookAngle: -90
   maxVerticalLookAngle: 90
 --- !u!1 &3710502992347217994
