@@ -40,12 +40,10 @@ jobs:
           name: webgl-build
           path: build
 
-      - name: Publish to itch.io
-        uses: manleydev/butler-publish-itchio-action@master
+      - uses: yeslayla/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
-        with:
-          user: ${{ secrets.ITCH_USERNAME }}
-          game: ${{ secrets.ITCH_GAME }}
-          channel: web
-          package: build/WebGL
+          CHANNEL: web
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USERNAME }}
+          PACKAGE: build/WebGL
