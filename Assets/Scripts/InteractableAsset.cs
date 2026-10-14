@@ -30,4 +30,9 @@ public class InteractableAsset : Interactable
 			marker.SetActive(true);
 	}
 
+	private void OnEnable() =>
+		Asset.RegisterAsset(asset);
+	private void OnDisable() =>
+		Asset.UnregisterAsset(asset);
+
 }
