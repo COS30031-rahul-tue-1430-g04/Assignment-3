@@ -6,7 +6,6 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
-	[Min(0f)] public float accelaration = 20f;
 	[Min(0f)] public float walkSpeed = 5f;
 	[Min(0f)] public float sprintSpeed = 10f;
 	[Min(0f)] public float jumpForce = 5f;
@@ -20,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
 	private Vector2 moveInput;
 	private bool isSprinting;
+	private Vector2 targetVelocity;
 	private float currentVerticalLookAngle;
 
 	private Camera _camera;
@@ -86,8 +86,6 @@ public class PlayerController : MonoBehaviour
 	private InputAction interactAction;
 
 
-	private float MaxSpeed => isSprinting ? sprintSpeed : walkSpeed;
-
 	void Awake()
     {
 		moveAction = InputSystem.actions.FindAction("Move");
@@ -113,16 +111,8 @@ public class PlayerController : MonoBehaviour
 		Camera.transform.localPosition = Vector3.back * cameraDistance;
 	}
 
-	private void FixedUpdate()
-	{
-		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x);
-		
-		Vector3 currentVelocity = Rb.linearVelocity;
-		Vector3 horizontalVelocity = new(currentVelocity.x, 0f, currentVelocity.z);
-
-		if (horizontalVelocity.magnitude < MaxSpeed)
-			Rb.AddForce(moveDirection * accelaration, ForceMode.Acceleration);
-	}
+	private void FixedUpdate() =>
+		Rb.linearVelocity = new(targetVelocity.x, Rb.linearVelocity.y, targetVelocity.y);
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -169,8 +159,11 @@ public class PlayerController : MonoBehaviour
 
 	void OnInteractInput(CallbackContext _) => Interactor.Interact();
 
-	void OnMoveInput(CallbackContext context) =>
+	void OnMoveInput(CallbackContext context)
+	{
 		moveInput = context.ReadValue<Vector2>();
+		UpdateVelocity();
+	}
 
 	void OnLookInput(CallbackContext context)
 	{
@@ -181,6 +174,15 @@ public class PlayerController : MonoBehaviour
 		currentVerticalLookAngle -= input.y * mouseSensitivity;
 		currentVerticalLookAngle = Mathf.Clamp(currentVerticalLookAngle, minVerticalLookAngle, maxVerticalLookAngle);
 		Head.localRotation = Quaternion.Euler(currentVerticalLookAngle, 0f, 0f);
+
+		UpdateVelocity();
+	}
+
+	void UpdateVelocity()
+	{
+		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x);
+		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
+		targetVelocity = new Vector2(moveDirection.x, moveDirection.z) * moveSpeed;
 	}
 
 	void OnJumpInput(CallbackContext context)
@@ -190,6 +192,9 @@ public class PlayerController : MonoBehaviour
 		Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 	}
 
-	void OnSprintInput(CallbackContext context) =>
+	void OnSprintInput(CallbackContext context)
+	{
 		isSprinting = context.ReadValueAsButton();
+		UpdateVelocity();
+	}
 }
