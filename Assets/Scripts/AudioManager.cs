@@ -14,10 +14,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip correctSound;
     [SerializeField] private AudioClip incorrectSound;
 
+    [Header("Pause")]
+    [SerializeField] private float pausedMusicVolume = 0.3f;
+
+    private float normalMusicVolume;
+
     private void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
+        normalMusicVolume = musicSource.volume;
     }
 
     private void Start() => PlayMusic(backgroundMusic);
@@ -33,6 +39,11 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         if (clip != null) sfxSource.PlayOneShot(clip);
+    }
+
+    public void SetMusicPaused(bool paused)
+    {
+        musicSource.volume = paused ? pausedMusicVolume : normalMusicVolume;
     }
 
     public void PlayPause() => PlaySFX(pauseSound);
