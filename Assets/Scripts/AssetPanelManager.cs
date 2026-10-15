@@ -39,6 +39,7 @@ public class AssetPanelManager : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI explanationText;
 
 	private Asset currentAsset;
+	private IEnumerable<Asset> assets;
 
 	private bool CheckSerializedFields()
 	{
@@ -69,20 +70,15 @@ public class AssetPanelManager : MonoBehaviour
 
 		interactionPanel.SetActive(false);
 		feedbackPanel.SetActive(false);
+
+		assets = FindObjectsByType<InteractableAsset>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+			.Where(interactable => interactable.asset != null)
+			.Select(interactable => interactable.asset);
 	}
 	private void OnEnable()
 	{
-		foreach (Asset asset in Asset.assets)
+		foreach (Asset asset in assets)
 			asset.OnAssetFound += OnAssetFound;
-		Asset.OnRegisterChanged += OnRegisterChanged;
-	}
-	private void OnRegisterChanged()
-	{
-		foreach (Asset asset in Asset.assets)
-		{
-			asset.OnAssetFound -= OnAssetFound;
-			asset.OnAssetFound += OnAssetFound;
-		}
 	}
 
 	private void OnAssetFound(Asset asset)
@@ -217,8 +213,8 @@ public class AssetPanelManager : MonoBehaviour
 
 	private void OnDisable()
 	{
-		if (Asset.assets == null) return;
-		foreach (Asset asset in Asset.assets)
+		if (assets == null) return;
+		foreach (Asset asset in assets)
 			asset.OnAssetFound -= OnAssetFound;
 	}
 }
