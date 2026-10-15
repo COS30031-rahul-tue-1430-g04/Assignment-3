@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
 public static class SceneLoader
@@ -13,8 +14,11 @@ public static class SceneLoader
 	{
 		if (state == PlayModeStateChange.ExitingEditMode)
 		{
-			string previousScenePath = EditorSceneManager.GetActiveScene().path;
-			EditorPrefs.SetString(previousScenePathKey, previousScenePath);
+			Scene currentScene = EditorSceneManager.GetActiveScene();
+			if (currentScene.isDirty)
+				EditorSceneManager.SaveScene(currentScene);
+
+			EditorPrefs.SetString(previousScenePathKey, currentScene.path);
 			EditorSceneManager.OpenScene(scenePath);
 		}
 		if (state == PlayModeStateChange.EnteredEditMode)
