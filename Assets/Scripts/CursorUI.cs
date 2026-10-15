@@ -1,12 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Linq;
 
 [RequireComponent(typeof(RectTransform))]
 public class CursorUI : MonoBehaviour
 {
 	[Header("Input Actions")]
-	public InputActionReference look;
+	public InputActionReference move;
 	public InputActionReference click;
 
 	[Header("Cursor Settings")]
@@ -24,43 +28,60 @@ public class CursorUI : MonoBehaviour
 
 	void Awake()
 	{
+		Cursor.lockState = CursorLockMode.Locked;
+
 		rectTransform = GetComponent<RectTransform>();
 		canvasRect = canvas.GetComponent<RectTransform>();
 		canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceCamera
 			? canvas.worldCamera
 			: null;
 
-		virtualMouse = (Mouse)InputSystem.AddDevice("VirtualMouse");
+		foreach (InputDevice device in InputSystem.devices)
+		{
+			if (device.name == "VirtualMouse")
+			{
+				virtualMouse = (Mouse)device;
+				break;
+			}
+		}
+		virtualMouse ??= (Mouse)InputSystem.AddDevice("VirtualMouse");
 		InputSystem.EnableDevice(virtualMouse);
 
 		virtualPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
 	}
+	void OnDestroy() =>
+		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+
+	void OnGameStateChanged(GameManager.GameState newState) =>
+		gameObject.SetActive(newState != GameManager.GameState.Gameplay);
+
 
 	void OnEnable()
 	{
-		look.action.Enable();
+		move.action.Enable();
 		click.action.Enable();
 
-		click.action.started += OnClickStarted;
-		click.action.canceled += OnClickCanceled;
+		click.action.canceled += OnClick;
+		move.action.performed += OnMovePerformed;
+		move.action.canceled += OnMovePerformed;
 	}
 
 	void OnDisable()
 	{
-		click.action.started -= OnClickStarted;
-		click.action.canceled -= OnClickCanceled;
+		click.action.canceled -= OnClick;
+		move.action.performed -= OnMovePerformed;
+		move.action.canceled -= OnMovePerformed;
 	}
 
-	void Update()
+	void OnMovePerformed(InputAction.CallbackContext ctx)
 	{
-		Vector2 delta = look.action.ReadValue<Vector2>();
+		Vector2 delta = ctx.ReadValue<Vector2>();
 		virtualPos += delta * sensitivity;
-
 		virtualPos.x = Mathf.Clamp(virtualPos.x, 0, Screen.width);
 		virtualPos.y = Mathf.Clamp(virtualPos.y, 0, Screen.height);
-
 		InputState.Change(virtualMouse.position, virtualPos);
-
 		if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
 			canvasRect,
 			virtualPos,
@@ -71,8 +92,25 @@ public class CursorUI : MonoBehaviour
 		}
 	}
 
-	private void OnClickStarted(InputAction.CallbackContext ctx) =>
-		InputSystem.QueueStateEvent(virtualMouse, new MouseState { buttons = 1 });
-	private void OnClickCanceled(InputAction.CallbackContext ctx) =>
-		InputSystem.QueueStateEvent(virtualMouse, new MouseState { buttons = 0 });
+	private bool TryGetButtonAt(Vector2 screenPos, out Button button)
+	{
+		GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
+		PointerEventData eventData = new(EventSystem.current)
+		{ position = screenPos };
+
+		List<RaycastResult> results = new();
+		raycaster.Raycast(eventData, results);
+		foreach (RaycastResult result in results)
+			if (result.gameObject.TryGetComponent(out button))
+				return true;
+
+		button = null;
+		return false;
+	}
+
+	private void OnClick(InputAction.CallbackContext ctx)
+	{
+		if (TryGetButtonAt(virtualPos, out Button button))
+			button.onClick.Invoke();
+	}
 }

@@ -124,12 +124,11 @@ public class PlayerController : MonoBehaviour
 
 	void EnablePlayerControl()
 	{
-		Cursor.lockState = CursorLockMode.Locked;
-
 		moveAction.Enable();
 		jumpAction.Enable();
 		sprintAction.Enable();
 		interactAction.Enable();
+		lookAction.Enable();
 
 		moveAction.performed += OnMoveInput;
 		moveAction.canceled += OnMoveInput;
@@ -142,12 +141,11 @@ public class PlayerController : MonoBehaviour
 	}
 	void DisablePlayerControl()
 	{
-		Cursor.lockState = CursorLockMode.None;
-
 		moveAction.Disable();
 		jumpAction.Disable();
 		sprintAction.Disable();
 		interactAction.Disable();
+		lookAction.Disable();
 
 		moveAction.performed -= OnMoveInput;
 		moveAction.canceled -= OnMoveInput;
