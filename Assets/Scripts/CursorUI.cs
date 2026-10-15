@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Linq;
 
 [RequireComponent(typeof(RectTransform))]
 public class CursorUI : MonoBehaviour
@@ -54,8 +53,25 @@ public class CursorUI : MonoBehaviour
 	void OnDestroy() =>
 		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
 
-	void OnGameStateChanged(GameManager.GameState newState) =>
-		gameObject.SetActive(newState != GameManager.GameState.Gameplay);
+	void OnGameStateChanged(GameManager.GameState newState)
+	{
+		switch (newState)
+		{
+			case GameManager.GameState.Gameplay:
+				gameObject.SetActive(false);
+				Cursor.lockState = CursorLockMode.Locked;
+				break;
+			case GameManager.GameState.Paused:
+				gameObject.SetActive(false);
+				Cursor.lockState = CursorLockMode.None;
+				break;
+			case GameManager.GameState.AssetMenu:
+			case GameManager.GameState.Menu:
+				gameObject.SetActive(true);
+				Cursor.lockState = CursorLockMode.Locked;
+				break;
+		}
+	}
 
 
 	void OnEnable()
@@ -89,6 +105,11 @@ public class CursorUI : MonoBehaviour
 			out Vector2 localPoint))
 		{
 			rectTransform.anchoredPosition = localPoint;
+
+			if (TryGetButtonAt(virtualPos, out Button button))
+				button.Select();
+			else
+				EventSystem.current.SetSelectedGameObject(null);
 		}
 	}
 
