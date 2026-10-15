@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 [RequireComponent(typeof(RectTransform))]
 public class CursorUI : MonoBehaviour
@@ -15,8 +17,7 @@ public class CursorUI : MonoBehaviour
 	[Header("Cursor Settings")]
 	public float sensitivity = 1.0f;
 
-	[Header("References")]
-	public Canvas canvas;
+	private Canvas canvas;
 
 	private RectTransform rectTransform;
 	private RectTransform canvasRect;
@@ -27,13 +28,10 @@ public class CursorUI : MonoBehaviour
 
 	void Awake()
 	{
+		SceneManager.sceneLoaded += OnSceneLoaded;
 		Cursor.lockState = CursorLockMode.Locked;
 
 		rectTransform = GetComponent<RectTransform>();
-		canvasRect = canvas.GetComponent<RectTransform>();
-		canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceCamera
-			? canvas.worldCamera
-			: null;
 
 		foreach (InputDevice device in InputSystem.devices)
 		{
@@ -50,8 +48,23 @@ public class CursorUI : MonoBehaviour
 
 		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
 	}
-	void OnDestroy() =>
+	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		canvas = FindObjectsByType<Canvas>(FindObjectsSortMode.None)
+			.FirstOrDefault(c => c.name != "CursorCanvas");
+		if (canvas == null) return;
+		
+		canvasRect = canvas.GetComponent<RectTransform>();
+		canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceCamera
+			? canvas.worldCamera
+			: null;
+	}
+
+	void OnDestroy()
+	{
 		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -86,6 +99,9 @@ public class CursorUI : MonoBehaviour
 
 	void OnDisable()
 	{
+		move.action.Disable();
+		click.action.Disable();
+
 		click.action.canceled -= OnClick;
 		move.action.performed -= OnMovePerformed;
 		move.action.canceled -= OnMovePerformed;

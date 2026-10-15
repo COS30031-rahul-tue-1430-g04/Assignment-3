@@ -4,7 +4,7 @@ using UnityEditor.SceneManagement;
 [InitializeOnLoad]
 public static class SceneLoader
 {
-	private const string scenePath = "Assets/Scenes/MainMenu.unity";
+	private const string scenePath = "Assets/Scenes/Bootstrap.unity";
 	private const string previousScenePathKey = "PreviousScenePath";
 	static SceneLoader() =>
 		EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
