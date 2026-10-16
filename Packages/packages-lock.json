@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.andbc.texturepacker": {
+      "version": "https://github.com/andydbc/unity-texture-packer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c1a44020673d18365544c57e8382091422536686"
+	},
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
