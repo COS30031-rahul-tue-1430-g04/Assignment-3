@@ -2,54 +2,32 @@
 
 public class InteractableAsset : Interactable
 {
-	[Header("Core Asset Data")]
 	public Asset asset;
+	private GameObject marker;
 
-	[SerializeField]
-	private bool interactionEnabled = true;
-
-	private bool hasBeenInteractedWith;
-
-	public bool HasBeenInteractedWith =>
-		hasBeenInteractedWith;
-
-	public bool CanBeInteractedWith =>
-		interactionEnabled &&
-		!hasBeenInteractedWith &&
-		asset != null;
-
-	protected override void Interact(GameObject interactor)
+	private void Awake()
 	{
-		if (!CanBeInteractedWith)
-			return;
-
-		hasBeenInteractedWith = true;
-		asset.Find();
+		Transform markerTransform = transform.Find("MapMarker");
+		if (markerTransform != null)
+		{
+			marker = markerTransform.gameObject;
+			marker.SetActive(true);
+		}
 	}
 
-	protected override bool CanInteract(GameObject interactor)
+	public override void Interact(GameObject interactor)
 	{
-		return CanBeInteractedWith;
+		CanInteract = false;
+		if (marker != null)
+			marker.SetActive(false);
+		asset.Find();
 	}
 
 	public void ResetInteraction()
 	{
-		hasBeenInteractedWith = false;
+		CanInteract = true;
+		if (marker != null)
+			marker.SetActive(true);
 	}
 
-	public void SetInteractionEnabled(bool enabled)
-	{
-		interactionEnabled = enabled;
-	}
-
-	private void OnValidate()
-	{
-		if (asset == null)
-		{
-			Debug.LogWarning(
-				$"No Asset data assigned to '{gameObject.name}'.",
-				this
-			);
-		}
-	}
 }

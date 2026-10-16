@@ -29,10 +29,10 @@ public class EndGameManager : MonoBehaviour
 	}
 
 	public void PlayAgain() =>
-		SceneManager.LoadScene(1);
+		SceneManager.LoadScene(2);
 
 	public void MainMenu() =>
-		SceneManager.LoadScene(0);
+		SceneManager.LoadScene(1);
 
 	public void QuitGame() =>
 		Application.Quit();
