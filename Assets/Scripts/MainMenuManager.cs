@@ -12,7 +12,7 @@ public class MainMenuManager : MonoBehaviour
 
 	void Start() => GameManager.Instance.CurrentState = GameManager.GameState.Menu;
 
-	public void PlayGame() => SceneManager.LoadScene(1);
+	public void PlayGame() => SceneManager.LoadScene(2);
 	public void ShowHowToPlay() => howToPlayPanel.SetActive(true);
 	public void HideHowToPlay() => howToPlayPanel.SetActive(false);
 	public void QuitGame() => Application.Quit();
