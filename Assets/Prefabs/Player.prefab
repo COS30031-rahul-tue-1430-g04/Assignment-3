@@ -74,8 +74,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   walkSpeed: 5
   sprintSpeed: 10
-  jumpForce: 5
-  gravity: 9.81
+  jumpForce: 8
+  gravity: 18
   cameraDistance: 0
   mouseSensitivity: 0.1
   minVerticalLookAngle: -90
