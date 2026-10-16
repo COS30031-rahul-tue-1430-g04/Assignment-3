@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 using static UnityEngine.InputSystem.InputAction;
+using System.Linq;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -47,7 +49,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 	private CharacterController _characterController;
-	private CharacterController CharacterControllerComponent
+	private CharacterController Controller
 	{
 		get
 		{
@@ -101,9 +103,9 @@ public class PlayerController : MonoBehaviour
 		Camera.transform.localPosition = Vector3.back * cameraDistance;
 	}
 
-	void FixedUpdate()
+	void Update()
 	{
-		if (CharacterControllerComponent.isGrounded && verticalVelocity < 0f)
+		if (Controller.isGrounded && verticalVelocity < 0f)
 			verticalVelocity = -2f;
 		else
 			verticalVelocity -= gravity * Time.deltaTime;
@@ -113,8 +115,27 @@ public class PlayerController : MonoBehaviour
 		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
 
 		Vector3 displacement = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
-		CharacterControllerComponent.Move(displacement * Time.deltaTime);
+
+		float friction = ProbeSurface(moveDirection)
+			.Concat(ProbeGround())
+			.Where(hit => hit.collider != null && hit.collider.sharedMaterial != null)
+			.Select(hit => hit.collider.sharedMaterial.dynamicFriction)
+			.DefaultIfEmpty(0f)
+			.Max();
+		displacement *= (1f - friction);
+
+		Controller.Move(displacement * Time.deltaTime);
 	}
+
+	IEnumerable<RaycastHit> ProbeSurface(Vector3 direction)
+	{
+		Vector3 origin = transform.position + Controller.center;
+		Vector3 p1 = origin + Vector3.up * (Controller.height / 2f - Controller.radius);
+		Vector3 p2 = origin - Vector3.up * (Controller.height / 2f - Controller.radius);
+		float distance = Controller.skinWidth + 0.1f;
+		return Physics.CapsuleCastAll(p1, p2, Controller.radius, direction.normalized, distance);
+	}
+	IEnumerable<RaycastHit> ProbeGround() => ProbeSurface(Vector3.down);
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -177,7 +198,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnJumpInput(CallbackContext context)
 	{
-		if (!CharacterControllerComponent.isGrounded) return;
+		if (!Controller.isGrounded) return;
 		verticalVelocity = jumpForce;
 	}
 	void OnSprintInput(CallbackContext context) =>
