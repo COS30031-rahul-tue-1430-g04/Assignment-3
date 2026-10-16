@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Linq;
 
 [RequireComponent(typeof(RectTransform))]
@@ -17,21 +16,18 @@ public class CursorUI : MonoBehaviour
 	[Header("Cursor Settings")]
 	public float sensitivity = 1.0f;
 
-	private Canvas canvas;
-
 	private RectTransform rectTransform;
-	private RectTransform canvasRect;
-	private Camera canvasCamera;
+	private RectTransform cursorCanvasRect;
 
 	private Mouse virtualMouse;
 	private Vector2 virtualPos;
 
 	void Awake()
 	{
-		SceneManager.sceneLoaded += OnSceneLoaded;
 		Cursor.lockState = CursorLockMode.Locked;
 
 		rectTransform = GetComponent<RectTransform>();
+		cursorCanvasRect = rectTransform.parent as RectTransform;
 
 		foreach (InputDevice device in InputSystem.devices)
 		{
@@ -45,26 +41,13 @@ public class CursorUI : MonoBehaviour
 		InputSystem.EnableDevice(virtualMouse);
 
 		virtualPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+		InputState.Change(virtualMouse.position, virtualPos);
 
 		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
 	}
-	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-	{
-		canvas = FindObjectsByType<Canvas>(FindObjectsSortMode.None)
-			.FirstOrDefault(c => c.name != "CursorCanvas");
-		if (canvas == null) return;
-		
-		canvasRect = canvas.GetComponent<RectTransform>();
-		canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceCamera
-			? canvas.worldCamera
-			: null;
-	}
 
-	void OnDestroy()
-	{
+	void OnDestroy() =>
 		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
-		SceneManager.sceneLoaded -= OnSceneLoaded;
-	}
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -92,7 +75,7 @@ public class CursorUI : MonoBehaviour
 		move.action.Enable();
 		click.action.Enable();
 
-		click.action.canceled += OnClick;
+		click.action.performed += OnClick;
 		move.action.performed += OnMovePerformed;
 		move.action.canceled += OnMovePerformed;
 	}
@@ -102,7 +85,7 @@ public class CursorUI : MonoBehaviour
 		move.action.Disable();
 		click.action.Disable();
 
-		click.action.canceled -= OnClick;
+		click.action.performed -= OnClick;
 		move.action.performed -= OnMovePerformed;
 		move.action.canceled -= OnMovePerformed;
 	}
@@ -115,33 +98,50 @@ public class CursorUI : MonoBehaviour
 		virtualPos.y = Mathf.Clamp(virtualPos.y, 0, Screen.height);
 		InputState.Change(virtualMouse.position, virtualPos);
 		if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-			canvasRect,
+			cursorCanvasRect,
 			virtualPos,
-			canvasCamera,
+			null,
 			out Vector2 localPoint))
 		{
 			rectTransform.anchoredPosition = localPoint;
 
-			if (TryGetButtonAt(virtualPos, out Button button))
+			if (TryGetButtonAt(virtualPos, out Button button) && EventSystem.current != null)
 				button.Select();
-			else
+			else if (EventSystem.current != null)
 				EventSystem.current.SetSelectedGameObject(null);
 		}
 	}
 
 	private bool TryGetButtonAt(Vector2 screenPos, out Button button)
 	{
-		GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
-		PointerEventData eventData = new(EventSystem.current)
-		{ position = screenPos };
-
-		List<RaycastResult> results = new();
-		raycaster.Raycast(eventData, results);
-		foreach (RaycastResult result in results)
-			if (result.gameObject.TryGetComponent(out button))
-				return true;
-
 		button = null;
+		if (EventSystem.current == null)
+			return false;
+
+		IEnumerable<GraphicRaycaster> raycasters =
+			from raycaster in FindObjectsByType<GraphicRaycaster>(
+				FindObjectsInactive.Exclude,
+				FindObjectsSortMode.None
+			)
+			let canvas = raycaster.GetComponent<Canvas>()
+			where raycaster.isActiveAndEnabled
+				&& canvas != null
+				&& canvas.name != "CursorCanvas"
+			orderby canvas.sortingOrder descending
+			select raycaster;
+
+		PointerEventData eventData = new(EventSystem.current) { position = screenPos };
+		List<RaycastResult> results = new();
+
+		foreach (GraphicRaycaster raycaster in raycasters)
+		{
+			results.Clear();
+			raycaster.Raycast(eventData, results);
+			button = results.Select(r => r.gameObject.GetComponentInParent<Button>())
+				.FirstOrDefault(b => b != null && b.isActiveAndEnabled && b.interactable);
+			if (button != null) return true;
+		}
+
 		return false;
 	}
 
