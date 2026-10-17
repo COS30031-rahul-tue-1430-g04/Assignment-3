@@ -41,24 +41,31 @@ public class PauseManager : MonoBehaviour
 		pauseAction.Disable();
 	}
 	void TogglePause(CallbackContext _) => TogglePause();
-	public void TogglePause()
-	{
-		if (!CheckSerializedFields()) return;
 
-		if (isPaused = !isPaused)
-		{
-			pausePanel.SetActive(true);
-			previousState = GameManager.Instance.CurrentState;
-			GameManager.Instance.CurrentState = GameManager.GameState.Paused;
-		}
-		else
-		{
-			pausePanel.SetActive(false);
-			GameManager.Instance.CurrentState = previousState;
-		}
-	}
+    public void TogglePause()
+    {
+        if (!CheckSerializedFields()) return;
 
-	public void RestartLevel()
+        if (isPaused = !isPaused)
+        {
+            pausePanel.SetActive(true);
+            previousState = GameManager.Instance.CurrentState;
+            GameManager.Instance.CurrentState = GameManager.GameState.Paused;
+
+            AudioManager.Instance.PlayPause();
+            AudioManager.Instance.SetMusicPaused(true);
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+            GameManager.Instance.CurrentState = previousState;
+
+            AudioManager.Instance.PlayPause();
+            AudioManager.Instance.SetMusicPaused(false);
+        }
+    }
+
+    public void RestartLevel()
 	{
 		GameManager.Instance.CurrentState = GameManager.GameState.Gameplay;
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -66,6 +73,6 @@ public class PauseManager : MonoBehaviour
 	public void MainMenu()
 	{
 		GameManager.Instance.CurrentState = GameManager.GameState.Menu;
-		SceneManager.LoadScene(0);
+		SceneManager.LoadScene(1);
 	}
 }

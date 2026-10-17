@@ -113,7 +113,9 @@ public class AssetPanelManager : MonoBehaviour
 		interactionPanel.SetActive(true);
 		feedbackPanel.SetActive(false);
 
-		GameManager.Instance.CurrentState = GameManager.GameState.AssetMenu;
+        AudioManager.Instance.SetMusicPaused(true);
+
+        GameManager.Instance.CurrentState = GameManager.GameState.AssetMenu;
 	}
 
 	private void SetOptionalText(
@@ -149,9 +151,12 @@ public class AssetPanelManager : MonoBehaviour
 		}
 
 
-		bool isCorrect = currentAsset.Answer(selectedCouncil);
+        bool isCorrect = currentAsset.Answer(selectedCouncil);
 
-		interactionPanel.SetActive(false);
+        if (isCorrect) AudioManager.Instance.PlayCorrect();
+			else AudioManager.Instance.PlayIncorrect();
+
+        interactionPanel.SetActive(false);
 		feedbackPanel.SetActive(true);
 
 		feedbackText.text = isCorrect
@@ -207,7 +212,9 @@ public class AssetPanelManager : MonoBehaviour
 
 		feedbackPanel.SetActive(false);
 
-		GameManager.Instance.CurrentState =
+        AudioManager.Instance.SetMusicPaused(false);
+
+        GameManager.Instance.CurrentState =
 			GameManager.GameState.Gameplay;
 	}
 

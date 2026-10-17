@@ -1,18 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 using static UnityEngine.InputSystem.InputAction;
+using System.Linq;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
 	[Min(0f)] public float walkSpeed = 5f;
 	[Min(0f)] public float sprintSpeed = 10f;
 	[Min(0f)] public float jumpForce = 5f;
-	[Min(0f)] public float groundedDistance = 0.1f;
+	[Min(0f)] public float gravity = 9.81f;
 
 	[Header("Camera Settings")]
 	[Min(0f)] public float cameraDistance = 3f;
@@ -20,15 +19,10 @@ public class PlayerController : MonoBehaviour
 	[Range(-90f, 0f)] public float minVerticalLookAngle = -90f;
 	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
 
-	[Header("Interaction Settings")]
-	[Min(0f)] public float interactionRadius = 5f;
-
-
 	private Vector2 moveInput;
 	private bool isSprinting;
-	private Vector2 targetVelocity;
+	private float verticalVelocity;
 	private float currentVerticalLookAngle;
-	private readonly List<Interactable> nearbyInteractables = new();
 
 	private Camera _camera;
 	private Camera Camera
@@ -50,40 +44,28 @@ public class PlayerController : MonoBehaviour
 			if (_head == null)
 				_head = Camera.transform.parent;
 			if (_head == null || _head == transform)
-				Debug.LogError("Head (Camera parrent) not found in PlayerController.");
+				Debug.LogError("Head (Camera parent) not found in PlayerController.");
 			return _head;
 		}
 	}
-	private Transform _feet;
-	private Transform Feet
+	private CharacterController _characterController;
+	private CharacterController Controller
 	{
 		get
 		{
-			if (_feet == null)
-				_feet = transform.Find("Feet");
-			if (_feet == null)
-				Debug.LogError("Feet not found.");
-			return _feet;
+			if (_characterController == null && !TryGetComponent<CharacterController>(out _characterController))
+				Debug.LogError("CharacterController not found on PlayerController.");
+			return _characterController;
 		}
 	}
-	private Rigidbody _rb;
-	private Rigidbody Rb
+	private Interactor _interactor;
+	private Interactor Interactor
 	{
 		get
 		{
-			if (_rb == null && !TryGetComponent<Rigidbody>(out _rb))
-				Debug.LogError("Rigidbody not found on PlayerController.");
-			return _rb;
-		}
-	}
-	private SphereCollider _triggureCollider;
-	private SphereCollider TriggerCollider
-	{
-		get
-		{
-			if (_triggureCollider == null && !TryGetComponent<SphereCollider>(out _triggureCollider))
-				Debug.LogError("SphereCollider not found on PlayerController.");
-			return _triggureCollider;
+			if (_interactor == null && !Head.TryGetComponent(out _interactor))
+				Debug.LogError("Interactor not found on PlayerController.");
+			return _interactor;
 		}
 	}
 
@@ -93,14 +75,15 @@ public class PlayerController : MonoBehaviour
 	private InputAction sprintAction;
 	private InputAction interactAction;
 
-
 	void Awake()
-    {
+	{
 		moveAction = InputSystem.actions.FindAction("Move");
 		lookAction = InputSystem.actions.FindAction("Look");
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		interactAction = InputSystem.actions.FindAction("Interact");
+
+		verticalVelocity = 0f;
 	}
 
 	void OnEnable()
@@ -108,6 +91,7 @@ public class PlayerController : MonoBehaviour
 		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
 		OnGameStateChanged(GameManager.Instance.CurrentState);
 	}
+
 	void OnDisable()
 	{
 		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
@@ -117,11 +101,41 @@ public class PlayerController : MonoBehaviour
 	void OnValidate()
 	{
 		Camera.transform.localPosition = Vector3.back * cameraDistance;
-		TriggerCollider.radius = interactionRadius;
 	}
 
-	private void FixedUpdate() =>
-		Rb.linearVelocity = new(targetVelocity.x, Rb.linearVelocity.y, targetVelocity.y);
+	void Update()
+	{
+		if (Controller.isGrounded && verticalVelocity < 0f)
+			verticalVelocity = -2f;
+		else
+			verticalVelocity -= gravity * Time.deltaTime;
+
+
+		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
+		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+		Vector3 displacement = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
+
+		float friction = ProbeSurface(moveDirection)
+			.Concat(ProbeGround())
+			.Where(hit => hit.collider != null && hit.collider.sharedMaterial != null)
+			.Select(hit => hit.collider.sharedMaterial.dynamicFriction)
+			.DefaultIfEmpty(0f)
+			.Max();
+		displacement *= (1f - friction);
+
+		Controller.Move(displacement * Time.deltaTime);
+	}
+
+	IEnumerable<RaycastHit> ProbeSurface(Vector3 direction)
+	{
+		Vector3 origin = transform.position + Controller.center;
+		Vector3 p1 = origin + Vector3.up * (Controller.height / 2f - Controller.radius);
+		Vector3 p2 = origin - Vector3.up * (Controller.height / 2f - Controller.radius);
+		float distance = Controller.skinWidth + 0.1f;
+		return Physics.CapsuleCastAll(p1, p2, Controller.radius, direction.normalized, distance);
+	}
+	IEnumerable<RaycastHit> ProbeGround() => ProbeSurface(Vector3.down);
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -133,13 +147,11 @@ public class PlayerController : MonoBehaviour
 
 	void EnablePlayerControl()
 	{
-		Cursor.lockState = CursorLockMode.Locked;
-
 		moveAction.Enable();
-		lookAction.Enable();
 		jumpAction.Enable();
 		sprintAction.Enable();
 		interactAction.Enable();
+		lookAction.Enable();
 
 		moveAction.performed += OnMoveInput;
 		moveAction.canceled += OnMoveInput;
@@ -152,13 +164,11 @@ public class PlayerController : MonoBehaviour
 	}
 	void DisablePlayerControl()
 	{
-		Cursor.lockState = CursorLockMode.None;
-
 		moveAction.Disable();
-		lookAction.Disable();
 		jumpAction.Disable();
 		sprintAction.Disable();
 		interactAction.Disable();
+		lookAction.Disable();
 
 		moveAction.performed -= OnMoveInput;
 		moveAction.canceled -= OnMoveInput;
@@ -170,64 +180,27 @@ public class PlayerController : MonoBehaviour
 		interactAction.performed -= OnInteractInput;
 	}
 
-	void OnMoveInput(CallbackContext context)
-	{
+	void OnInteractInput(CallbackContext _) => Interactor.Interact();
+
+	void OnMoveInput(CallbackContext context) =>
 		moveInput = context.ReadValue<Vector2>();
-		UpdateVelocity();
-	}
 
 	void OnLookInput(CallbackContext context)
 	{
 		Vector2 input = context.ReadValue<Vector2>();
 
-		transform.Rotate(Vector3.up, input.x * mouseSensitivity * Time.fixedDeltaTime);
+		transform.Rotate(Vector3.up, input.x * mouseSensitivity);
 
-		currentVerticalLookAngle -= input.y * mouseSensitivity * Time.fixedDeltaTime;
+		currentVerticalLookAngle -= input.y * mouseSensitivity;
 		currentVerticalLookAngle = Mathf.Clamp(currentVerticalLookAngle, minVerticalLookAngle, maxVerticalLookAngle);
 		Head.localRotation = Quaternion.Euler(currentVerticalLookAngle, 0f, 0f);
-
-		UpdateVelocity();
-	}
-
-	void UpdateVelocity()
-	{
-		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x);
-		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
-		targetVelocity = new Vector2(moveDirection.x, moveDirection.z) * moveSpeed;
 	}
 
 	void OnJumpInput(CallbackContext context)
 	{
-		if (!Physics.Raycast(Feet.position, Vector3.down, groundedDistance))
-			return;
-		Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+		if (!Controller.isGrounded) return;
+		verticalVelocity = jumpForce;
 	}
-
-	void OnSprintInput(CallbackContext context)
-	{
+	void OnSprintInput(CallbackContext context) =>
 		isSprinting = context.ReadValueAsButton();
-		UpdateVelocity();
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.TryGetComponent(out Interactable interactable))
-			nearbyInteractables.Add(interactable);
-	}
-
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.TryGetComponent(out Interactable interactable))
-			nearbyInteractables.Remove(interactable);
-	}
-
-	void OnInteractInput(CallbackContext context)
-	{
-		IEnumerable<Interactable> interactables = nearbyInteractables
-			.OrderBy(i => Vector3.Distance(transform.position, i.transform.position));
-
-		foreach (Interactable interactable in interactables)
-			if (interactable.TryInteract(gameObject))
-				break;
-	}
 }
