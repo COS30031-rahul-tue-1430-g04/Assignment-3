@@ -40,9 +40,9 @@
 			if (!unityInstanceGlobal) return; // Unity not ready yet
 		
 			if (document.pointerLockElement == null) {
-				unityInstanceGlobal.SendMessage("CursorUI", "OnPointerUnlock");
+				unityInstanceGlobal.SendMessage("WebGLRouter", "PointerUnlocked");
 			} else {
-				unityInstanceGlobal.SendMessage("CursorUI", "OnPointerLock");
+				unityInstanceGlobal.SendMessage("WebGLRouter", "PointerLocked");
 			}
 		});
 	</script>
