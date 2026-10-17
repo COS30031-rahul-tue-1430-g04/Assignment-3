@@ -34,36 +34,41 @@ public class PauseManager : MonoBehaviour
 	{
 		pauseAction.Enable();
 		pauseAction.performed += TogglePause;
+		WebGLRouter.Instance.OnPointerUnlock += Pause;
 	}
 	void OnDisable()
 	{
 		pauseAction.performed -= TogglePause;
 		pauseAction.Disable();
+		WebGLRouter.Instance.OnPointerUnlock -= Pause;
 	}
 	void TogglePause(CallbackContext _) => TogglePause();
 
     public void TogglePause()
     {
         if (!CheckSerializedFields()) return;
-
-        if (isPaused = !isPaused)
-        {
-            pausePanel.SetActive(true);
-            previousState = GameManager.Instance.CurrentState;
-            GameManager.Instance.CurrentState = GameManager.GameState.Paused;
-
-            AudioManager.Instance.PlayPause();
-            AudioManager.Instance.SetMusicPaused(true);
-        }
-        else
-        {
-            pausePanel.SetActive(false);
-            GameManager.Instance.CurrentState = previousState;
-
-            AudioManager.Instance.PlayPause();
-            AudioManager.Instance.SetMusicPaused(false);
-        }
+		if (isPaused) Resume(); else Pause();
     }
+
+	private void Pause()
+	{
+		if (!CheckSerializedFields()) return;
+		isPaused = true;
+		pausePanel.SetActive(true);
+		previousState = GameManager.Instance.CurrentState;
+		GameManager.Instance.CurrentState = GameManager.GameState.Paused;
+		AudioManager.Instance.PlayPause();
+		AudioManager.Instance.SetMusicPaused(true);
+	}
+	private void Resume()
+	{
+		if (!CheckSerializedFields()) return;
+		isPaused = false;
+		pausePanel.SetActive(false);
+		GameManager.Instance.CurrentState = previousState;
+		AudioManager.Instance.PlayPause();
+		AudioManager.Instance.SetMusicPaused(false);
+	}
 
     public void RestartLevel()
 	{

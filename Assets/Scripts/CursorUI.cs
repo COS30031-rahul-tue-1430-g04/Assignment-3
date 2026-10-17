@@ -12,15 +12,21 @@ public class CursorUI : MonoBehaviour
 	[Header("Input Actions")]
 	public InputActionReference move;
 	public InputActionReference click;
+	public InputActionReference defaultPoint;
 
 	[Header("Cursor Settings")]
 	public float sensitivity = 1.0f;
+
+	[Header("References")]
+	public Image cursorImage;
 
 	private RectTransform rectTransform;
 	private RectTransform cursorCanvasRect;
 
 	private Mouse virtualMouse;
 	private Vector2 virtualPos;
+
+	private bool Active { get => cursorImage.enabled; set => cursorImage.enabled = value; }
 
 	void Awake()
 	{
@@ -54,16 +60,16 @@ public class CursorUI : MonoBehaviour
 		switch (newState)
 		{
 			case GameManager.GameState.Gameplay:
-				gameObject.SetActive(false);
+				Active = false;
 				Cursor.lockState = CursorLockMode.Locked;
 				break;
 			case GameManager.GameState.Paused:
-				gameObject.SetActive(false);
+				Active = false;
 				Cursor.lockState = CursorLockMode.None;
 				break;
 			case GameManager.GameState.AssetMenu:
 			case GameManager.GameState.Menu:
-				gameObject.SetActive(true);
+				Active = true;
 				Cursor.lockState = CursorLockMode.Locked;
 				break;
 		}
@@ -78,6 +84,9 @@ public class CursorUI : MonoBehaviour
 		click.action.performed += OnClick;
 		move.action.performed += OnMovePerformed;
 		move.action.canceled += OnMovePerformed;
+
+		WebGLRouter.Instance.OnPointerLock += OnPointerLock;
+		WebGLRouter.Instance.OnPointerUnlock += OnPointerUnlock;
 	}
 
 	void OnDisable()
@@ -88,10 +97,14 @@ public class CursorUI : MonoBehaviour
 		click.action.performed -= OnClick;
 		move.action.performed -= OnMovePerformed;
 		move.action.canceled -= OnMovePerformed;
+
+		WebGLRouter.Instance.OnPointerLock -= OnPointerLock;
+		WebGLRouter.Instance.OnPointerUnlock -= OnPointerUnlock;
 	}
 
 	void OnMovePerformed(InputAction.CallbackContext ctx)
 	{
+		if (!Active) return;
 		Vector2 delta = ctx.ReadValue<Vector2>();
 		virtualPos += delta * sensitivity;
 		virtualPos.x = Mathf.Clamp(virtualPos.x, 0, Screen.width);
@@ -145,18 +158,26 @@ public class CursorUI : MonoBehaviour
 		return false;
 	}
 
-	private void OnClick(InputAction.CallbackContext ctx)
+	private void OnClick(InputAction.CallbackContext _) => OnClick();
+	private void OnClick()
 	{
+		if (!Active) return;
 		if (TryGetButtonAt(virtualPos, out Button button))
 			button.onClick.Invoke();
 	}
-
-	public void OnPointerUnlock()
-	{
-		Debug.Log("Pointer unlocked");
-	}
 	public void OnPointerLock()
 	{
-		Debug.Log("Pointer locked");
+		OnClick();
+		defaultPoint.action.performed -= OnPointerMove;
+	}
+	public void OnPointerUnlock()
+	{
+		defaultPoint.action.performed += OnPointerMove;
+	}
+
+	private void OnPointerMove(InputAction.CallbackContext ctx)
+	{
+		virtualPos = ctx.ReadValue<Vector2>();
+		InputState.Change(virtualMouse.position, virtualPos);
 	}
 }

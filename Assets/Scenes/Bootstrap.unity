@@ -415,6 +415,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0ff49ba073a944e858aa05b72f4e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeepAlive
+--- !u!1 &706248657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 706248660}
+  - component: {fileID: 706248659}
+  - component: {fileID: 706248658}
+  m_Layer: 0
+  m_Name: WebGLRouter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &706248658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706248657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67305e27f104eff409c115b4f33f3684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WebGLRouter
+--- !u!114 &706248659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706248657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0ff49ba073a944e858aa05b72f4e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeepAlive
+--- !u!4 &706248660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706248657}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.01955, y: -0, z: 0.16948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1614220104
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +724,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorUI
   move: {fileID: -4524063728418455724, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   click: {fileID: -8905708737005117344, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  defaultPoint: {fileID: -3509520641736223896, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   sensitivity: 0.7
+  cursorImage: {fileID: 66235139300735714}
 --- !u!224 &1359496674494782129
 RectTransform:
   m_ObjectHideFlags: 0
@@ -753,7 +812,7 @@ GameObject:
   - component: {fileID: 1598874573591448618}
   - component: {fileID: 1239658888240588774}
   m_Layer: 5
-  m_Name: Cursor
+  m_Name: CustomCursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -954,3 +1013,4 @@ SceneRoots:
   - {fileID: 1614220107}
   - {fileID: 52421266}
   - {fileID: 176645476904601863}
+  - {fileID: 706248660}
