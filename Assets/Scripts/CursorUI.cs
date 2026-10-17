@@ -150,4 +150,13 @@ public class CursorUI : MonoBehaviour
 		if (TryGetButtonAt(virtualPos, out Button button))
 			button.onClick.Invoke();
 	}
+
+	public void OnPointerUnlock()
+	{
+		Debug.Log("Pointer unlocked");
+	}
+	public void OnPointerLock()
+	{
+		Debug.Log("Pointer locked");
+	}
 }
