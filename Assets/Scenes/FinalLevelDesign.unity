@@ -3578,13 +3578,70 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 131991960}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 131991961}
   m_SourcePrefab: {fileID: 100100000, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
 --- !u!4 &131991958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
   m_PrefabInstance: {fileID: 131991957}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &131991959 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
+  m_PrefabInstance: {fileID: 131991957}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &131991960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131991959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: 
+    explanation: Public benches are generally managed by the city.
+    councilOwned: 0
+    category: General
+    description: Bench at the lake
+    locationDescription: 'Lake '
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Comfy for your behind
+    responsibilityDetails: Respooooo
+    interestingFact: made out of wood with termites
+    interactionHint: Press the Interact key to inspect.
+--- !u!65 &131991961
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131991959}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.045382757, y: 0.021971589, z: 0.026453909}
+  m_Center: {x: 0.0000004764046, y: 0.008833396, z: 0.0023598555}
 --- !u!1001 &132620554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6038,13 +6095,70 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ae02c3812141de4ea70b6203f474ce7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 241063229}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ae02c3812141de4ea70b6203f474ce7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 241063230}
   m_SourcePrefab: {fileID: 100100000, guid: 6ae02c3812141de4ea70b6203f474ce7, type: 3}
 --- !u!4 &241063227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ae02c3812141de4ea70b6203f474ce7, type: 3}
   m_PrefabInstance: {fileID: 241063226}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &241063228 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ae02c3812141de4ea70b6203f474ce7, type: 3}
+  m_PrefabInstance: {fileID: 241063226}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &241063229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241063228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Street Light
+    explanation: Similar to traffic signs, street lights are also managed by council.
+    councilOwned: 1
+    category: General
+    description: Street Light in the City Centre.
+    locationDescription: Central Park
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Give LIIIIIGHT
+    responsibilityDetails: RESPOOOOO
+    interestingFact: light bulb hehe
+    interactionHint: Press the Interact key to inspect.
+--- !u!65 &241063230
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241063228}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.014455666, y: 0.003350145, z: 0.051919125}
+  m_Center: {x: 0.005594757, y: 0, z: 0.02428449}
 --- !u!1001 &242760004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9359,13 +9473,70 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 361809132}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 361809133}
   m_SourcePrefab: {fileID: 100100000, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
 --- !u!4 &361809130 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
   m_PrefabInstance: {fileID: 361809129}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &361809131 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bdcbc1963d390ae409042ae8a379dfdd, type: 3}
+  m_PrefabInstance: {fileID: 361809129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &361809132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361809131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Bench
+    explanation: Public benches are generally managed by the city.
+    councilOwned: 1
+    category: General
+    description: This is a bench in the city center.
+    locationDescription: Central Park
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: People can sit on it and relax.
+    responsibilityDetails: Be comfy.
+    interestingFact: Made out of wood and metal.
+    interactionHint: Press the Interact key to inspect.
+--- !u!65 &361809133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361809131}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.04538274, y: 0.021971585, z: 0.026453909}
+  m_Center: {x: 0, y: 0.008833396, z: 0.0023598566}
 --- !u!1001 &365439503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11695,13 +11866,70 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d788cc23d0eb254589a6fdec9e8fead, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 480620448}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d788cc23d0eb254589a6fdec9e8fead, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 480620447}
   m_SourcePrefab: {fileID: 100100000, guid: 1d788cc23d0eb254589a6fdec9e8fead, type: 3}
 --- !u!4 &480620445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d788cc23d0eb254589a6fdec9e8fead, type: 3}
   m_PrefabInstance: {fileID: 480620444}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &480620446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d788cc23d0eb254589a6fdec9e8fead, type: 3}
+  m_PrefabInstance: {fileID: 480620444}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &480620447
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480620446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.018567188, y: 0.005263306, z: 0.054572757}
+  m_Center: {x: 0, y: -0.0008384917, z: 0.02549322}
+--- !u!114 &480620448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480620446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Stop Sign
+    explanation: Stop Signs and other traffic signs are usually managed by council.
+    councilOwned: 1
+    category: General
+    description: Stop sign right next to the road
+    locationDescription: Central Park
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: So everybody can drive safely
+    responsibilityDetails: Respooooo
+    interestingFact: Not round but octagon shape which makes it 10x cooler
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &480806169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21368,13 +21596,70 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e4799c701bfba5b43a37d7f520c992fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 901211769}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e4799c701bfba5b43a37d7f520c992fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 901211770}
   m_SourcePrefab: {fileID: 100100000, guid: e4799c701bfba5b43a37d7f520c992fb, type: 3}
 --- !u!4 &901211767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e4799c701bfba5b43a37d7f520c992fb, type: 3}
   m_PrefabInstance: {fileID: 901211766}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &901211768 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e4799c701bfba5b43a37d7f520c992fb, type: 3}
+  m_PrefabInstance: {fileID: 901211766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &901211769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901211768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Bush
+    explanation: Trees and bushes are generally managed by the city.
+    councilOwned: 1
+    category: General
+    description: This is a bush right next to the road.
+    locationDescription: Next to the road
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Habitat for wildlife and makes the city look more comfy.
+    responsibilityDetails: Provide shelter for animals and produce O2 for human.
+    interestingFact: Interesting Fact.
+    interactionHint: Press the Interact key to inspect.
+--- !u!65 &901211770
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901211768}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.04335466, y: 0.01963342, z: 0.018969331}
+  m_Center: {x: -0.000054831617, y: -4.656612e-10, z: -0.00030462252}
 --- !u!1001 &902358583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21930,13 +22215,71 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 27f03d1bf73f1ac43814c8e5d67ee825, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915835403}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 27f03d1bf73f1ac43814c8e5d67ee825, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915835404}
   m_SourcePrefab: {fileID: 100100000, guid: 27f03d1bf73f1ac43814c8e5d67ee825, type: 3}
 --- !u!4 &915835401 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 27f03d1bf73f1ac43814c8e5d67ee825, type: 3}
   m_PrefabInstance: {fileID: 915835400}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &915835402 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 27f03d1bf73f1ac43814c8e5d67ee825, type: 3}
+  m_PrefabInstance: {fileID: 915835400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &915835403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915835402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Bike Rack
+    explanation: Bike racks are provided by the city council so cyclist can park
+      their bikes.
+    councilOwned: 1
+    category: General
+    description: This is a bike rack in the city centre.
+    locationDescription: Central Park
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Cyclist can park their bikes.
+    responsibilityDetails: Responsibility
+    interestingFact: Made out of metall (I hope)
+    interactionHint: Press the Interact key to inspect.
+--- !u!65 &915835404
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915835402}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0374077, y: 0.06437876, z: 0.01942768}
+  m_Center: {x: 0, y: -0.00020857531, z: 0.0001204531}
 --- !u!1001 &917817676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24724,13 +25067,71 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 19321d92cc2955c4e9f3493521bb93c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019158772}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 19321d92cc2955c4e9f3493521bb93c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019158771}
   m_SourcePrefab: {fileID: 100100000, guid: 19321d92cc2955c4e9f3493521bb93c7, type: 3}
 --- !u!4 &1019158769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 19321d92cc2955c4e9f3493521bb93c7, type: 3}
   m_PrefabInstance: {fileID: 1019158768}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1019158770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 19321d92cc2955c4e9f3493521bb93c7, type: 3}
+  m_PrefabInstance: {fileID: 1019158768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1019158771
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019158770}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.15674025, y: 0.9662638, z: 0.47146899}
+  m_Center: {x: 0.00019477308, y: 0.48313197, z: 0.07915708}
+--- !u!114 &1019158772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019158770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Mailbox
+    explanation: Mailboxes are usually on private property and therefore belong to
+      the residant.
+    councilOwned: 0
+    category: General
+    description: Mailbox in front of house.
+    locationDescription: House Front Garden
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Store letters
+    responsibilityDetails: Respooooo
+    interestingFact: Has a cool lever to signal new letters inside
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &1019262527
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25793,13 +26194,70 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1074687123}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1074687124}
   m_SourcePrefab: {fileID: 100100000, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
 --- !u!4 &1074687121 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
   m_PrefabInstance: {fileID: 1074687120}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1074687122 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
+  m_PrefabInstance: {fileID: 1074687120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1074687123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074687122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Tree
+    explanation: Trees and bushes are generally managed by the city.
+    councilOwned: 1
+    category: General
+    description: This is a tree in the middle of the city park.
+    locationDescription: Central Park
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Provide shelter for animals
+    responsibilityDetails: Produce O2 for human
+    interestingFact: Is green and brown
+    interactionHint: Press the Interact key to inspect.
+--- !u!65 &1074687124
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074687122}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 14.670491, y: 14.661565, z: 13.24115}
+  m_Center: {x: 0.68204546, y: 7.329016, z: 0.09253144}
 --- !u!1001 &1074901022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30508,11 +30966,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
   asset:
-    name: Common House
-    explanation: This house is privately owned by Hakan.
+    name: Neighbour Judah's House
+    explanation: This house is privately owned by your neighbour Judah.
     councilOwned: 0
     category: General
-    description: Your neighbour Hakan's house.
+    description: Your neighbour Judah's house.
     locationDescription: Located at start of city
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
@@ -32060,13 +32518,47 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0336f8eb1dddd143aea7ca6a59e6a18, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1339710584}
   m_SourcePrefab: {fileID: 100100000, guid: e0336f8eb1dddd143aea7ca6a59e6a18, type: 3}
 --- !u!4 &1339710582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0336f8eb1dddd143aea7ca6a59e6a18, type: 3}
   m_PrefabInstance: {fileID: 1339710581}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1339710583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0336f8eb1dddd143aea7ca6a59e6a18, type: 3}
+  m_PrefabInstance: {fileID: 1339710581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1339710584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339710583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Manhole
+    explanation: Manholes are part of the infrastructure of the city and therefore
+      managed by council.
+    councilOwned: 1
+    category: General
+    description: Manhole in the middle of the road
+    locationDescription: On the road
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Access to sewage canals
+    responsibilityDetails: So people dont fall in
+    interestingFact: Is round
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &1348884789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36304,6 +36796,8 @@ GameObject:
   - component: {fileID: 1553448922}
   - component: {fileID: 1553448924}
   - component: {fileID: 1553448923}
+  - component: {fileID: 1553448925}
+  - component: {fileID: 1553448926}
   m_Layer: 0
   m_Name: house_4
   m_TagString: Untagged
@@ -36383,6 +36877,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553448921}
   m_Mesh: {fileID: -5399012549893847015, guid: 608eef947f6e7ca4d8c0c3c04439e4eb, type: 3}
+--- !u!114 &1553448925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553448921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Neighbour Nicks's House
+    explanation: This house is privately owned by your neighbour Nick.
+    councilOwned: 0
+    category: General
+    description: Your neighbour Nick's house.
+    locationDescription: Located at start of city
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: basic house lol
+    responsibilityDetails: let people live inside
+    interestingFact: 
+    interactionHint: Press the Interact key to inspect.
+--- !u!65 &1553448926
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553448921}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19353965, y: 0.15546817, z: 0.106509306}
+  m_Center: {x: 0.009224605, y: 0.0074764513, z: -0.0024668197}
 --- !u!1001 &1554055489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50905,8 +51445,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1169067261}
-  - {fileID: 1675440173}
-  - {fileID: 930317815}
   - {fileID: 2353833477405382699}
   - {fileID: 351527053}
   - {fileID: 2010808446}
@@ -50923,3 +51461,5 @@ SceneRoots:
   - {fileID: 1822806004}
   - {fileID: 35390407}
   - {fileID: 2145542311}
+  - {fileID: 930317815}
+  - {fileID: 1675440173}
