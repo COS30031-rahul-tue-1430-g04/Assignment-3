@@ -3611,7 +3611,7 @@ MonoBehaviour:
   asset:
     name: 
     explanation: Public benches are generally managed by the city.
-    councilOwned: 0
+    councilOwned: 1
     category: General
     description: Bench at the lake
     locationDescription: 'Lake '
@@ -30947,7 +30947,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
