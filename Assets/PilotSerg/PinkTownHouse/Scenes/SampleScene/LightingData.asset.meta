@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2802aa423d17e8e47bfada457c9ddcf0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 112000000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 404912
+  packageName: Lowpoly Town House
+  packageVersion: 1.0.0
+  assetPath: Assets/PilotSerg/PinkTownHouse/Scenes/SampleScene/LightingData.asset
+  uploadId: 987696
