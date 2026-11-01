@@ -33,8 +33,8 @@ public class LevelTimer : MonoBehaviour
 			return;
 
 		// Count down only during normal gameplay.
-		if (GameManager.Instance == null ||
-			GameManager.Instance.CurrentState != GameState.Gameplay)
+		if (Instance == null ||
+			Instance.CurrentState != GameState.Gameplay)
 			return;
 
 		timeRemaining -= Time.deltaTime;
@@ -68,8 +68,8 @@ public class LevelTimer : MonoBehaviour
 		UpdateTimerDisplay();
 
 		// Disable normal gameplay controls through the existing state.
-		if (GameManager.Instance != null)
-			GameManager.Instance.CurrentState = GameState.Paused;
+		if (Instance != null)
+			Instance.CurrentState = GameState.Menu;
 
 		if (gameOverPanel != null)
 			gameOverPanel.SetActive(true);
@@ -81,12 +81,12 @@ public class LevelTimer : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 
-		if (GameManager.Instance != null)
+		if (Instance != null)
 		{
-			GameManager.Instance.CurrentState = GameState.Menu;
+			Instance.CurrentState = GameState.Menu;
 		}
 
-		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+		SceneManager.LoadScene(1);
 	}
 
 	public void RetryLevel()
@@ -94,8 +94,8 @@ public class LevelTimer : MonoBehaviour
 		// Restore normal time and state before reloading the scene.
 		Time.timeScale = 1f;
 
-		if (GameManager.Instance != null)
-			GameManager.Instance.CurrentState = GameState.Gameplay;
+		if (Instance != null)
+			Instance.CurrentState = GameState.Gameplay;
 
 		SceneManager.LoadScene(
 			SceneManager.GetActiveScene().buildIndex);

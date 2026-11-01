@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 19321d92cc2955c4e9f3493521bb93c7
+guid: 32736b6af5fd2b0458eb7fe4dbde6c21
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: House_Props_Diffuse
-    second: {fileID: 2800000, guid: 1860c8baad337c74183078c8dbc2f619, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
