@@ -58,7 +58,7 @@ public class CursorUI : MonoBehaviour
 		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
 
 	void OnGameStateChanged(GameManager.GameState newState) =>
-		Active = newState != GameManager.GameState.Paused && newState != GameManager.GameState.Gameplay;
+		Active = newState != GameManager.GameState.Gameplay;
 
 
 	void OnEnable()
