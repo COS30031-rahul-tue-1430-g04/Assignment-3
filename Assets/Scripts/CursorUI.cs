@@ -178,9 +178,12 @@ public class CursorUI : MonoBehaviour
 
 	private void OnPointerMove(InputAction.CallbackContext ctx)
 	{
+		if (ctx.control.device == virtualMouse) return;
 		Debug.Log("OnPointerMove called");
 		Debug.Log("The pointer currently has the lockstate: " + WebGLRouter.Instance.IsPointerLocked);
 		Debug.Log("The current platform is: " + Application.platform);
+		Debug.Log("The current virtual mouse position is: " + virtualPos);
+		Debug.Log("The current pointer value is: " + ctx.ReadValue<Vector2>());
 		if (WebGLRouter.Instance.IsPointerLocked || Application.platform != RuntimePlatform.WebGLPlayer) return;
 		virtualPos = ctx.ReadValue<Vector2>();
 		Debug.Log("Therefore, we are updating the virtual mouse position to: " + virtualPos);
