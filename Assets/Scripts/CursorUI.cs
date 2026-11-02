@@ -43,7 +43,7 @@ public class CursorUI : MonoBehaviour
 		{
 			if (device.name == "VirtualMouse")
 				virtualMouse = (Mouse)device;
-			if (device.name == "PhysicalMouse")
+			if (device.name == "Mouse")
 				physicalMouse = (Mouse)device;
 			if (virtualMouse != null && physicalMouse != null) break;
 		}
