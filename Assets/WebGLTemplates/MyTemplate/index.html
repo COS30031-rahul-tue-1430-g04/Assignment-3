@@ -42,10 +42,12 @@
 			if (document.pointerLockElement != null) return; // Pointer locked
 
 			const rect = canvas.getBoundingClientRect();
-			const scale = scale = canvas.width / rect.width;
+			const scale = canvas.width / rect.width;
 
 			const x = (e.clientX - rect.left) * scale;
 			const y = (rect.height - (e.clientY - rect.top)) * scale;
+			
+			console.log(`Mouse delta: ${e.movementX},${e.movementY}`);
 
 			unityInstanceGlobal.SendMessage(
 				"WebGLRouter",
