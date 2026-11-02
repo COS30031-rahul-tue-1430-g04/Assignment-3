@@ -38,6 +38,8 @@
 		
 		document.addEventListener("pointerlockchange", () => {
 			if (!unityInstanceGlobal) return; // Unity not ready yet
+
+			console.log("Pointer lock state changed. Locked:", document.pointerLockElement != null);
 		
 			if (document.pointerLockElement == null) {
 				unityInstanceGlobal.SendMessage("WebGLRouter", "PointerUnlocked");
