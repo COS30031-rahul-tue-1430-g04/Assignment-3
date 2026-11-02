@@ -9,8 +9,20 @@ public class WebGLRouter : MonoBehaviour
 
 	public event Action OnPointerLock;
 	public event Action OnPointerUnlock;
+	public bool IsPointerLocked { get; private set; } = false;
 
-	public void PointerLocked() => OnPointerLock?.Invoke();
-	public void PointerUnlocked() => OnPointerUnlock?.Invoke();
+	public void PointerLocked()
+	{
+		if (IsPointerLocked) return;
+		IsPointerLocked = true;
+		OnPointerLock?.Invoke();
+	}
+
+	public void PointerUnlocked()
+	{
+		if (!IsPointerLocked) return;
+		IsPointerLocked = false;
+		OnPointerUnlock?.Invoke();
+	}
 
 }
