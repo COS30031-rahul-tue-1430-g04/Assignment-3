@@ -25,7 +25,6 @@ public class CursorUI : MonoBehaviour
 
 	private Mouse virtualMouse;
 	private Vector2 virtualPos;
-	private bool isCursorTrulyLocked = false;
 
 	private bool Active { get => cursorImage.enabled; set => cursorImage.enabled = value; }
 
@@ -57,8 +56,26 @@ public class CursorUI : MonoBehaviour
 	void OnDestroy() =>
 		GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
 
-	void OnGameStateChanged(GameManager.GameState newState) =>
-		Active = newState != GameManager.GameState.Gameplay;
+	void OnGameStateChanged(GameManager.GameState newState)
+	{
+		bool inGameplay = newState == GameManager.GameState.Gameplay;
+		if (inGameplay)
+		{
+			Active = false;
+			return;
+		}
+		bool paused = newState == GameManager.GameState.Paused;
+		if (!paused)
+		{
+			Active = true;
+			return;
+		}
+
+		bool inWebGL = Application.platform == RuntimePlatform.WebGLPlayer;
+		bool pointerLocked = WebGLRouter.Instance.IsPointerLocked;
+
+		Active = !inWebGL || pointerLocked;
+	}
 
 
 	void OnEnable()
@@ -71,9 +88,7 @@ public class CursorUI : MonoBehaviour
 		move.action.canceled += OnMovePerformed;
 		defaultPoint.action.performed += OnPointerMove;
 
-		WebGLRouter.Instance.OnPointerLock += OnClick;
-		WebGLRouter.Instance.OnPointerUnlock += () => isCursorTrulyLocked = false;
-		WebGLRouter.Instance.OnPointerLock += () => isCursorTrulyLocked = true;
+		WebGLRouter.Instance.OnPointerLock += OnWebGlPointerLock;
 	}
 
 	void OnDisable()
@@ -86,9 +101,13 @@ public class CursorUI : MonoBehaviour
 		move.action.canceled -= OnMovePerformed;
 		defaultPoint.action.performed -= OnPointerMove;
 
-		WebGLRouter.Instance.OnPointerLock -= OnClick;
-		WebGLRouter.Instance.OnPointerUnlock -= () => isCursorTrulyLocked = false;
-		WebGLRouter.Instance.OnPointerLock -= () => isCursorTrulyLocked = true;
+		WebGLRouter.Instance.OnPointerLock -= OnWebGlPointerLock;
+	}
+
+	void OnWebGlPointerLock()
+	{
+		OnGameStateChanged(GameManager.Instance.CurrentState);
+		OnClick();
 	}
 
 	void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -157,7 +176,7 @@ public class CursorUI : MonoBehaviour
 
 	private void OnPointerMove(InputAction.CallbackContext ctx)
 	{
-		if (isCursorTrulyLocked || Application.platform != RuntimePlatform.WebGLPlayer) return;
+		if (WebGLRouter.Instance.IsPointerLocked || Application.platform != RuntimePlatform.WebGLPlayer) return;
 		virtualPos = ctx.ReadValue<Vector2>();
 		InputState.Change(virtualMouse.position, virtualPos);
 	}
