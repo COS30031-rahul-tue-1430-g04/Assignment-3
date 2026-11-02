@@ -34,7 +34,24 @@
       </div>
     </div>
 	<script>
+		var canvas = document.querySelector("#unity-canvas");
 		let unityInstanceGlobal = null;
+
+		canvas.addEventListener("mousemove", (e) => {
+			if (!unityInstanceGlobal) return; // Unity not ready yet
+			if (document.pointerLockElement == null) return; // Pointer locked
+
+			const rect = canvas.getBoundingClientRect();
+
+			const x = e.clientX - rect.left;
+			const y = rect.height - (e.clientY - rect.top);
+
+			unityInstanceGlobal.SendMessage(
+				"WebGLRouter",
+				"MouseMove",
+				`${x},${y}`
+			);
+		});
 		
 		document.addEventListener("pointerlockchange", () => {
 			if (!unityInstanceGlobal) return; // Unity not ready yet
@@ -49,7 +66,6 @@
 		});
 	</script>
     <script>
-      var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.

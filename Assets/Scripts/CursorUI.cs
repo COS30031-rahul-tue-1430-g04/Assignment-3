@@ -14,7 +14,6 @@ public class CursorUI : MonoBehaviour
 	[Header("Input Actions")]
 	public InputActionReference move;
 	public InputActionReference click;
-	public InputActionReference defaultPoint;
 
 	[Header("Cursor Settings")]
 	public float sensitivity = 1.0f;
@@ -26,7 +25,6 @@ public class CursorUI : MonoBehaviour
 	private RectTransform cursorCanvasRect;
 
 	private Mouse virtualMouse;
-	private Mouse physicalMouse;
 	private Vector2 virtualPos;
 
 	private bool Active { get => cursorImage.enabled; set => cursorImage.enabled = value; }
@@ -42,10 +40,10 @@ public class CursorUI : MonoBehaviour
 		foreach (InputDevice device in InputSystem.devices)
 		{
 			if (device.name == "VirtualMouse")
+			{
 				virtualMouse = (Mouse)device;
-			if (device.name == "Mouse")
-				physicalMouse = (Mouse)device;
-			if (virtualMouse != null && physicalMouse != null) break;
+				break;
+			}
 		}
 		virtualMouse ??= (Mouse)InputSystem.AddDevice("VirtualMouse");
 		InputSystem.EnableDevice(virtualMouse);
@@ -89,8 +87,8 @@ public class CursorUI : MonoBehaviour
 		click.action.performed += OnClick;
 		move.action.performed += OnMovePerformed;
 		move.action.canceled += OnMovePerformed;
-		defaultPoint.action.performed += OnPointerMove;
 
+		WebGLRouter.Instance.OnMouseMove += OnPointerMove;
 		WebGLRouter.Instance.OnPointerLock += OnWebGlPointerLock;
 	}
 
@@ -102,8 +100,8 @@ public class CursorUI : MonoBehaviour
 		click.action.performed -= OnClick;
 		move.action.performed -= OnMovePerformed;
 		move.action.canceled -= OnMovePerformed;
-		defaultPoint.action.performed -= OnPointerMove;
 
+		WebGLRouter.Instance.OnMouseMove -= OnPointerMove;
 		WebGLRouter.Instance.OnPointerLock -= OnWebGlPointerLock;
 	}
 
@@ -178,11 +176,11 @@ public class CursorUI : MonoBehaviour
 			button.onClick.Invoke();
 	}
 
-	private void OnPointerMove(InputAction.CallbackContext _)
+	private void OnPointerMove(float x, float y)
 	{
-		if (WebGLRouter.Instance.IsPointerLocked || Application.platform != RuntimePlatform.WebGLPlayer) return;
-		virtualPos = physicalMouse.position.ReadValue();
-		Debug.Log("Therefore, we are updating the virtual mouse position to: " + virtualPos);
+		if (Application.platform != RuntimePlatform.WebGLPlayer) return;
+		virtualPos = new Vector2(x, y);
+		Debug.Log("Updating the virtual mouse position to: " + virtualPos);
 		InputState.Change(virtualMouse.position, virtualPos);
 	}
 }
