@@ -1,11 +1,12 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Linq;
-using System;
 
 [RequireComponent(typeof(RectTransform))]
 public class CursorUI : MonoBehaviour
@@ -52,6 +53,35 @@ public class CursorUI : MonoBehaviour
 		InputState.Change(virtualMouse.position, virtualPos);
 
 		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+
+		Debug.Log(Mouse.current);
+		StartCoroutine(CheckMouseCurrent());
+
+		static IEnumerator CheckMouseCurrent()
+		{
+			yield return null;
+			Debug.Log($"Next frame Mouse.current = {Mouse.current?.name}");
+		}
+
+
+		Debug.Log("=== MOUSE DEVICES ===");
+		foreach (Mouse mouse in InputSystem.devices.Where(d => d is Mouse).Cast<Mouse>())
+		{
+			Debug.Log($"Mouse: {mouse.name}, Display Name: {mouse.displayName}, ID: {mouse.deviceId}, Layout: {mouse.layout}");
+		}
+		Debug.Log($"Mouse.current: {Mouse.current?.name}");
+		Debug.Log($"Virtual mouse ID: {virtualMouse?.deviceId}");
+
+		Debug.Log("=== Bindings ===");
+		foreach (var binding in move.action.bindings)
+		{
+			Debug.Log($"Move Binding: {binding.path}, Action: {binding.action}, Groups: {binding.groups}");
+		}
+		Debug.Log(move.action.controls.Count);
+		foreach (var control in move.action.controls)
+		{
+			Debug.Log($"Move Control: {control.path}, Device: {control.device.name}, Layout: {control.device.layout}");
+		}
 	}
 
 	void OnDestroy() =>
@@ -178,6 +208,16 @@ public class CursorUI : MonoBehaviour
 
 	private void OnPointerMove(InputAction.CallbackContext ctx)
 	{
+		Debug.Log("=== POINTER MOVE ===");
+		Debug.Log($"Device: {ctx.control.device.name}");
+		Debug.Log($"Device ID: {ctx.control.device.deviceId}");
+		Debug.Log($"Layout: {ctx.control.device.layout}");
+		Debug.Log($"Control Path: {ctx.control.path}");
+		Debug.Log($"Action Control: {ctx.action.activeControl?.path}");
+		Debug.Log($"Value: {ctx.ReadValue<Vector2>()}");
+
+		Debug.Log(InputControlPath.ToHumanReadableString(ctx.control.path));
+
 		if (ctx.control.device == virtualMouse) return;
 		Debug.Log("OnPointerMove called");
 		Debug.Log("The pointer currently has the lockstate: " + WebGLRouter.Instance.IsPointerLocked);
