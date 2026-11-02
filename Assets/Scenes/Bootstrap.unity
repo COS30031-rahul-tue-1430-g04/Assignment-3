@@ -725,7 +725,7 @@ MonoBehaviour:
   move: {fileID: -4524063728418455724, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   click: {fileID: -8905708737005117344, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   defaultPoint: {fileID: -3509520641736223896, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  sensitivity: 0.7
+  sensitivity: 0.8
   cursorImage: {fileID: 66235139300735714}
 --- !u!224 &1359496674494782129
 RectTransform:
@@ -755,8 +755,8 @@ RectTransform:
   m_GameObject: {fileID: 2758753377197969948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1359496674494782129}
   m_Father: {fileID: 602807200}
