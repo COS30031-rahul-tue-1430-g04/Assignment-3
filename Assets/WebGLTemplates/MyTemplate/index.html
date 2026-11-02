@@ -46,8 +46,6 @@
 
 			const x = (e.clientX - rect.left) * scale;
 			const y = (rect.height - (e.clientY - rect.top)) * scale;
-			
-			console.log(`Mouse delta: ${e.movementX},${e.movementY}`);
 
 			unityInstanceGlobal.SendMessage(
 				"WebGLRouter",
@@ -227,7 +225,7 @@
                 };
 #endif
               }).catch((message) => {
-                alert(message);
+	  			console.error(message);
               });
             };
 
