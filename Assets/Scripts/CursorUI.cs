@@ -170,7 +170,7 @@ public class CursorUI : MonoBehaviour
 	private void OnClick(InputAction.CallbackContext _) => OnClick();
 	private void OnClick()
 	{
-		Console.WriteLine("OnClick called");
+		Debug.Log("OnClick called");
 		if (!Active) return;
 		if (TryGetButtonAt(virtualPos, out Button button))
 			button.onClick.Invoke();
@@ -178,12 +178,12 @@ public class CursorUI : MonoBehaviour
 
 	private void OnPointerMove(InputAction.CallbackContext ctx)
 	{
-		Console.WriteLine("OnPointerMove called");
-		Console.WriteLine("The pointer currently has the lockstate: " + WebGLRouter.Instance.IsPointerLocked);
-		Console.WriteLine("The current platform is: " + Application.platform);
+		Debug.Log("OnPointerMove called");
+		Debug.Log("The pointer currently has the lockstate: " + WebGLRouter.Instance.IsPointerLocked);
+		Debug.Log("The current platform is: " + Application.platform);
 		if (WebGLRouter.Instance.IsPointerLocked || Application.platform != RuntimePlatform.WebGLPlayer) return;
 		virtualPos = ctx.ReadValue<Vector2>();
-		Console.WriteLine("Therefore, we are updating the virtual mouse position to: " + virtualPos);
+		Debug.Log("Therefore, we are updating the virtual mouse position to: " + virtualPos);
 		InputState.Change(virtualMouse.position, virtualPos);
 	}
 }
