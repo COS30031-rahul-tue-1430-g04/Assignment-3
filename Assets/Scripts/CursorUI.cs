@@ -26,6 +26,7 @@ public class CursorUI : MonoBehaviour
 	private RectTransform cursorCanvasRect;
 
 	private Mouse virtualMouse;
+	private Mouse physicalMouse;
 	private Vector2 virtualPos;
 
 	private bool Active { get => cursorImage.enabled; set => cursorImage.enabled = value; }
@@ -41,10 +42,10 @@ public class CursorUI : MonoBehaviour
 		foreach (InputDevice device in InputSystem.devices)
 		{
 			if (device.name == "VirtualMouse")
-			{
 				virtualMouse = (Mouse)device;
-				break;
-			}
+			if (device.name == "PhysicalMouse")
+				physicalMouse = (Mouse)device;
+			if (virtualMouse != null && physicalMouse != null) break;
 		}
 		virtualMouse ??= (Mouse)InputSystem.AddDevice("VirtualMouse");
 		InputSystem.EnableDevice(virtualMouse);
@@ -53,35 +54,6 @@ public class CursorUI : MonoBehaviour
 		InputState.Change(virtualMouse.position, virtualPos);
 
 		GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
-
-		Debug.Log(Mouse.current);
-		StartCoroutine(CheckMouseCurrent());
-
-		static IEnumerator CheckMouseCurrent()
-		{
-			yield return null;
-			Debug.Log($"Next frame Mouse.current = {Mouse.current?.name}");
-		}
-
-
-		Debug.Log("=== MOUSE DEVICES ===");
-		foreach (Mouse mouse in InputSystem.devices.Where(d => d is Mouse).Cast<Mouse>())
-		{
-			Debug.Log($"Mouse: {mouse.name}, Display Name: {mouse.displayName}, ID: {mouse.deviceId}, Layout: {mouse.layout}");
-		}
-		Debug.Log($"Mouse.current: {Mouse.current?.name}");
-		Debug.Log($"Virtual mouse ID: {virtualMouse?.deviceId}");
-
-		Debug.Log("=== Bindings ===");
-		foreach (var binding in defaultPoint.action.bindings)
-		{
-			Debug.Log($"defaultPoint Binding: {binding.path}, Action: {binding.action}, Groups: {binding.groups}");
-		}
-		Debug.Log(defaultPoint.action.controls.Count);
-		foreach (var control in defaultPoint.action.controls)
-		{
-			Debug.Log($"defaultPoint Control: {control.path}, Device: {control.device.name}, Layout: {control.device.layout}");
-		}
 	}
 
 	void OnDestroy() =>
@@ -206,26 +178,10 @@ public class CursorUI : MonoBehaviour
 			button.onClick.Invoke();
 	}
 
-	private void OnPointerMove(InputAction.CallbackContext ctx)
+	private void OnPointerMove(InputAction.CallbackContext _)
 	{
-		Debug.Log("=== POINTER MOVE ===");
-		Debug.Log($"Device: {ctx.control.device.name}");
-		Debug.Log($"Device ID: {ctx.control.device.deviceId}");
-		Debug.Log($"Layout: {ctx.control.device.layout}");
-		Debug.Log($"Control Path: {ctx.control.path}");
-		Debug.Log($"Action Control: {ctx.action.activeControl?.path}");
-		Debug.Log($"Value: {ctx.ReadValue<Vector2>()}");
-
-		Debug.Log(InputControlPath.ToHumanReadableString(ctx.control.path));
-
-		if (ctx.control.device == virtualMouse) return;
-		Debug.Log("OnPointerMove called");
-		Debug.Log("The pointer currently has the lockstate: " + WebGLRouter.Instance.IsPointerLocked);
-		Debug.Log("The current platform is: " + Application.platform);
-		Debug.Log("The current virtual mouse position is: " + virtualPos);
-		Debug.Log("The current pointer value is: " + ctx.ReadValue<Vector2>());
 		if (WebGLRouter.Instance.IsPointerLocked || Application.platform != RuntimePlatform.WebGLPlayer) return;
-		virtualPos = ctx.ReadValue<Vector2>();
+		virtualPos = physicalMouse.position.ReadValue();
 		Debug.Log("Therefore, we are updating the virtual mouse position to: " + virtualPos);
 		InputState.Change(virtualMouse.position, virtualPos);
 	}
