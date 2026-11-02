@@ -73,14 +73,14 @@ public class CursorUI : MonoBehaviour
 		Debug.Log($"Virtual mouse ID: {virtualMouse?.deviceId}");
 
 		Debug.Log("=== Bindings ===");
-		foreach (var binding in move.action.bindings)
+		foreach (var binding in defaultPoint.action.bindings)
 		{
-			Debug.Log($"Move Binding: {binding.path}, Action: {binding.action}, Groups: {binding.groups}");
+			Debug.Log($"defaultPoint Binding: {binding.path}, Action: {binding.action}, Groups: {binding.groups}");
 		}
-		Debug.Log(move.action.controls.Count);
-		foreach (var control in move.action.controls)
+		Debug.Log(defaultPoint.action.controls.Count);
+		foreach (var control in defaultPoint.action.controls)
 		{
-			Debug.Log($"Move Control: {control.path}, Device: {control.device.name}, Layout: {control.device.layout}");
+			Debug.Log($"defaultPoint Control: {control.path}, Device: {control.device.name}, Layout: {control.device.layout}");
 		}
 	}
 
