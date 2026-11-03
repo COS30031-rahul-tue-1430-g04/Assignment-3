@@ -172,15 +172,8 @@ public class PlayerController : MonoBehaviour
 	}
 	IEnumerable<RaycastHit> ProbeGround() => ProbeSurface(Vector3.down);
 
-	IEnumerable<Collider> GetPaths()
-	{
-		IEnumerable<Collider> paths = Physics.OverlapCapsule(Controller.bounds.max, Controller.bounds.min, Controller.radius, pathLayerMask);
-		foreach (Collider path in paths)
-		{
-			Debug.Log($"Player is on path: {path.name}");
-		}
-		return paths;
-	}
+	IEnumerable<Collider> GetPaths() =>
+		Physics.OverlapCapsule(Controller.bounds.max, Controller.bounds.min, Controller.radius, pathLayerMask);
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
