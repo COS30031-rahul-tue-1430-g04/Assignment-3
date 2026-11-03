@@ -34,6 +34,10 @@
       </div>
     </div>
 	<script>
+		window.alert = function(msg) {
+    		console.error("Alert called with message: " + msg);
+		};
+
 		var canvas = document.querySelector("#unity-canvas");
 		let unityInstanceGlobal = null;
 
