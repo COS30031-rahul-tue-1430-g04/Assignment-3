@@ -15,10 +15,15 @@ public class SuburbanLevelGeneratorWindow : EditorWindow
     [SerializeField, Min(4)] float roadWidth = 7f;
     [SerializeField, Min(1)] float roadSampleSpacing = 3f;
     [SerializeField, Min(5)] float houseSpacing = 14f;
+    [SerializeField, Min(0)] int houseCount = 55;
     [SerializeField, Min(4)] float houseOffset = 15f;
+    [SerializeField, Min(0)] float houseRoadClearance = 3f;
+    [SerializeField, Min(1)] float houseMinSeparation = 12f;
+    [SerializeField, Min(1)] float treeHouseClearance = 7f;
     [SerializeField, Range(6, 20)] int roadCount = 14;
-    [SerializeField, Min(0)] int treeCount = 180;
-    [SerializeField, Min(0)] int gardenTreeCount = 55;
+    [SerializeField, Min(0)] int roadsideTreeCount = 45;
+    [SerializeField, Min(0)] int treeCount = 35;
+    [SerializeField, Min(0)] int gardenTreeCount = 20;
     [SerializeField] bool createTerrain = true;
     [SerializeField] bool addRoadColliders = true;
     [SerializeField] Material roadMaterial;
@@ -45,10 +50,15 @@ public class SuburbanLevelGeneratorWindow : EditorWindow
         roadCount = EditorGUILayout.IntSlider("Road Count", roadCount, 6, 20);
         roadWidth = EditorGUILayout.FloatField("Road Width", roadWidth);
         roadSampleSpacing = EditorGUILayout.FloatField("Road Sample Spacing", roadSampleSpacing);
+        houseCount = EditorGUILayout.IntField("Number of Houses", houseCount);
         houseSpacing = EditorGUILayout.FloatField("House Spacing", houseSpacing);
         houseOffset = EditorGUILayout.FloatField("House Offset", houseOffset);
-        treeCount = EditorGUILayout.IntField("Total Trees", treeCount);
-        gardenTreeCount = EditorGUILayout.IntField("Extra Garden / Park Trees", gardenTreeCount);
+        houseRoadClearance = EditorGUILayout.FloatField("House Road Clearance", houseRoadClearance);
+        houseMinSeparation = EditorGUILayout.FloatField("Minimum House Separation", houseMinSeparation);
+        treeHouseClearance = EditorGUILayout.FloatField("Tree-to-House Clearance", treeHouseClearance);
+        roadsideTreeCount = EditorGUILayout.IntField("Roadside Trees", roadsideTreeCount);
+        treeCount = EditorGUILayout.IntField("Extra Random Trees", treeCount);
+        gardenTreeCount = EditorGUILayout.IntField("Garden / Park Trees", gardenTreeCount);
         createTerrain = EditorGUILayout.Toggle("Create New Flat Terrain", createTerrain);
         addRoadColliders = EditorGUILayout.Toggle("Add Road Colliders", addRoadColliders);
         roadMaterial = (Material)EditorGUILayout.ObjectField("Road Material", roadMaterial, typeof(Material), false);
@@ -65,7 +75,7 @@ public class SuburbanLevelGeneratorWindow : EditorWindow
         parkPropCount = EditorGUILayout.IntField("Park Prop Count", parkPropCount);
 
         EditorGUILayout.Space();
-        EditorGUILayout.HelpBox("Tree Prefabs are used for roadside, garden and park trees. Assign multiple varieties for a natural mix. Assign prefab assets from the Project window. Interactable prefabs should already have InteractableAsset and valid Asset data. Save the scene before generating.", MessageType.Warning);
+        EditorGUILayout.HelpBox("Roadside trees are placed in the verge beside roads, alternating sides. Tree-to-House Clearance controls spacing from houses. Tree Prefabs are also used for extra garden and park trees. Assign multiple varieties for a natural mix. Assign prefab assets from the Project window. Interactable prefabs should already have InteractableAsset and valid Asset data. Save the scene before generating.", MessageType.Warning);
         GUI.enabled = !Application.isPlaying;
         if (GUILayout.Button("Generate / Regenerate Suburban Level", GUILayout.Height(34)))
         {
@@ -122,10 +132,10 @@ public class SuburbanLevelGeneratorWindow : EditorWindow
             samplesAll.AddRange(samples);
             MakeRoad(roadRoot, samples);
         }
-        PlaceHouses(houseRoot, paths);
-        PlaceTrees(treeRoot, paths);
-        PlaceRandom(treePrefabs, treeCount, treeRoot, mapSize * .44f);
-        PlaceRandom(treePrefabs, gardenTreeCount, treeRoot, mapSize * .30f);
+        List<Vector3> housePositions = PlaceHouses(houseRoot, paths);
+        PlaceTrees(treeRoot, paths, roadsideTreeCount, housePositions);
+        PlaceRandomTrees(treePrefabs, treeCount, treeRoot, mapSize * .44f, paths, housePositions);
+        PlaceRandomTrees(treePrefabs, gardenTreeCount, treeRoot, mapSize * .30f, paths, housePositions);
         PlaceRandom(streetPropPrefabs, streetPropCount, propRoot, mapSize * .42f);
         PlaceRandom(parkPropPrefabs, parkPropCount, parkRoot, mapSize * .30f);
         PlaceInteractables(interactRoot, samplesAll);
@@ -282,53 +292,210 @@ public class SuburbanLevelGeneratorWindow : EditorWindow
         if (go == null) go = Instantiate(prefab, parent);
         Undo.RegisterCreatedObjectUndo(go, "Place suburban prefab");
         go.transform.position = pos;
-        go.transform.rotation = rot;
+
+        // Preserve the prefab's authored X and Z rotation. Only apply the
+        // generator's requested Y rotation (house alignment / random yaw).
+        Vector3 prefabEuler = prefab.transform.eulerAngles;
+        float requestedYaw = rot.eulerAngles.y;
+        go.transform.rotation = Quaternion.Euler(
+            prefabEuler.x,
+            requestedYaw,
+            prefabEuler.z
+        );
         return go;
     }
 
     bool InBounds(Vector3 p) => Mathf.Abs(p.x) < mapSize*.46f && Mathf.Abs(p.z) < mapSize*.46f;
 
-    void PlaceHouses(Transform parent, List<Vector3[]> paths)
+    List<Vector3> PlaceHouses(Transform parent, List<Vector3[]> paths)
     {
-        if (housePrefabs.Count == 0) return;
+        // Return house positions so tree placement can keep clear of every building.
+        List<Vector3> placedHousePositions = new List<Vector3>();
+        if (housePrefabs.Count == 0) return placedHousePositions;
+        int step = Mathf.Max(1, Mathf.RoundToInt(houseSpacing / Mathf.Max(1f, roadSampleSpacing)));
+
         foreach (var path in paths)
         {
-            List<Vector3> pts = Sample(path, houseSpacing);
-            for (int i=2; i<pts.Count-2; i+=Mathf.Max(1, Mathf.RoundToInt(houseSpacing/Mathf.Max(1,roadSampleSpacing))))
+            if (placedHousePositions.Count >= houseCount) break;
+            List<Vector3> pts = Sample(path, Mathf.Max(2f, roadSampleSpacing));
+            for (int i = 2; i < pts.Count - 2; i += step)
             {
-                Vector3 tangent = (pts[i+1]-pts[i-1]).normalized;
+                if (placedHousePositions.Count >= houseCount) break;
+                Vector3 tangent = (pts[i + 1] - pts[i - 1]).normalized;
+                tangent.y = 0f;
+                if (tangent.sqrMagnitude < 0.001f) continue;
+                tangent.Normalize();
+
+                // Side vector is perpendicular to the road direction.
                 Vector3 side = Vector3.Cross(tangent, Vector3.up).normalized;
-                for (int s=-1; s<=1; s+=2)
+
+                for (int sign = -1; sign <= 1; sign += 2)
                 {
-                    if (Random.value < .22f) continue;
-                    Vector3 pos = pts[i] + side*(roadWidth*.5f+houseOffset)*s;
+                    if (placedHousePositions.Count >= houseCount) break;
+
+                    // Place the house beyond the road edge, with an adjustable setback.
+                    Vector3 pos = pts[i] + side * (roadWidth * .5f + houseOffset) * sign;
+                    pos.y = 0f;
+
                     if (!InBounds(pos)) continue;
-                    Vector3 facing = s > 0 ? -tangent : tangent;
-                    facing.y = 0;
-                    Place(Pick(housePrefabs), pos, Quaternion.LookRotation(facing), parent);
+
+                    // Keep the whole house frontage safely outside the road corridor.
+                    if (!IsRoadClear(pos, paths, houseRoadClearance)) continue;
+
+                    // Prevent duplicate/overlapping houses near junctions and parallel roads.
+                    float minSeparationSqr = houseMinSeparation * houseMinSeparation;
+                    bool overlapsAnotherHouse = false;
+                    foreach (Vector3 existing in placedHousePositions)
+                    {
+                        Vector2 a = new Vector2(pos.x, pos.z);
+                        Vector2 b = new Vector2(existing.x, existing.z);
+                        if ((a - b).sqrMagnitude < minSeparationSqr)
+                        {
+                            overlapsAnotherHouse = true;
+                            break;
+                        }
+                    }
+                    if (overlapsAnotherHouse) continue;
+
+                    // House front faces the road; its front wall remains parallel to the road.
+                    Vector3 facingRoad = -side * sign;
+                    facingRoad.y = 0f;
+                    GameObject house = Place(
+                        Pick(housePrefabs),
+                        pos,
+                        Quaternion.LookRotation(facingRoad, Vector3.up),
+                        parent
+                    );
+
+                    if (house != null)
+                        placedHousePositions.Add(pos);
                 }
             }
         }
+        Debug.Log("House placement: placed " + placedHousePositions.Count + " of " + houseCount +
+                  " requested. If fewer were placed, road clearance, map boundaries or minimum separation limited valid positions.");
+        return placedHousePositions;
     }
 
-    void PlaceTrees(Transform parent, List<Vector3[]> paths)
+    void PlaceTrees(Transform parent, List<Vector3[]> paths, int maxTrees, List<Vector3> housePositions)
     {
-        if (treePrefabs.Count == 0) return;
+        if (treePrefabs.Count == 0 || maxTrees <= 0) return;
+
+        int placed = 0;
+        // Roadside trees are deliberately placed in the verge just outside the road.
+        // Use a moderate sample interval and alternate sides to avoid a continuous wall.
+        float sampleInterval = Mathf.Max(16f, houseSpacing + 2f);
+
         foreach (var path in paths)
         {
-            List<Vector3> pts = Sample(path, Mathf.Max(7f, mapSize/32f));
-            for (int i=1; i<pts.Count-1; i++)
+            if (placed >= maxTrees) break;
+
+            List<Vector3> pts = Sample(path, sampleInterval);
+            for (int i = 1; i < pts.Count - 1; i++)
             {
-                Vector3 tangent=(pts[i+1]-pts[i-1]).normalized;
-                Vector3 side=Vector3.Cross(tangent,Vector3.up).normalized;
-                for (int s=-1;s<=1;s+=2)
-                {
-                    if (Random.value < .12f) continue;
-                    Vector3 pos=pts[i]+side*(roadWidth*.5f+houseOffset*.70f+Random.Range(3f,7f))*s;
-                    if (InBounds(pos)) Place(Pick(treePrefabs),pos,Quaternion.Euler(0,Random.Range(0,360),0),parent);
-                }
+                if (placed >= maxTrees) break;
+
+                Vector3 tangent = (pts[i + 1] - pts[i - 1]).normalized;
+                tangent.y = 0f;
+                if (tangent.sqrMagnitude < 0.001f) continue;
+                tangent.Normalize();
+
+                Vector3 side = Vector3.Cross(tangent, Vector3.up).normalized;
+
+                // Alternate sides along each road so trees are distributed naturally.
+                int sign = (i % 2 == 0) ? 1 : -1;
+                float vergeOffset = roadWidth * 0.5f + Random.Range(3.5f, 5.5f);
+                Vector3 pos = pts[i] + side * vergeOffset * sign;
+                pos.y = 0f;
+
+                // Keep a small safety margin from the road edge, not a large exclusion zone.
+                if (!InBounds(pos) ||
+                    !IsRoadClear(pos, paths, 2.5f) ||
+                    !IsClearOfHouses(pos, housePositions))
+                    continue;
+
+                GameObject tree = Place(
+                    Pick(treePrefabs),
+                    pos,
+                    Quaternion.Euler(0f, Random.Range(0f, 360f), 0f),
+                    parent
+                );
+
+                if (tree != null) placed++;
             }
         }
+
+        Debug.Log("Roadside tree placement: placed " + placed + " of " + maxTrees +
+                  " requested. If fewer were placed, road junctions, map boundaries or house-clearance checks limited the available verge space.");
+    }
+
+    bool IsClearOfHouses(Vector3 point, List<Vector3> housePositions)
+    {
+        float minDistanceSqr = treeHouseClearance * treeHouseClearance;
+        Vector2 treePoint = new Vector2(point.x, point.z);
+
+        foreach (Vector3 housePosition in housePositions)
+        {
+            Vector2 housePoint = new Vector2(housePosition.x, housePosition.z);
+            if ((treePoint - housePoint).sqrMagnitude < minDistanceSqr)
+                return false;
+        }
+        return true;
+    }
+
+    // Returns false when a point is too close to any road centreline.
+    // Uses XZ distance to every road segment, not just the sampled tree-placement path.
+    bool IsRoadClear(Vector3 point, List<Vector3[]> paths, float clearance)
+    {
+        float minimumDistance = roadWidth * 0.5f + clearance;
+        float minSqr = minimumDistance * minimumDistance;
+
+        foreach (var path in paths)
+        {
+            List<Vector3> samples = Sample(path, Mathf.Max(2f, roadSampleSpacing));
+            for (int i = 0; i < samples.Count - 1; i++)
+            {
+                Vector2 a = new Vector2(samples[i].x, samples[i].z);
+                Vector2 b = new Vector2(samples[i + 1].x, samples[i + 1].z);
+                Vector2 p2 = new Vector2(point.x, point.z);
+                Vector2 ab = b - a;
+                float lengthSqr = ab.sqrMagnitude;
+                float t = lengthSqr > 0.0001f ? Mathf.Clamp01(Vector2.Dot(p2 - a, ab) / lengthSqr) : 0f;
+                Vector2 closest = a + ab * t;
+                if ((p2 - closest).sqrMagnitude < minSqr) return false;
+            }
+        }
+        return true;
+    }
+
+    void PlaceRandomTrees(List<GameObject> prefabs, int count, Transform parent, float radius, List<Vector3[]> paths, List<Vector3> housePositions)
+    {
+        if (prefabs == null || prefabs.Count == 0 || count <= 0) return;
+
+        int placed = 0;
+        int attempts = 0;
+        int maxAttempts = count * 40;
+
+        while (placed < count && attempts < maxAttempts)
+        {
+            attempts++;
+            Vector3 pos = new Vector3(
+                Random.Range(-radius, radius),
+                0f,
+                Random.Range(-radius, radius));
+
+            if (!InBounds(pos) ||
+                !IsRoadClear(pos, paths, 13f) ||
+                !IsClearOfHouses(pos, housePositions))
+                continue;
+
+            if (Place(Pick(prefabs), pos, Quaternion.Euler(0, Random.Range(0, 360), 0), parent) != null)
+                placed++;
+        }
+
+        if (placed < count)
+            Debug.LogWarning("Placed " + placed + " of " + count +
+                " extra trees because road-clearance checks rejected some positions.");
     }
 
     void PlaceRandom(List<GameObject> prefabs, int count, Transform parent, float radius)
