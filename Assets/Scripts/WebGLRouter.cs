@@ -9,6 +9,7 @@ public class WebGLRouter : MonoBehaviour
 
 	public event Action OnPointerLock;
 	public event Action OnPointerUnlock;
+	public event Action<float, float> OnMouseMove;
 	public bool IsPointerLocked { get; private set; } = false;
 
 	public void PointerLocked()
@@ -25,4 +26,11 @@ public class WebGLRouter : MonoBehaviour
 		OnPointerUnlock?.Invoke();
 	}
 
+	public void MouseMove(string coords)
+	{
+		string[] parts = coords.Split(',');
+		float x = float.Parse(parts[0]);
+		float y = float.Parse(parts[1]);
+		OnMouseMove?.Invoke(x, y);
+	}
 }
