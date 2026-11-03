@@ -8,8 +8,9 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
-	[Min(0f)] public float walkSpeed = 5f;
-	[Min(0f)] public float sprintSpeed = 10f;
+	[Min(0f)] public float walkSpeed = 10f;
+	[Min(0f)] public float sprintSpeed = 20f;
+	[Range(0f, 1f)] public float noPathFriction = 0.8f;
 	[Min(0f)] public float jumpForce = 5f;
 	[Min(0f)] public float gravity = 18f;
 	[Header("Water Settings")]
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour
 	private readonly HashSet<Collider> watersIn = new();
 	private bool InWater => watersIn.Count > 0;
 	private float startingHeadY;
+	private int pathLayerMask;
+	private int waterLayerMask;
 
 	private Camera _camera;
 	private Camera Camera
@@ -94,6 +97,8 @@ public class PlayerController : MonoBehaviour
 
 		verticalVelocity = 0f;
 		startingHeadY = Head.localPosition.y;
+		pathLayerMask = LayerMask.GetMask("Path");
+		waterLayerMask = LayerMask.NameToLayer("Water");
 	}
 
 	void OnEnable()
@@ -137,6 +142,13 @@ public class PlayerController : MonoBehaviour
 		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
 		moveSpeed *= InWater ? 1f - horizontalWaterDrag : 1f;
 
+		float pathFriction = GetPaths()
+			.Where(path => path != null && path.sharedMaterial != null)
+			.Select(path => path.sharedMaterial.dynamicFriction)
+			.DefaultIfEmpty(noPathFriction)
+			.Max();
+		moveSpeed *= 1f - pathFriction;
+
 		Vector3 displacement = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
 
 		float friction = ProbeSurface(moveDirection)
@@ -156,9 +168,19 @@ public class PlayerController : MonoBehaviour
 		Vector3 p1 = origin + Vector3.up * (Controller.height / 2f - Controller.radius);
 		Vector3 p2 = origin - Vector3.up * (Controller.height / 2f - Controller.radius);
 		float distance = Controller.skinWidth + 0.1f;
-		return Physics.CapsuleCastAll(p1, p2, Controller.radius, direction.normalized, distance);
+		return Physics.CapsuleCastAll(p1, p2, Controller.radius, direction.normalized, distance, ~pathLayerMask);
 	}
 	IEnumerable<RaycastHit> ProbeGround() => ProbeSurface(Vector3.down);
+
+	IEnumerable<Collider> GetPaths()
+	{
+		IEnumerable<Collider> paths = Physics.OverlapCapsule(Controller.bounds.max, Controller.bounds.min, Controller.radius, pathLayerMask);
+		foreach (Collider path in paths)
+		{
+			Debug.Log($"Player is on path: {path.name}");
+		}
+		return paths;
+	}
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -170,12 +192,12 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+		if (other.gameObject.layer == waterLayerMask)
 			watersIn.Add(other);
 	}
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+		if (other.gameObject.layer == waterLayerMask)
 			watersIn.Remove(other);
 	}
 
