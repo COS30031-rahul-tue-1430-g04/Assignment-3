@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7005439206235882688}
   - component: {fileID: 976301911170698155}
   - component: {fileID: 68346634523914268}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,12 +72,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a2d572c142ca141820b05f06862b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  walkSpeed: 5
-  sprintSpeed: 10
+  walkSpeed: 15
+  sprintSpeed: 25
+  noPathFriction: 0.8
   jumpForce: 8
   gravity: 18
   buoyancyStrength: 22
   verticalWaterDrag: 0.98
+  horizontalWaterDrag: 0.5
   bobFrequency: 4
   bobAmplitude: 0.05
   cameraDistance: 0
