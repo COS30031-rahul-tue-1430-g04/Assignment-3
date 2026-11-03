@@ -11,7 +11,13 @@ public class PlayerController : MonoBehaviour
 	[Min(0f)] public float walkSpeed = 5f;
 	[Min(0f)] public float sprintSpeed = 10f;
 	[Min(0f)] public float jumpForce = 5f;
-	[Min(0f)] public float gravity = 9.81f;
+	[Min(0f)] public float gravity = 18f;
+	[Header("Water Settings")]
+	[Min(0f)] public float buoyancyStrength = 22f;
+	[Range(0f, 1f)] public float verticalWaterDrag = 0.02f;
+	[Range(0f, 1f)] public float horizontalWaterDrag = 0.5f;
+	[Min(0f)] public float bobFrequency = 10f;
+	[Min(0f)] public float bobAmplitude = 0.1f;
 
 	[Header("Camera Settings")]
 	[Min(0f)] public float cameraDistance = 3f;
@@ -23,6 +29,9 @@ public class PlayerController : MonoBehaviour
 	private bool isSprinting;
 	private float verticalVelocity;
 	private float currentVerticalLookAngle;
+	private readonly HashSet<Collider> watersIn = new();
+	private bool InWater => watersIn.Count > 0;
+	private float startingHeadY;
 
 	private Camera _camera;
 	private Camera Camera
@@ -84,6 +93,7 @@ public class PlayerController : MonoBehaviour
 		interactAction = InputSystem.actions.FindAction("Interact");
 
 		verticalVelocity = 0f;
+		startingHeadY = Head.localPosition.y;
 	}
 
 	void OnEnable()
@@ -105,14 +115,27 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-		if (Controller.isGrounded && verticalVelocity < 0f)
-			verticalVelocity = -2f;
+		if (InWater)
+		{
+			float waterHeight = watersIn.Max(water => water.bounds.max.y);
+			float depth = Mathf.Clamp(waterHeight - Controller.bounds.min.y, 0, Controller.height);
+			float boyancy = Mathf.Max(0, depth) * buoyancyStrength;
+			Head.position = Controller.bounds.center + Vector3.up * (startingHeadY + Mathf.Sin(Time.time * bobFrequency) * bobAmplitude);
+			verticalVelocity += (boyancy - gravity) * Time.deltaTime;
+			verticalVelocity *= 1f - verticalWaterDrag;
+		}
 		else
-			verticalVelocity -= gravity * Time.deltaTime;
-
+		{
+			Head.position = Controller.bounds.center + Vector3.up * startingHeadY;
+			if (Controller.isGrounded && verticalVelocity < 0f)
+				verticalVelocity = -2f;
+			else
+				verticalVelocity -= gravity * Time.deltaTime;
+		}
 
 		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
 		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
+		moveSpeed *= InWater ? 1f - horizontalWaterDrag : 1f;
 
 		Vector3 displacement = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
 
@@ -143,6 +166,17 @@ public class PlayerController : MonoBehaviour
 			EnablePlayerControl();
 		else
 			DisablePlayerControl();
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+			watersIn.Add(other);
+	}
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+			watersIn.Remove(other);
 	}
 
 	void EnablePlayerControl()
