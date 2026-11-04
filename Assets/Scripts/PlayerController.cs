@@ -70,22 +70,11 @@ public class PlayerController : MonoBehaviour
 			return _characterController;
 		}
 	}
-	private Interactor _interactor;
-	private Interactor Interactor
-	{
-		get
-		{
-			if (_interactor == null && !Head.TryGetComponent(out _interactor))
-				Debug.LogError("Interactor not found on PlayerController.");
-			return _interactor;
-		}
-	}
 
 	private InputAction moveAction;
 	private InputAction lookAction;
 	private InputAction jumpAction;
 	private InputAction sprintAction;
-	private InputAction interactAction;
 
 	void Awake()
 	{
@@ -93,7 +82,6 @@ public class PlayerController : MonoBehaviour
 		lookAction = InputSystem.actions.FindAction("Look");
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		sprintAction = InputSystem.actions.FindAction("Sprint");
-		interactAction = InputSystem.actions.FindAction("Interact");
 
 		verticalVelocity = 0f;
 		startingHeadY = Head.localPosition.y;
@@ -199,7 +187,6 @@ public class PlayerController : MonoBehaviour
 		moveAction.Enable();
 		jumpAction.Enable();
 		sprintAction.Enable();
-		interactAction.Enable();
 		lookAction.Enable();
 
 		moveAction.performed += OnMoveInput;
@@ -209,14 +196,12 @@ public class PlayerController : MonoBehaviour
 		jumpAction.performed += OnJumpInput;
 		sprintAction.performed += OnSprintInput;
 		sprintAction.canceled += OnSprintInput;
-		interactAction.performed += OnInteractInput;
 	}
 	void DisablePlayerControl()
 	{
 		moveAction.Disable();
 		jumpAction.Disable();
 		sprintAction.Disable();
-		interactAction.Disable();
 		lookAction.Disable();
 
 		moveAction.performed -= OnMoveInput;
@@ -226,10 +211,7 @@ public class PlayerController : MonoBehaviour
 		jumpAction.performed -= OnJumpInput;
 		sprintAction.performed -= OnSprintInput;
 		sprintAction.canceled -= OnSprintInput;
-		interactAction.performed -= OnInteractInput;
 	}
-
-	void OnInteractInput(CallbackContext _) => Interactor.Interact();
 
 	void OnMoveInput(CallbackContext context) =>
 		moveInput = context.ReadValue<Vector2>();
