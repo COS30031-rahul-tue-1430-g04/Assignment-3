@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bdcbc1963d390ae409042ae8a379dfdd
+guid: 943e31f1b83c12045b90902986276c8f
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: bench
-    second: {fileID: 2100000, guid: d3d76630004312b4e9f16354680ba78e, type: 2}
+    second: {fileID: 2100000, guid: bd1e2cbde18fa83488be8d6ec1c3cbec, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
