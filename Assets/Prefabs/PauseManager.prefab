@@ -929,7 +929,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1070238180221230130}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: Resume
+        m_MethodName: TogglePause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

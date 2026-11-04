@@ -3,20 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags:
-  - MiniMapCamera
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Path
+  - 
   - Water
   - UI
   - Interactable
   - InRangeInteractable
   - Uninteractable
   - MapMarker
-  - Player
+  - 
   - 
   - 
   - 

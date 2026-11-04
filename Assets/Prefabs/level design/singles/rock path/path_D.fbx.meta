@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: abcb7f87dd097d64da6ef137251ccc45
+guid: cbb0cc1d6c30ec14494eb33f49835988
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: halloweenbits_texture
+    second: {fileID: 2800000, guid: e18249954d9d43a458e4a12039c0dcfc, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

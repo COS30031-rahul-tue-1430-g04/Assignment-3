@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 [RequireComponent(typeof(RectTransform))]
 public class CursorUI : MonoBehaviour
@@ -14,6 +12,7 @@ public class CursorUI : MonoBehaviour
 	[Header("Input Actions")]
 	public InputActionReference move;
 	public InputActionReference click;
+	public InputActionReference defaultPoint;
 
 	[Header("Cursor Settings")]
 	public float sensitivity = 1.0f;
@@ -27,12 +26,11 @@ public class CursorUI : MonoBehaviour
 	private Mouse virtualMouse;
 	private Vector2 virtualPos;
 
-	private bool Visible { get => cursorImage.enabled; set => cursorImage.enabled = value; }
+	private bool Active { get => cursorImage.enabled; set => cursorImage.enabled = value; }
 
 	void Awake()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
-		Visible = false;
 
 		rectTransform = GetComponent<RectTransform>();
 		cursorCanvasRect = rectTransform.parent as RectTransform;
@@ -59,17 +57,22 @@ public class CursorUI : MonoBehaviour
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
-		bool inGameplay = newState == GameManager.GameState.Gameplay;
-		if (inGameplay)
+		switch (newState)
 		{
-			Visible = false;
-			return;
+			case GameManager.GameState.Gameplay:
+				Active = false;
+				Cursor.lockState = CursorLockMode.Locked;
+				break;
+			case GameManager.GameState.Paused:
+				Active = false;
+				Cursor.lockState = CursorLockMode.None;
+				break;
+			case GameManager.GameState.AssetMenu:
+			case GameManager.GameState.Menu:
+				Active = true;
+				Cursor.lockState = CursorLockMode.Locked;
+				break;
 		}
-
-		bool inWebGL = Application.platform == RuntimePlatform.WebGLPlayer;
-		bool pointerLocked = WebGLRouter.Instance.IsPointerLocked;
-
-		Visible = !inWebGL || pointerLocked;
 	}
 
 
@@ -82,8 +85,8 @@ public class CursorUI : MonoBehaviour
 		move.action.performed += OnMovePerformed;
 		move.action.canceled += OnMovePerformed;
 
-		WebGLRouter.Instance.OnMouseMove += OnPointerMove;
-		WebGLRouter.Instance.OnPointerLock += OnWebGlPointerLock;
+		WebGLRouter.Instance.OnPointerLock += OnPointerLock;
+		WebGLRouter.Instance.OnPointerUnlock += OnPointerUnlock;
 	}
 
 	void OnDisable()
@@ -95,19 +98,13 @@ public class CursorUI : MonoBehaviour
 		move.action.performed -= OnMovePerformed;
 		move.action.canceled -= OnMovePerformed;
 
-		WebGLRouter.Instance.OnMouseMove -= OnPointerMove;
-		WebGLRouter.Instance.OnPointerLock -= OnWebGlPointerLock;
-	}
-
-	void OnWebGlPointerLock()
-	{
-		OnGameStateChanged(GameManager.Instance.CurrentState);
-		OnClick();
+		WebGLRouter.Instance.OnPointerLock -= OnPointerLock;
+		WebGLRouter.Instance.OnPointerUnlock -= OnPointerUnlock;
 	}
 
 	void OnMovePerformed(InputAction.CallbackContext ctx)
 	{
-		if (!Visible) return;
+		if (!Active) return;
 		Vector2 delta = ctx.ReadValue<Vector2>();
 		virtualPos += delta * sensitivity;
 		virtualPos.x = Mathf.Clamp(virtualPos.x, 0, Screen.width);
@@ -164,14 +161,23 @@ public class CursorUI : MonoBehaviour
 	private void OnClick(InputAction.CallbackContext _) => OnClick();
 	private void OnClick()
 	{
+		if (!Active) return;
 		if (TryGetButtonAt(virtualPos, out Button button))
 			button.onClick.Invoke();
 	}
-
-	private void OnPointerMove(float x, float y)
+	public void OnPointerLock()
 	{
-		if (Application.platform != RuntimePlatform.WebGLPlayer) return;
-		virtualPos = new Vector2(x, y);
+		OnClick();
+		defaultPoint.action.performed -= OnPointerMove;
+	}
+	public void OnPointerUnlock()
+	{
+		defaultPoint.action.performed += OnPointerMove;
+	}
+
+	private void OnPointerMove(InputAction.CallbackContext ctx)
+	{
+		virtualPos = ctx.ReadValue<Vector2>();
 		InputState.Change(virtualMouse.position, virtualPos);
 	}
 }

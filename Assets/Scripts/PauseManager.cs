@@ -33,19 +33,25 @@ public class PauseManager : MonoBehaviour
 	void OnEnable()
 	{
 		pauseAction.Enable();
-		pauseAction.performed += Pause;
+		pauseAction.performed += TogglePause;
 		WebGLRouter.Instance.OnPointerUnlock += Pause;
 	}
 	void OnDisable()
 	{
+		pauseAction.performed -= TogglePause;
 		pauseAction.Disable();
-		pauseAction.performed -= Pause;
 		WebGLRouter.Instance.OnPointerUnlock -= Pause;
 	}
-	void Pause(CallbackContext _) => Pause();
+	void TogglePause(CallbackContext _) => TogglePause();
+
+    public void TogglePause()
+    {
+        if (!CheckSerializedFields()) return;
+		if (isPaused) Resume(); else Pause();
+    }
+
 	private void Pause()
 	{
-		if (isPaused) return;
 		if (!CheckSerializedFields()) return;
 		isPaused = true;
 		pausePanel.SetActive(true);
@@ -54,9 +60,8 @@ public class PauseManager : MonoBehaviour
 		AudioManager.Instance.PlayPause();
 		AudioManager.Instance.SetMusicPaused(true);
 	}
-	public void Resume()
+	private void Resume()
 	{
-		if (!isPaused) return;
 		if (!CheckSerializedFields()) return;
 		isPaused = false;
 		pausePanel.SetActive(false);
