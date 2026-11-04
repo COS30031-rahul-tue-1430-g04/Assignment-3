@@ -207,7 +207,6 @@ MonoBehaviour:
   progressText: {fileID: 8741450277635156666}
   levelText: {fileID: 6544765864759160185}
   progressBar: {fileID: 7357644530317595255}
-  gameManager: {fileID: 11400000, guid: c70667aff7f3737468ea75f59d1654cc, type: 2}
 --- !u!1 &1978527883965457477
 GameObject:
   m_ObjectHideFlags: 0
