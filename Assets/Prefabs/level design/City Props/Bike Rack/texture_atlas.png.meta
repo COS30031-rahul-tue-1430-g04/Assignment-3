@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/level design/City Props/Bike Rack/texture_atlas.png.meta
 guid: 73b6899cf369e0a488aef3f13bbb28ce
+========
+guid: f7b6d3ea66cefc2469c99b50ca333c31
+>>>>>>>> main:Assets/Prefabs/level design/singles/community centre/without details/Black/base comunity centre_black_AlbedoTransparency.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
