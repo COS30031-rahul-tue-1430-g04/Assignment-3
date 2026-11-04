@@ -8,10 +8,17 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
 	[Header("Movement Settings")]
-	[Min(0f)] public float walkSpeed = 5f;
-	[Min(0f)] public float sprintSpeed = 10f;
+	[Min(0f)] public float walkSpeed = 10f;
+	[Min(0f)] public float sprintSpeed = 20f;
+	[Range(0f, 1f)] public float noPathFriction = 0.8f;
 	[Min(0f)] public float jumpForce = 5f;
-	[Min(0f)] public float gravity = 9.81f;
+	[Min(0f)] public float gravity = 18f;
+	[Header("Water Settings")]
+	[Min(0f)] public float buoyancyStrength = 22f;
+	[Range(0f, 1f)] public float verticalWaterDrag = 0.02f;
+	[Range(0f, 1f)] public float horizontalWaterDrag = 0.5f;
+	[Min(0f)] public float bobFrequency = 10f;
+	[Min(0f)] public float bobAmplitude = 0.1f;
 
 	[Header("Camera Settings")]
 	[Min(0f)] public float cameraDistance = 3f;
@@ -23,6 +30,11 @@ public class PlayerController : MonoBehaviour
 	private bool isSprinting;
 	private float verticalVelocity;
 	private float currentVerticalLookAngle;
+	private readonly HashSet<Collider> watersIn = new();
+	private bool InWater => watersIn.Count > 0;
+	private float startingHeadY;
+	private int pathLayerMask;
+	private int waterLayerMask;
 
 	private Camera _camera;
 	private Camera Camera
@@ -84,6 +96,9 @@ public class PlayerController : MonoBehaviour
 		interactAction = InputSystem.actions.FindAction("Interact");
 
 		verticalVelocity = 0f;
+		startingHeadY = Head.localPosition.y;
+		pathLayerMask = LayerMask.GetMask("Path");
+		waterLayerMask = LayerMask.NameToLayer("Water");
 	}
 
 	void OnEnable()
@@ -105,14 +120,34 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-		if (Controller.isGrounded && verticalVelocity < 0f)
-			verticalVelocity = -2f;
+		if (InWater)
+		{
+			float waterHeight = watersIn.Max(water => water.bounds.max.y);
+			float depth = Mathf.Clamp(waterHeight - Controller.bounds.min.y, 0, Controller.height);
+			float boyancy = Mathf.Max(0, depth) * buoyancyStrength;
+			Head.position = Controller.bounds.center + Vector3.up * (startingHeadY + Mathf.Sin(Time.time * bobFrequency) * bobAmplitude);
+			verticalVelocity += (boyancy - gravity) * Time.deltaTime;
+			verticalVelocity *= 1f - verticalWaterDrag;
+		}
 		else
-			verticalVelocity -= gravity * Time.deltaTime;
-
+		{
+			Head.position = Controller.bounds.center + Vector3.up * startingHeadY;
+			if (Controller.isGrounded && verticalVelocity < 0f)
+				verticalVelocity = -2f;
+			else
+				verticalVelocity -= gravity * Time.deltaTime;
+		}
 
 		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
 		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
+		moveSpeed *= InWater ? 1f - horizontalWaterDrag : 1f;
+
+		float pathFriction = GetPaths()
+			.Where(path => path != null && path.sharedMaterial != null)
+			.Select(path => path.sharedMaterial.dynamicFriction)
+			.DefaultIfEmpty(noPathFriction)
+			.Max();
+		moveSpeed *= 1f - pathFriction;
 
 		Vector3 displacement = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
 
@@ -133,9 +168,12 @@ public class PlayerController : MonoBehaviour
 		Vector3 p1 = origin + Vector3.up * (Controller.height / 2f - Controller.radius);
 		Vector3 p2 = origin - Vector3.up * (Controller.height / 2f - Controller.radius);
 		float distance = Controller.skinWidth + 0.1f;
-		return Physics.CapsuleCastAll(p1, p2, Controller.radius, direction.normalized, distance);
+		return Physics.CapsuleCastAll(p1, p2, Controller.radius, direction.normalized, distance, ~pathLayerMask);
 	}
 	IEnumerable<RaycastHit> ProbeGround() => ProbeSurface(Vector3.down);
+
+	IEnumerable<Collider> GetPaths() =>
+		Physics.OverlapCapsule(Controller.bounds.max, Controller.bounds.min, Controller.radius, pathLayerMask);
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -143,6 +181,17 @@ public class PlayerController : MonoBehaviour
 			EnablePlayerControl();
 		else
 			DisablePlayerControl();
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.layer == waterLayerMask)
+			watersIn.Add(other);
+	}
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.layer == waterLayerMask)
+			watersIn.Remove(other);
 	}
 
 	void EnablePlayerControl()

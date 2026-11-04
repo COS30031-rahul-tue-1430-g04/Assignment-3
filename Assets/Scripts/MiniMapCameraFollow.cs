@@ -11,7 +11,7 @@ public class MiniMapCameraFollow : MonoBehaviour
 	[SerializeField] private float height = 30f;
 
 	[Min(5f)]
-	[SerializeField] private float viewingDistance = 15f;
+	[SerializeField] private float viewingDistance = 100f;
 
 	[Min(0f)]
 	[SerializeField] private float followSmoothness = 10f;
