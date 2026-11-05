@@ -1265,14 +1265,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 68346634523914268, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
-      propertyPath: verticalWaterDrag
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 68346634523914268, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
-      propertyPath: horizontalWaterDrag
-      value: 0.6
-      objectReference: {fileID: 0}
     - target: {fileID: 2166596772971823992, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
       propertyPath: m_Name
       value: Player

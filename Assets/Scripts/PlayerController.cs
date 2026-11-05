@@ -1,8 +1,9 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using static UnityEngine.InputSystem.InputAction;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -25,6 +26,12 @@ public class PlayerController : MonoBehaviour
 	[Min(0f)] public float mouseSensitivity = 5f;
 	[Range(-90f, 0f)] public float minVerticalLookAngle = -90f;
 	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
+
+	[Header("Actions")]
+	public InputActionReference moveAction;
+	public InputActionReference lookAction;
+	public InputActionReference jumpAction;
+	public InputActionReference sprintAction;
 
 	private Vector2 moveInput;
 	private bool isSprinting;
@@ -70,31 +77,9 @@ public class PlayerController : MonoBehaviour
 			return _characterController;
 		}
 	}
-	private Interactor _interactor;
-	private Interactor Interactor
-	{
-		get
-		{
-			if (_interactor == null && !Head.TryGetComponent(out _interactor))
-				Debug.LogError("Interactor not found on PlayerController.");
-			return _interactor;
-		}
-	}
-
-	private InputAction moveAction;
-	private InputAction lookAction;
-	private InputAction jumpAction;
-	private InputAction sprintAction;
-	private InputAction interactAction;
 
 	void Awake()
 	{
-		moveAction = InputSystem.actions.FindAction("Move");
-		lookAction = InputSystem.actions.FindAction("Look");
-		jumpAction = InputSystem.actions.FindAction("Jump");
-		sprintAction = InputSystem.actions.FindAction("Sprint");
-		interactAction = InputSystem.actions.FindAction("Interact");
-
 		verticalVelocity = 0f;
 		startingHeadY = Head.localPosition.y;
 		pathLayerMask = LayerMask.GetMask("Path");
@@ -118,48 +103,45 @@ public class PlayerController : MonoBehaviour
 		Camera.transform.localPosition = Vector3.back * cameraDistance;
 	}
 
+	private float MoveSpeed =>
+		(isSprinting ? sprintSpeed : walkSpeed)			// Base sprint or walk speed
+		* (InWater ? 1f - horizontalWaterDrag : 1f)     // Apply horizontal water drag if in water
+		* (1f - GetPathFriction());                     // Apply path friction if on a path
+
 	void Update()
+	{
+		BobIfInWater();
+		UpdateVerticalVelocity();
+
+		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
+		Vector3 displacement = (moveDirection * MoveSpeed + Vector3.up * verticalVelocity)
+			* (1f - GetFriction(moveDirection));        // Apply surface friction if on a surface
+
+		Controller.Move(displacement * Time.deltaTime);
+	}
+	private void BobIfInWater()
+	{
+		if (!InWater) return;
+		float bobOffset = Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
+		Head.position = Controller.bounds.center + Vector3.up * (startingHeadY + bobOffset);
+	}
+	private void UpdateVerticalVelocity()
 	{
 		if (InWater)
 		{
 			float waterHeight = watersIn.Max(water => water.bounds.max.y);
 			float depth = Mathf.Clamp(waterHeight - Controller.bounds.min.y, 0, Controller.height);
 			float boyancy = Mathf.Max(0, depth) * buoyancyStrength;
-			Head.position = Controller.bounds.center + Vector3.up * (startingHeadY + Mathf.Sin(Time.time * bobFrequency) * bobAmplitude);
 			verticalVelocity += (boyancy - gravity) * Time.deltaTime;
 			verticalVelocity *= 1f - verticalWaterDrag;
 		}
 		else
 		{
-			Head.position = Controller.bounds.center + Vector3.up * startingHeadY;
 			if (Controller.isGrounded && verticalVelocity < 0f)
 				verticalVelocity = -2f;
 			else
 				verticalVelocity -= gravity * Time.deltaTime;
 		}
-
-		Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
-		float moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
-		moveSpeed *= InWater ? 1f - horizontalWaterDrag : 1f;
-
-		float pathFriction = GetPaths()
-			.Where(path => path != null && path.sharedMaterial != null)
-			.Select(path => path.sharedMaterial.dynamicFriction)
-			.DefaultIfEmpty(noPathFriction)
-			.Max();
-		moveSpeed *= 1f - pathFriction;
-
-		Vector3 displacement = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
-
-		float friction = ProbeSurface(moveDirection)
-			.Concat(ProbeGround())
-			.Where(hit => hit.collider != null && hit.collider.sharedMaterial != null)
-			.Select(hit => hit.collider.sharedMaterial.dynamicFriction)
-			.DefaultIfEmpty(0f)
-			.Max();
-		displacement *= (1f - friction);
-
-		Controller.Move(displacement * Time.deltaTime);
 	}
 
 	IEnumerable<RaycastHit> ProbeSurface(Vector3 direction)
@@ -171,9 +153,20 @@ public class PlayerController : MonoBehaviour
 		return Physics.CapsuleCastAll(p1, p2, Controller.radius, direction.normalized, distance, ~pathLayerMask);
 	}
 	IEnumerable<RaycastHit> ProbeGround() => ProbeSurface(Vector3.down);
+	private float GetFriction(Vector3 moveDirection) => ProbeSurface(moveDirection)
+		.Concat(ProbeGround())
+		.Where(hit => hit.collider != null && hit.collider.sharedMaterial != null)
+		.Select(hit => hit.collider.sharedMaterial.dynamicFriction)
+		.DefaultIfEmpty(0f)
+		.Max();
 
 	IEnumerable<Collider> GetPaths() =>
 		Physics.OverlapCapsule(Controller.bounds.max, Controller.bounds.min, Controller.radius, pathLayerMask);
+	private float GetPathFriction() => GetPaths()
+		.Where(path => path != null && path.sharedMaterial != null)
+		.Select(path => path.sharedMaterial.dynamicFriction)
+		.DefaultIfEmpty(noPathFriction)
+		.Max();
 
 	void OnGameStateChanged(GameManager.GameState newState)
 	{
@@ -191,45 +184,43 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerExit(Collider other)
 	{
 		if (other.gameObject.layer == waterLayerMask)
+		{
 			watersIn.Remove(other);
+			if (!InWater)
+				Head.position = Controller.bounds.center + Vector3.up * startingHeadY;
+		}
 	}
 
 	void EnablePlayerControl()
 	{
-		moveAction.Enable();
-		jumpAction.Enable();
-		sprintAction.Enable();
-		interactAction.Enable();
-		lookAction.Enable();
+		moveAction.action.Enable();
+		jumpAction.action.Enable();
+		sprintAction.action.Enable();
+		lookAction.action.Enable();
 
-		moveAction.performed += OnMoveInput;
-		moveAction.canceled += OnMoveInput;
-		lookAction.performed += OnLookInput;
-		lookAction.canceled += OnLookInput;
-		jumpAction.performed += OnJumpInput;
-		sprintAction.performed += OnSprintInput;
-		sprintAction.canceled += OnSprintInput;
-		interactAction.performed += OnInteractInput;
+		moveAction.action.performed += OnMoveInput;
+		moveAction.action.canceled += OnMoveInput;
+		lookAction.action.performed += OnLookInput;
+		lookAction.action.canceled += OnLookInput;
+		jumpAction.action.performed += OnJumpInput;
+		sprintAction.action.performed += OnSprintInput;
+		sprintAction.action.canceled += OnSprintInput;
 	}
 	void DisablePlayerControl()
 	{
-		moveAction.Disable();
-		jumpAction.Disable();
-		sprintAction.Disable();
-		interactAction.Disable();
-		lookAction.Disable();
+		moveAction.action.Disable();
+		jumpAction.action.Disable();
+		sprintAction.action.Disable();
+		lookAction.action.Disable();
 
-		moveAction.performed -= OnMoveInput;
-		moveAction.canceled -= OnMoveInput;
-		lookAction.performed -= OnLookInput;
-		lookAction.canceled -= OnLookInput;
-		jumpAction.performed -= OnJumpInput;
-		sprintAction.performed -= OnSprintInput;
-		sprintAction.canceled -= OnSprintInput;
-		interactAction.performed -= OnInteractInput;
+		moveAction.action.performed -= OnMoveInput;
+		moveAction.action.canceled -= OnMoveInput;
+		lookAction.action.performed -= OnLookInput;
+		lookAction.action.canceled -= OnLookInput;
+		jumpAction.action.performed -= OnJumpInput;
+		sprintAction.action.performed -= OnSprintInput;
+		sprintAction.action.canceled -= OnSprintInput;
 	}
-
-	void OnInteractInput(CallbackContext _) => Interactor.Interact();
 
 	void OnMoveInput(CallbackContext context) =>
 		moveInput = context.ReadValue<Vector2>();
