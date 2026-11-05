@@ -8,8 +8,8 @@ public class MiniMapCameraFollow : MonoBehaviour
 	[SerializeField] private Transform followTransform;
 
 	[Header("Map Settings")]
-	[SerializeField, Min(5f)] private float height = 30f;
-	[SerializeField, Min(5f)] private float viewingDistance = 100f;
+	[Min(5f)] public float height = 30f;
+	[Min(5f)] public float viewingDistance = 100f;
 	[SerializeField, Min(0f)] private float catchUpTime = 0.3f;
 
 	private float responsiveness;
