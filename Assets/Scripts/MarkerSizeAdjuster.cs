@@ -5,18 +5,27 @@ public class MarkerSizeAdjuster : MonoBehaviour
 	public float scaleAtDefaultDistance = 1f;
 	private readonly float defaultCameraDistance = 15f;
 
-	private Camera miniMapCamera;
-	private void Awake()
+	private float? CameraSize
 	{
-		miniMapCamera = GameObject.FindGameObjectsWithTag("MiniMapCamera")[0].GetComponent<Camera>();
-	}
-	private void Start()
-	{
-		if (miniMapCamera == null)
+		get
 		{
-			Debug.LogError("MiniMapCamera not found in the scene. Please ensure there is a camera with the 'MiniMapCamera' tag.");
-			return;
+			GameObject miniMapCameraGameobject = GameObject.FindGameObjectWithTag("MiniMapCamera");
+			if (miniMapCameraGameobject == null) return null;
+			if (!miniMapCameraGameobject.TryGetComponent<Camera>(out var miniMapCamera)) return null;
+			return miniMapCamera.orthographicSize;
 		}
-		transform.localScale = Vector3.one * ((miniMapCamera.orthographicSize / defaultCameraDistance) * scaleAtDefaultDistance);
 	}
+
+	private void OnValidate()
+	{
+		if (CameraSize == null || transform.parent == null) return;
+		float desiredScale = (CameraSize.Value / defaultCameraDistance) * scaleAtDefaultDistance;
+		Vector3 parentScale = transform.parent.lossyScale;
+		transform.localScale = new Vector3(
+			desiredScale / parentScale.x,
+			desiredScale / parentScale.y,
+			desiredScale / parentScale.z
+		);
+	}
+
 }
