@@ -15972,6 +15972,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiniMapSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 4601357570999126120, guid: 815641f84d4e8ad47a84b1de009df95e, type: 3}
+      propertyPath: followTransform
+      value: 
+      objectReference: {fileID: 1019262528}
     - target: {fileID: 6573758092617937084, guid: 815641f84d4e8ad47a84b1de009df95e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 471.19464
@@ -32104,6 +32108,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
+--- !u!4 &1019262528 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7005439206235882688, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
+  m_PrefabInstance: {fileID: 1019262527}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1019981243
 PrefabInstance:
   m_ObjectHideFlags: 0
