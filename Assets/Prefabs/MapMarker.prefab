@@ -105,3 +105,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   scaleAtDefaultDistance: 2.5
+  heightAtDefaultDistance: 5

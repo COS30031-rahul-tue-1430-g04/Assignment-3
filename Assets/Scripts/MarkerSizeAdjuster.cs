@@ -5,18 +5,34 @@ public class MarkerSizeAdjuster : MonoBehaviour
 	public float scaleAtDefaultDistance = 1f;
 	private readonly float defaultCameraDistance = 15f;
 
-	private Camera miniMapCamera;
-	private void Awake()
+	private MiniMapCameraFollow MiniMapCameraFollow
 	{
-		miniMapCamera = GameObject.FindGameObjectsWithTag("MiniMapCamera")[0].GetComponent<Camera>();
-	}
-	private void Start()
-	{
-		if (miniMapCamera == null)
+		get
 		{
-			Debug.LogError("MiniMapCamera not found in the scene. Please ensure there is a camera with the 'MiniMapCamera' tag.");
-			return;
+			GameObject miniMapCameraGameobject = GameObject.FindGameObjectWithTag("MiniMapCamera");
+			if (miniMapCameraGameobject == null) return null;
+			if (!miniMapCameraGameobject.TryGetComponent<MiniMapCameraFollow>(out var miniMapCamera)) return null;
+			return miniMapCamera;
 		}
-		transform.localScale = Vector3.one * ((miniMapCamera.orthographicSize / defaultCameraDistance) * scaleAtDefaultDistance);
 	}
+
+	private void OnValidate()
+	{
+		if (MiniMapCameraFollow == null || transform.parent == null) return;
+		float scaleFactor = MiniMapCameraFollow.viewingDistance / defaultCameraDistance;
+		float desiredScale = scaleFactor * scaleAtDefaultDistance;
+		Vector3 parentScale = transform.parent.lossyScale;
+		transform.localScale = new Vector3(
+			desiredScale / parentScale.x,
+			desiredScale / parentScale.y,
+			desiredScale / parentScale.z
+		);
+		transform.position = new Vector3(
+			transform.parent.position.x,
+			MiniMapCameraFollow.height - 1f,
+			transform.parent.position.z
+		);
+		transform.localRotation = Quaternion.Inverse(transform.parent.rotation) * Quaternion.Euler(90, 0, 0);
+	}
+
 }
