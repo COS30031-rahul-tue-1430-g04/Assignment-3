@@ -26,6 +26,12 @@ public class PlayerController : MonoBehaviour
 	[Range(-90f, 0f)] public float minVerticalLookAngle = -90f;
 	[Range(0f, 90f)] public float maxVerticalLookAngle = 90f;
 
+	[Header("Actions")]
+	public InputActionReference moveAction;
+	public InputActionReference lookAction;
+	public InputActionReference jumpAction;
+	public InputActionReference sprintAction;
+
 	private Vector2 moveInput;
 	private bool isSprinting;
 	private float verticalVelocity;
@@ -71,18 +77,8 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private InputAction moveAction;
-	private InputAction lookAction;
-	private InputAction jumpAction;
-	private InputAction sprintAction;
-
 	void Awake()
 	{
-		moveAction = InputSystem.actions.FindAction("Move");
-		lookAction = InputSystem.actions.FindAction("Look");
-		jumpAction = InputSystem.actions.FindAction("Jump");
-		sprintAction = InputSystem.actions.FindAction("Sprint");
-
 		verticalVelocity = 0f;
 		startingHeadY = Head.localPosition.y;
 		pathLayerMask = LayerMask.GetMask("Path");
@@ -184,33 +180,33 @@ public class PlayerController : MonoBehaviour
 
 	void EnablePlayerControl()
 	{
-		moveAction.Enable();
-		jumpAction.Enable();
-		sprintAction.Enable();
-		lookAction.Enable();
+		moveAction.action.Enable();
+		jumpAction.action.Enable();
+		sprintAction.action.Enable();
+		lookAction.action.Enable();
 
-		moveAction.performed += OnMoveInput;
-		moveAction.canceled += OnMoveInput;
-		lookAction.performed += OnLookInput;
-		lookAction.canceled += OnLookInput;
-		jumpAction.performed += OnJumpInput;
-		sprintAction.performed += OnSprintInput;
-		sprintAction.canceled += OnSprintInput;
+		moveAction.action.performed += OnMoveInput;
+		moveAction.action.canceled += OnMoveInput;
+		lookAction.action.performed += OnLookInput;
+		lookAction.action.canceled += OnLookInput;
+		jumpAction.action.performed += OnJumpInput;
+		sprintAction.action.performed += OnSprintInput;
+		sprintAction.action.canceled += OnSprintInput;
 	}
 	void DisablePlayerControl()
 	{
-		moveAction.Disable();
-		jumpAction.Disable();
-		sprintAction.Disable();
-		lookAction.Disable();
+		moveAction.action.Disable();
+		jumpAction.action.Disable();
+		sprintAction.action.Disable();
+		lookAction.action.Disable();
 
-		moveAction.performed -= OnMoveInput;
-		moveAction.canceled -= OnMoveInput;
-		lookAction.performed -= OnLookInput;
-		lookAction.canceled -= OnLookInput;
-		jumpAction.performed -= OnJumpInput;
-		sprintAction.performed -= OnSprintInput;
-		sprintAction.canceled -= OnSprintInput;
+		moveAction.action.performed -= OnMoveInput;
+		moveAction.action.canceled -= OnMoveInput;
+		lookAction.action.performed -= OnLookInput;
+		lookAction.action.canceled -= OnLookInput;
+		jumpAction.action.performed -= OnJumpInput;
+		sprintAction.action.performed -= OnSprintInput;
+		sprintAction.action.canceled -= OnSprintInput;
 	}
 
 	void OnMoveInput(CallbackContext context) =>

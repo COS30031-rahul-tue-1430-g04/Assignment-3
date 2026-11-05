@@ -86,6 +86,10 @@ MonoBehaviour:
   mouseSensitivity: 0.1
   minVerticalLookAngle: -90
   maxVerticalLookAngle: 90
+  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  lookAction: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  sprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &3710502992347217994
 GameObject:
   m_ObjectHideFlags: 0
