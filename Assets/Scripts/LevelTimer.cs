@@ -14,28 +14,26 @@ public class LevelTimer : MonoBehaviour
 	[SerializeField] private GameObject gameOverPanel;
 
 	private float timeRemaining;
-	private bool hasEnded;
+	private bool shouldTick;
 
 	private void Start()
 	{
 		timeRemaining = timeLimitSeconds;
-		hasEnded = false;
 
 		if (gameOverPanel != null)
 			gameOverPanel.SetActive(false);
 
 		UpdateTimerDisplay();
+		shouldTick = true;
+
 	}
+	private void OnEnable() => Instance.OnGameStateChanged += OnGameStateChanged;
+	private void OnDisable() => Instance.OnGameStateChanged -= OnGameStateChanged;
+	private void OnGameStateChanged(GameState newState) => shouldTick = newState == GameState.Gameplay;
 
 	private void Update()
 	{
-		if (hasEnded)
-			return;
-
-		// Count down only during normal gameplay.
-		if (Instance == null ||
-			Instance.CurrentState != GameState.Gameplay)
-			return;
+		if (!shouldTick) return;
 
 		timeRemaining -= Time.deltaTime;
 		timeRemaining = Mathf.Max(0f, timeRemaining);
@@ -48,8 +46,7 @@ public class LevelTimer : MonoBehaviour
 
 	private void UpdateTimerDisplay()
 	{
-		if (timerText == null)
-			return;
+		if (timerText == null) return;
 
 		int seconds = Mathf.CeilToInt(timeRemaining);
 		int minutes = seconds / 60;
@@ -60,10 +57,9 @@ public class LevelTimer : MonoBehaviour
 
 	private void HandleTimeUp()
 	{
-		if (hasEnded)
-			return;
+		shouldTick = false;
+		Instance.OnGameStateChanged -= OnGameStateChanged;
 
-		hasEnded = true;
 		timeRemaining = 0f;
 		UpdateTimerDisplay();
 
@@ -74,8 +70,7 @@ public class LevelTimer : MonoBehaviour
 		if (gameOverPanel != null)
 			gameOverPanel.SetActive(true);
 		else
-			Debug.LogWarning(
-				"LevelTimer: Game Over Panel is not assigned.", this);
+			Debug.LogWarning("LevelTimer: Game Over Panel is not assigned.", this);
 	}
 	public void GoToMainMenu()
 	{
