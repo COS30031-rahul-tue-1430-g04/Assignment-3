@@ -176,4 +176,4 @@ MonoBehaviour:
   followTransform: {fileID: 0}
   height: 30
   viewingDistance: 15
-  followSmoothness: 10
+  followSmoothness: 0.0001

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -7,59 +8,44 @@ public class MiniMapCameraFollow : MonoBehaviour
 	[SerializeField] private Transform followTransform;
 
 	[Header("Map Settings")]
-	[Min(5f)]
-	[SerializeField] private float height = 30f;
+	[SerializeField, Min(5f)] private float height = 30f;
+	[SerializeField, Min(5f)] private float viewingDistance = 100f;
+	[SerializeField, Min(0f)] private float catchUpTime = 0.3f;
 
-	[Min(5f)]
-	[SerializeField] private float viewingDistance = 100f;
-
-	[Min(0f)]
-	[SerializeField] private float followSmoothness = 10f;
-
+	private float responsiveness;
 	private Camera mapCamera;
-
-	private void Awake()
+	private Camera MapCamera
 	{
-		mapCamera = GetComponent<Camera>();
-		mapCamera.orthographic = true;
-		mapCamera.orthographicSize = viewingDistance;
-
-		transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+		get
+		{
+			if (mapCamera == null) mapCamera = GetComponent<Camera>();
+			return mapCamera;
+		}
 	}
 
-	private void LateUpdate()
+	private Vector3 TargetPos => followTransform.position + Vector3.up * height;
+	private Action updateAction;
+	private void OnValidate()
 	{
+		MapCamera.orthographicSize = viewingDistance;
+		MapCamera.orthographic = true;
+		transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+
 		if (followTransform == null)
-			return;
-
-		Vector3 targetPosition = new(
-			followTransform.position.x,
-			followTransform.position.y + height,
-			followTransform.position.z
-		);
-
-		if (followSmoothness <= 0f)
-		{
-			transform.position = targetPosition;
-		}
+			updateAction = null;
+		else if (catchUpTime <= 0f)
+			updateAction = SnapFollow;
 		else
 		{
-			float blend = 1f -
-				Mathf.Exp(-followSmoothness * Time.deltaTime);
-
-			transform.position = Vector3.Lerp(
-				transform.position,
-				targetPosition,
-				blend
-			);
+			responsiveness = 1f / catchUpTime;
+			updateAction = SmoothFollow;
 		}
 	}
-
-	public void SetViewingDistance(float distance)
+	private void SnapFollow() => transform.position = TargetPos;
+	private void SmoothFollow()
 	{
-		viewingDistance = Mathf.Max(5f, distance);
-
-		if (mapCamera != null)
-			mapCamera.orthographicSize = viewingDistance;
+		float blend = 1f - Mathf.Exp(-responsiveness * Time.deltaTime);
+		transform.position = Vector3.Lerp(transform.position, TargetPos, blend);
 	}
+	private void LateUpdate() => updateAction?.Invoke();
 }
