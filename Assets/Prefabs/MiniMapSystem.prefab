@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 4601357570999126120}
   m_Layer: 0
   m_Name: MiniMapCamera
-  m_TagString: Untagged
+  m_TagString: MiniMapCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,4 +176,4 @@ MonoBehaviour:
   followTransform: {fileID: 0}
   height: 30
   viewingDistance: 15
-  followSmoothness: 10
+  followSmoothness: 0.0001
