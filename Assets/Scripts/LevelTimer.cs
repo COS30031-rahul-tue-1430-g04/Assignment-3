@@ -14,28 +14,26 @@ public class LevelTimer : MonoBehaviour
 	[SerializeField] private GameObject gameOverPanel;
 
 	private float timeRemaining;
-	private bool hasEnded;
+	private bool shouldTick;
 
 	private void Start()
 	{
 		timeRemaining = timeLimitSeconds;
-		hasEnded = false;
 
 		if (gameOverPanel != null)
 			gameOverPanel.SetActive(false);
 
 		UpdateTimerDisplay();
+		shouldTick = true;
+
 	}
+	private void OnEnable() => Instance.OnGameStateChanged += OnGameStateChanged;
+	private void OnDisable() => Instance.OnGameStateChanged -= OnGameStateChanged;
+	private void OnGameStateChanged(GameState newState) => shouldTick = newState == GameState.Gameplay;
 
 	private void Update()
 	{
-		if (hasEnded)
-			return;
-
-		// Count down only during normal gameplay.
-		if (GameManager.Instance == null ||
-			GameManager.Instance.CurrentState != GameState.Gameplay)
-			return;
+		if (!shouldTick) return;
 
 		timeRemaining -= Time.deltaTime;
 		timeRemaining = Mathf.Max(0f, timeRemaining);
@@ -48,8 +46,7 @@ public class LevelTimer : MonoBehaviour
 
 	private void UpdateTimerDisplay()
 	{
-		if (timerText == null)
-			return;
+		if (timerText == null) return;
 
 		int seconds = Mathf.CeilToInt(timeRemaining);
 		int minutes = seconds / 60;
@@ -60,33 +57,31 @@ public class LevelTimer : MonoBehaviour
 
 	private void HandleTimeUp()
 	{
-		if (hasEnded)
-			return;
+		shouldTick = false;
+		Instance.OnGameStateChanged -= OnGameStateChanged;
 
-		hasEnded = true;
 		timeRemaining = 0f;
 		UpdateTimerDisplay();
 
 		// Disable normal gameplay controls through the existing state.
-		if (GameManager.Instance != null)
-			GameManager.Instance.CurrentState = GameState.Paused;
+		if (Instance != null)
+			Instance.CurrentState = GameState.Menu;
 
 		if (gameOverPanel != null)
 			gameOverPanel.SetActive(true);
 		else
-			Debug.LogWarning(
-				"LevelTimer: Game Over Panel is not assigned.", this);
+			Debug.LogWarning("LevelTimer: Game Over Panel is not assigned.", this);
 	}
 	public void GoToMainMenu()
 	{
 		Time.timeScale = 1f;
 
-		if (GameManager.Instance != null)
+		if (Instance != null)
 		{
-			GameManager.Instance.CurrentState = GameState.Menu;
+			Instance.CurrentState = GameState.Menu;
 		}
 
-		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+		SceneManager.LoadScene(1);
 	}
 
 	public void RetryLevel()
@@ -94,8 +89,8 @@ public class LevelTimer : MonoBehaviour
 		// Restore normal time and state before reloading the scene.
 		Time.timeScale = 1f;
 
-		if (GameManager.Instance != null)
-			GameManager.Instance.CurrentState = GameState.Gameplay;
+		if (Instance != null)
+			Instance.CurrentState = GameState.Gameplay;
 
 		SceneManager.LoadScene(
 			SceneManager.GetActiveScene().buildIndex);

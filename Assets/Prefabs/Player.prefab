@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7005439206235882688}
   - component: {fileID: 976301911170698155}
   - component: {fileID: 68346634523914268}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,14 +72,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a2d572c142ca141820b05f06862b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  walkSpeed: 5
-  sprintSpeed: 10
+  walkSpeed: 15
+  sprintSpeed: 25
+  noPathFriction: 0.8
   jumpForce: 8
   gravity: 18
+  buoyancyStrength: 22
+  verticalWaterDrag: 0.02
+  horizontalWaterDrag: 0.6
+  bobFrequency: 4
+  bobAmplitude: 0.05
   cameraDistance: 0
   mouseSensitivity: 0.1
   minVerticalLookAngle: -90
   maxVerticalLookAngle: 90
+  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  lookAction: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  sprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &3710502992347217994
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8e4db274c8a0b409faeb92731ea86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   interactionRadius: 3
 --- !u!1 &7117497018755547862
 GameObject:
@@ -271,17 +282,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7005439206235882688}
     m_Modifications:
+    - target: {fileID: -8742643230366074609, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: scaleAtDefaultDistance
+      value: 0.33
+      objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.32999998
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.32999998
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.32999998
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalPosition.x
@@ -289,7 +304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 27.71
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalPosition.z

@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class Interactor : MonoBehaviour
 {
+	public InputActionReference interactAction;
 	public float interactionRadius = 5f;
 	private int inRangeLayer;
 	private int interactableLayer;
@@ -25,7 +28,8 @@ public class Interactor : MonoBehaviour
 		}
 	}
 
-	public void Interact()
+	private void Interact(CallbackContext _) => Interact();
+	private void Interact()
 	{
 		if (CurrentInteractable != null)
 			CurrentInteractable.Interact(gameObject);
@@ -33,10 +37,12 @@ public class Interactor : MonoBehaviour
 
 	private void OnEnable()
 	{
+		interactAction.action.performed += Interact;
 		interactableLayer = LayerMask.NameToLayer("Interactable");
 		inRangeLayer = LayerMask.NameToLayer("InRangeInteractable");
 		uninteractableLayer = LayerMask.NameToLayer("Uninteractable");
 	}
+	private void OnDisable() => interactAction.action.performed -= Interact;
 
 	private void Update()
 	{

@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: 65be3a3ea35013f4ca74c6796611c15d
+guid: 476c4eaa833d1594fb5751a4d4c66d6d
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cardboard_box
+    second: {fileID: 2100000, guid: c6778989de0440442a5f6dab9905394a, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: texture_atlas
+    second: {fileID: 2800000, guid: c647c53aa8f615b43be7e23127389423, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
