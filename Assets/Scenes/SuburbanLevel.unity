@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 23242039}
   - component: {fileID: 23242042}
   - component: {fileID: 23242041}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6646,7 +6646,7 @@ GameObject:
   - component: {fileID: 450917702}
   - component: {fileID: 450917705}
   - component: {fileID: 450917704}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7329,7 +7329,7 @@ GameObject:
   - component: {fileID: 497591400}
   - component: {fileID: 497591403}
   - component: {fileID: 497591402}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12111,7 +12111,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1099510808}
+    m_TransformParent: {fileID: 1099510811}
     m_Modifications:
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalScale.x
@@ -12674,7 +12674,7 @@ GameObject:
   - component: {fileID: 936282223}
   - component: {fileID: 936282226}
   - component: {fileID: 936282225}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13945,7 +13945,7 @@ GameObject:
   - component: {fileID: 1037351814}
   - component: {fileID: 1037351817}
   - component: {fileID: 1037351816}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14346,7 +14346,7 @@ GameObject:
   - component: {fileID: 1067811589}
   - component: {fileID: 1067811592}
   - component: {fileID: 1067811591}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14889,7 +14889,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3294208536604426464, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 6571601888481611912, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
       insertIndex: -1
       addedObject: {fileID: 890842592}
     m_AddedComponents:
@@ -14932,6 +14932,11 @@ MonoBehaviour:
     responsibilityDetails: x
     interestingFact: x
     interactionHint: Press the Interact key to inspect.
+--- !u!4 &1099510811 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6571601888481611912, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+  m_PrefabInstance: {fileID: 1099510807}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1100202429
 GameObject:
   m_ObjectHideFlags: 0
@@ -16009,7 +16014,7 @@ GameObject:
   - component: {fileID: 1164534523}
   - component: {fileID: 1164534526}
   - component: {fileID: 1164534525}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16099,7 +16104,7 @@ GameObject:
   - component: {fileID: 1173809655}
   - component: {fileID: 1173809658}
   - component: {fileID: 1173809657}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18433,7 +18438,7 @@ GameObject:
   - component: {fileID: 1312679607}
   - component: {fileID: 1312679610}
   - component: {fileID: 1312679609}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19844,7 +19849,7 @@ GameObject:
   - component: {fileID: 1388533285}
   - component: {fileID: 1388533288}
   - component: {fileID: 1388533287}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19989,7 +19994,7 @@ GameObject:
   - component: {fileID: 1397887349}
   - component: {fileID: 1397887352}
   - component: {fileID: 1397887351}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20554,7 +20559,7 @@ GameObject:
   - component: {fileID: 1456011688}
   - component: {fileID: 1456011691}
   - component: {fileID: 1456011690}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23630,7 +23635,7 @@ GameObject:
   - component: {fileID: 1658001164}
   - component: {fileID: 1658001167}
   - component: {fileID: 1658001166}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23955,7 +23960,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1686460352}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30270,7 +30275,7 @@ GameObject:
   - component: {fileID: 2132023401}
   - component: {fileID: 2132023404}
   - component: {fileID: 2132023403}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Curved Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
