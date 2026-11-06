@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4977e31c0ca3b704ca1b7c31badd4476
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 404912
+  packageName: Lowpoly Town House
+  packageVersion: 1.0.0
+  assetPath: Assets/PilotSerg/PinkTownHouse/Renderer/New Universal Render Pipeline
+    Asset_Renderer.asset
+  uploadId: 987696

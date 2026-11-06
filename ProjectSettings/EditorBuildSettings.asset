@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/new rural scene.unity
     guid: 38a283d5819d5e54c881d936536c2b18
   - enabled: 1
+    path: Assets/Scenes/SuburbanLevel.unity
+    guid: 733480fe30c1e334cb5ae29bde157800
+  - enabled: 1
     path: Assets/Scenes/FinalLevelDesign.unity
     guid: 405b6c42193d19b4c9bea5dac8347e65
   - enabled: 1
