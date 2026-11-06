@@ -27,12 +27,14 @@ public class MarkerSizeAdjuster : MonoBehaviour
 			desiredScale / parentScale.y,
 			desiredScale / parentScale.z
 		);
-		transform.position = new Vector3(
-			transform.parent.position.x,
-			MiniMapCameraFollow.height - 1f,
-			transform.parent.position.z
+		transform.SetPositionAndRotation(
+			new Vector3(
+				transform.parent.position.x,
+				MiniMapCameraFollow.height - 1f,
+				transform.parent.position.z
+			),
+			Quaternion.Euler(90f, transform.parent.eulerAngles.y, 0f)
 		);
-		transform.localRotation = Quaternion.Inverse(transform.parent.rotation) * Quaternion.Euler(90, 0, 0);
 	}
 
 }
