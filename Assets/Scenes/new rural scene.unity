@@ -5894,14 +5894,11 @@ Transform:
   - {fileID: 1754451038}
   - {fileID: 739679187}
   - {fileID: 1535818019}
-  - {fileID: 1707988774}
   - {fileID: 1125181984}
-  - {fileID: 960092740}
   - {fileID: 1071653686}
   - {fileID: 2039217687}
   - {fileID: 1186434192}
   - {fileID: 294840764}
-  - {fileID: 1444022270}
   - {fileID: 1305364919}
   - {fileID: 589208964}
   - {fileID: 328895416}
@@ -5934,6 +5931,7 @@ Transform:
   - {fileID: 913516210}
   - {fileID: 684509887}
   - {fileID: 1345281254}
+  - {fileID: 1707988774}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &500552452
@@ -8787,14 +8785,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754843528}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 501.65433, y: 11.19828, z: 475.346}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 513068825}
   - {fileID: 267625905}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 928156362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &755459833
 PrefabInstance:
@@ -8872,7 +8870,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 928156362}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 943e31f1b83c12045b90902986276c8f, type: 3}
       propertyPath: m_LocalScale.x
@@ -8937,6 +8935,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 943e31f1b83c12045b90902986276c8f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 755933968}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 943e31f1b83c12045b90902986276c8f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 755933970}
   m_SourcePrefab: {fileID: 100100000, guid: 943e31f1b83c12045b90902986276c8f, type: 3}
 --- !u!1 &755933967 stripped
 GameObject:
@@ -8965,6 +8966,47 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4670520448709566470, guid: 943e31f1b83c12045b90902986276c8f, type: 3}
+--- !u!4 &755933969 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 943e31f1b83c12045b90902986276c8f, type: 3}
+  m_PrefabInstance: {fileID: 755933966}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &755933970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755933967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Public Park Bench
+    explanation: This public park bench is maintained by the local council. The council
+      is responsible for keeping it safe, clean and in good condition for residents
+      and visitors.
+    councilOwned: 1
+    category: Parks & Recreation
+    description: A wooden outdoor bench that provides a comfortable resting place
+      for pedestrians and visitors enjoying the rural environment.
+    locationDescription: Located on a grassy area beside the pond and wooden footbridge,
+      near the rural walking paths and surrounding trees.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Public park benches provide places for people to rest, enjoy
+      nature and socialise. They also make public spaces more accessible for older
+      residents and people with limited mobility.
+    responsibilityDetails: The local council is responsible for inspecting, repairing
+      and maintaining benches installed in council-managed parks and public reserves.
+      This includes replacing damaged timber, checking structural supports and ensuring
+      the seating remains safe.
+    interestingFact: Public benches encourage walking and outdoor recreation by providing
+      convenient resting places along paths, especially for older people and those
+      who cannot walk long distances without a break.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &766180740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10513,17 +10555,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
   asset:
-    name: House
-    explanation: This is a privately owned house
+    name: Rural Residential House
+    explanation: This rural house is privately owned. The property owner is responsible
+      for maintaining the building and arranging necessary repairs, not the local
+      council.
     councilOwned: 0
-    category: General
-    description: This is a privately owned house
-    locationDescription: Private Property
+    category: Residential
+    description: A privately owned rural house that provides living accommodation
+      for residents in the countryside.
+    locationDescription: Located within a fenced private property beside a dirt road
+      in the rural neighbourhood, surrounded by trees and greenery.
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
-    realWorldPurpose: To live in
-    responsibilityDetails: Maintained by a private person
-    interestingFact: Houses come in all sorts of sizes
+    realWorldPurpose: Residential houses provide shelter, security and living space
+      for individuals and families, offering protection from weather and a place
+      to carry out everyday activities.
+    responsibilityDetails: The homeowner is generally responsible for maintaining
+      the house, including its roof, walls, plumbing and electrical systems. Local
+      councils regulate certain building and planning requirements but do not normally
+      maintain privately owned homes.
+    interestingFact: Rural homes often rely on additional systems such as rainwater
+      tanks or septic systems when they are not connected to town water and sewerage
+      networks.
     interactionHint: Press the Interact key to inspect.
 --- !u!1 &924835065
 GameObject:
@@ -10655,6 +10708,43 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3807592287963034991, guid: cec8c0e5f4d132342b4dcfa814586583, type: 3}
+--- !u!1 &928156361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 928156362}
+  m_Layer: 0
+  m_Name: Interactable Assets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &928156362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928156361}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1105892290}
+  - {fileID: 960092740}
+  - {fileID: 754843529}
+  - {fileID: 2106095597}
+  - {fileID: 755933969}
+  - {fileID: 1444022270}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &928605013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11029,19 +11119,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 477358736}
+    m_TransformParent: {fileID: 928156362}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -41.57669
+      value: 493.52835
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.48151112
+      value: 9.9981985
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 79.61264
+      value: 522.82697
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11082,6 +11172,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
       insertIndex: -1
       addedObject: {fileID: 960092742}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 960092743}
   m_SourcePrefab: {fileID: 100100000, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
 --- !u!4 &960092740 stripped
 Transform:
@@ -11115,6 +11208,41 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3850069193063363733, guid: 775ee4f51e7b4f34cac7f8a7fbb96127, type: 3}
+--- !u!114 &960092743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960092741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Private Garden Tree
+    explanation: This tree is located on privately owned land. The property owner
+      is generally responsible for maintaining it, keeping it healthy and managing
+      any safety risks.
+    councilOwned: 0
+    category: Landscaping & Vegetation
+    description: A leafy garden tree growing within a private rural property, providing
+      shade, greenery and natural beauty.
+    locationDescription: Located inside the fenced garden of a rural residential
+      property, beside the house and near the surrounding dirt road.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Garden trees provide shade, improve air quality, support wildlife
+      and enhance the appearance of residential properties. They can also help cool
+      surrounding areas during hot weather.
+    responsibilityDetails: The property owner is generally responsible for maintaining
+      trees on their land, including pruning, monitoring tree health and managing
+      hazardous branches. Some trees are protected by local council regulations and
+      may require approval before removal or significant pruning.
+    interestingFact: A mature tree can provide natural cooling by shading buildings
+      and releasing water vapour through its leaves, helping reduce surrounding temperatures.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &961552694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11123,6 +11251,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 68346634523914268, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
+      propertyPath: sprintSpeed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 2166596772971823992, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
       propertyPath: m_Name
       value: Player
@@ -12637,14 +12769,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105892289}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 504.53958, y: 9.99818, z: 469.572}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 850452883}
   - {fileID: 913822912}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 928156362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1116912718
 PrefabInstance:
@@ -15929,19 +16061,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 477358736}
+    m_TransformParent: {fileID: 928156362}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 43.560364
+      value: 578.6654
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.84
+      value: 9.639709
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 103.682526
+      value: 546.89685
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15982,6 +16114,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1444022272}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1444022273}
   m_SourcePrefab: {fileID: 100100000, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
 --- !u!4 &1444022270 stripped
 Transform:
@@ -16015,6 +16150,42 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3773792472632661017, guid: b6d0907f73a544342a5bc1abf764b6f8, type: 3}
+--- !u!114 &1444022273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444022271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Public Reserve Tree
+    explanation: This tree is located in a council-managed public reserve. The local
+      council is responsible for maintaining it, monitoring its health and managing
+      safety risks for visitors.
+    councilOwned: 1
+    category: Landscaping & Vegetation
+    description: A leafy tree growing in a public green space, providing shade, natural
+      beauty and environmental benefits to the surrounding community.
+    locationDescription: Located on public grassy land beside the pond and wooden
+      footbridge, outside the fenced residential properties in the rural neighbourhood.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Public reserve trees provide shade, improve air quality, support
+      local wildlife and create attractive outdoor environments for residents and
+      visitors.
+    responsibilityDetails: The local council is generally responsible for maintaining
+      trees within council-managed public reserves. This includes monitoring tree
+      health, assessing hazardous branches, arranging necessary pruning and ensuring
+      public safety.
+    interestingFact: Trees in public reserves help reduce surrounding temperatures
+      by providing shade and releasing water vapour through their leaves. They also
+      provide important habitats for birds and insects.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &1448143720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17630,13 +17801,57 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1249902558096720366, guid: a65aba5f5254241c58e7772a43ec6b8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1571255612}
   m_SourcePrefab: {fileID: 100100000, guid: a65aba5f5254241c58e7772a43ec6b8e, type: 3}
 --- !u!4 &1571255610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1917657543434808570, guid: a65aba5f5254241c58e7772a43ec6b8e, type: 3}
   m_PrefabInstance: {fileID: 1571255609}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1571255611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1249902558096720366, guid: a65aba5f5254241c58e7772a43ec6b8e, type: 3}
+  m_PrefabInstance: {fileID: 1571255609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1571255612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571255611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Private Property Fence
+    explanation: This fence surrounds a privately owned property. The property owner
+      is responsible for maintaining it, although shared boundary fences may be the
+      responsibility of neighbouring owners.
+    councilOwned: 0
+    category: Property Boundaries
+    description: A wooden boundary fence that separates a private residential property
+      from surrounding land and pathways.
+    locationDescription: Located around a rural residential house, marking the boundary
+      between the private property and the surrounding countryside.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Property fences define land boundaries, provide privacy and
+      security, and help prevent animals or unwanted visitors from entering private
+      land.
+    responsibilityDetails: Property owners are generally responsible for maintaining
+      private fences. In Victoria, neighbouring property owners usually share the
+      reasonable costs of constructing and repairing a common dividing fence, subject
+      to certain exceptions.
+    interestingFact: In Victoria, the Fences Act 1968 outlines how neighbouring property
+      owners share responsibilities for dividing fences, including repairs and replacement
+      costs.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &1573258840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18818,7 +19033,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.66
+      value: -3.6599731
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18826,7 +19041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 82.39
+      value: 82.389984
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7549ff5eb0468b54d93027685c9683e4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19492,7 +19707,7 @@ PrefabInstance:
       objectReference: {fileID: 1331937033}
     - target: {fileID: 261648540308020173, guid: 8e2915edc7f686a49a6f9fa14b727e53, type: 3}
       propertyPath: timeLimitSeconds
-      value: 30
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 2611186104661931674, guid: 8e2915edc7f686a49a6f9fa14b727e53, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22294,31 +22509,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00000054922737
+      value: 0.0000005427319
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.75862366
+      value: 0.6100163
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0000003547537
+      value: -0.00000035468796
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.004874001
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00487397
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.70709
+      value: 0.00000009313226
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.70709
+      value: -0.00000012395245
       objectReference: {fileID: 0}
     - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -22926,7 +23141,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 928156362}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
       propertyPath: m_LocalScale.x
@@ -22958,15 +23173,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -22991,6 +23206,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2106095596}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2106095598}
   m_SourcePrefab: {fileID: 100100000, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
 --- !u!1 &2106095595 stripped
 GameObject:
@@ -23019,6 +23237,45 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1689658604072297736, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
+--- !u!4 &2106095597 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e30e8fa91e89c554cb46d588f9b16b96, type: 3}
+  m_PrefabInstance: {fileID: 2106095594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2106095598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106095595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Public Footbridge
+    explanation: This is a public footbridge provided for people to safely cross
+      over the water.
+    councilOwned: 1
+    category: Public Infrastructure
+    description: A wooden pedestrian bridge that provides a safe crossing over a
+      small pond in the rural environment.
+    locationDescription: Located across a pond beside the rural walking paths, connecting
+      two grassy areas near residential properties and trees.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Public footbridges allow pedestrians to safely cross waterways,
+      improve access between walking paths and help people navigate parks and rural
+      community spaces.
+    responsibilityDetails: For a council-managed public footbridge, the local council
+      is responsible for inspecting, repairing and maintaining the structure. This
+      includes checking wooden surfaces, supports and railings to ensure the bridge
+      remains safe for public use.
+    interestingFact: Footbridges help protect natural environments by allowing pedestrians
+      to cross waterways without disturbing the water, banks or surrounding vegetation.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &2111851560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23778,14 +24035,14 @@ MeshCollider:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 928156362}
   - {fileID: 687426795}
-  - {fileID: 754843529}
-  - {fileID: 1105892290}
   - {fileID: 466673405}
   - {fileID: 961552694}
   - {fileID: 1125403311}
   - {fileID: 291322996}
   - {fileID: 626801148}
+  - {fileID: 1769764458}
   - {fileID: 1331937032}
   - {fileID: 477358736}
   - {fileID: 1664997127}
@@ -23806,12 +24063,9 @@ SceneRoots:
   - {fileID: 433068145}
   - {fileID: 1364760162}
   - {fileID: 1892922789}
-  - {fileID: 1769764458}
   - {fileID: 1322414115}
   - {fileID: 1634245052}
   - {fileID: 89497611}
-  - {fileID: 2106095594}
-  - {fileID: 755933966}
   - {fileID: 230980773}
   - {fileID: 4166621265970132235}
   - {fileID: 1687468834}

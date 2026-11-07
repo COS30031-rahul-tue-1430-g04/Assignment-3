@@ -3914,7 +3914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6450218710713895121, guid: 7c895138b9bebfd4da829dce54eeef94, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -40.8
       objectReference: {fileID: 0}
     - target: {fileID: 6450218710713895121, guid: 7c895138b9bebfd4da829dce54eeef94, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3934,11 +3934,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6450218710713895121, guid: 7c895138b9bebfd4da829dce54eeef94, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 200
+      value: 225
       objectReference: {fileID: 0}
     - target: {fileID: 6450218710713895121, guid: 7c895138b9bebfd4da829dce54eeef94, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 6450218710713895121, guid: 7c895138b9bebfd4da829dce54eeef94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6185,13 +6185,55 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: f32b000e4ef3aa247b8ff4d19a88aca7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 374966844}
   m_SourcePrefab: {fileID: 100100000, guid: f32b000e4ef3aa247b8ff4d19a88aca7, type: 3}
 --- !u!4 &374966842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f32b000e4ef3aa247b8ff4d19a88aca7, type: 3}
   m_PrefabInstance: {fileID: 374966841}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &374966843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: f32b000e4ef3aa247b8ff4d19a88aca7, type: 3}
+  m_PrefabInstance: {fileID: 374966841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &374966844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374966843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Community News Board
+    explanation: This community news board is a public asset maintained by the local
+      council. The council is responsible for keeping it safe, accessible and in
+      good condition for residents.
+    councilOwned: 1
+    category: Community Information
+    description: A public information board used to display community notices, local
+      events, announcements and important neighbourhood updates.
+    locationDescription: Located in an accessible public area of the suburban neighbourhood,
+      near residential streets and pedestrian pathways.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Community news boards provide residents with information about
+      local events, public services, community activities and important announcements.
+    responsibilityDetails: For a council-owned community news board, the local council
+      is responsible for inspecting, repairing and maintaining the structure, ensuring
+      it remains safe and accessible to the public.
+    interestingFact: Community notice boards remain useful even in the digital age
+      because they allow residents to access local information without needing a
+      smartphone or internet connection.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &378071189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6247,13 +6289,56 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: f3878ef94022a6f459f18f2e12cd6813, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 378071192}
   m_SourcePrefab: {fileID: 100100000, guid: f3878ef94022a6f459f18f2e12cd6813, type: 3}
 --- !u!4 &378071190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f3878ef94022a6f459f18f2e12cd6813, type: 3}
   m_PrefabInstance: {fileID: 378071189}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &378071191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: f3878ef94022a6f459f18f2e12cd6813, type: 3}
+  m_PrefabInstance: {fileID: 378071189}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &378071192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378071191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Public Bench
+    explanation: This public bench is maintained by the local council. The council
+      is responsible for keeping it clean, safe and in good condition for community
+      use.
+    councilOwned: 1
+    category: Parks & Recreation
+    description: A wooden public bench that provides seating for pedestrians, residents
+      and visitors in the suburban neighbourhood.
+    locationDescription: Located on a grassy area beside a suburban footpath, providing
+      a convenient resting place for pedestrians.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Public benches provide comfortable places for people to rest,
+      socialise and enjoy outdoor spaces. They also make neighbourhoods more accessible
+      for elderly residents and people with limited mobility.
+    responsibilityDetails: The local council is responsible for inspecting, repairing
+      and maintaining council-owned public benches. This includes replacing damaged
+      wooden panels, repairing supports and ensuring the seating remains safe for
+      public use.
+    interestingFact: Public benches help make neighbourhoods more walkable by giving
+      pedestrians places to rest during longer journeys.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1 &382783116
 GameObject:
   m_ObjectHideFlags: 0
@@ -7365,59 +7450,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3294208536604426464, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
   m_PrefabInstance: {fileID: 439946559}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &442352476
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 442352477}
-  - component: {fileID: 442352478}
-  m_Layer: 0
-  m_Name: HouseCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &442352477
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442352476}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.8103347, z: -0, w: -0.5859673}
-  m_LocalPosition: {x: 0, y: 4.4292197, z: 0}
-  m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1099510808}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &442352478
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442352476}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 12.395786, y: 8.85744, z: 12.131148}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &450917701
 GameObject:
   m_ObjectHideFlags: 0
@@ -12744,8 +12776,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6500000, guid: 68ee3d17a75022e4ebc3881d12645841, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 400000, guid: 68ee3d17a75022e4ebc3881d12645841, type: 3}
@@ -12755,6 +12786,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 68ee3d17a75022e4ebc3881d12645841, type: 3}
       insertIndex: -1
       addedObject: {fileID: 794468910}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 68ee3d17a75022e4ebc3881d12645841, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 794468911}
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 68ee3d17a75022e4ebc3881d12645841, type: 3}
       insertIndex: -1
       addedObject: {fileID: 794468908}
@@ -12821,7 +12855,7 @@ MonoBehaviour:
       public payphones are generally maintained by Telstra, not the local council
       or nearby property owners.
     councilOwned: 1
-    category: General
+    category: Telecommunications
     description: A public telephone that allows people to make calls without needing
       their own mobile phone.
     locationDescription: Located beside a road in the suburban neighbourhood, accessible
@@ -12837,6 +12871,27 @@ MonoBehaviour:
     interestingFact: Since August 2021, standard national and mobile calls from Telstra
       public payphones have been free across Australia.
     interactionHint: Press the Interact key to inspect.
+--- !u!65 &794468911
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794468909}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5000001, y: 0.68285894, z: 1.7511169}
+  m_Center: {x: 0, y: 0, z: 0.87555844}
 --- !u!1 &802729250
 GameObject:
   m_ObjectHideFlags: 0
@@ -14775,6 +14830,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 68346634523914268, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
+      propertyPath: sprintSpeed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 2166596772971823992, guid: 97239ccfc2e526a41965941ada496fd1, type: 3}
       propertyPath: m_Name
       value: Player
@@ -16653,16 +16712,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Baker_house
       objectReference: {fileID: 0}
+    - target: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3294208536604426464, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 442352477}
+      insertIndex: 0
+      addedObject: {fileID: 1755828120}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1099510811}
+    - targetCorrespondingSourceObject: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1099510812}
+    - targetCorrespondingSourceObject: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1099510813}
+    - targetCorrespondingSourceObject: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1099510814}
   m_SourcePrefab: {fileID: 100100000, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
 --- !u!4 &1099510808 stripped
 Transform:
@@ -16688,17 +16760,103 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
   asset:
     name: House
-    explanation: x
+    explanation: This house is privately owned. The property owner is responsible
+      for its maintenance and repairs, not the local council.
     councilOwned: 0
-    category: General
-    description: x
-    locationDescription: 
+    category: Residential
+    description: A privately owned residential house located within the suburban
+      neighbourhood.
+    locationDescription: A privately owned house situated along a residential street
+      in the suburban neighbourhood, surrounded by trees and nearby community spaces.
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
-    realWorldPurpose: x
-    responsibilityDetails: x
-    interestingFact: x
+    realWorldPurpose: Houses provide shelter, safety and a comfortable living environment
+      for individuals and families.
+    responsibilityDetails: The property owner is generally responsible for maintaining
+      the house, including its roof, walls, plumbing and other private features.
+      The local council maintains public infrastructure but does not normally repair
+      privately owned homes.
+    interestingFact: Although homeowners maintain their own properties, certain renovations
+      and building works still require permits or approval from the local council.
     interactionHint: Press the Interact key to inspect.
+--- !u!65 &1099510812
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099510809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 5, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1099510813
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099510809}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 63ac02641efdf374788d7d14242bde68, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1099510814
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099510809}
+  m_Mesh: {fileID: 4300000, guid: 06f242e6d0ae1dd4abc5e5ff41c613c1, type: 3}
 --- !u!1 &1100202429
 GameObject:
   m_ObjectHideFlags: 0
@@ -18027,13 +18185,56 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 28d375a433cc78c4fa3db00df795f14d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1160490904}
   m_SourcePrefab: {fileID: 100100000, guid: 28d375a433cc78c4fa3db00df795f14d, type: 3}
 --- !u!4 &1160490902 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 28d375a433cc78c4fa3db00df795f14d, type: 3}
   m_PrefabInstance: {fileID: 1160490901}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1160490903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 28d375a433cc78c4fa3db00df795f14d, type: 3}
+  m_PrefabInstance: {fileID: 1160490901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1160490904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160490903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Fire Hydrant
+    explanation: This fire hydrant is part of the public water infrastructure. The
+      local water authority is responsible for keeping it operational and available
+      for firefighters during emergencies.
+    councilOwned: 1
+    category: Emergency Services
+    description: A public fire hydrant connected to the underground water supply,
+      allowing firefighters to access water during emergencies.
+    locationDescription: Located on a grassy roadside verge within the suburban neighbourhood,
+      providing emergency water access near residential properties.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Fire hydrants provide firefighters with a reliable water supply
+      to extinguish fires and protect nearby homes, businesses and public spaces.
+    responsibilityDetails: In Victoria, the relevant water authority is responsible
+      for keeping public street hydrants operational and ensuring water is available.
+      Councils and other organisations may have responsibilities for their installation,
+      marking or associated costs.
+    interestingFact: Not all Australian fire hydrants look like the familiar above-ground
+      hydrants. Many are installed underground and identified by special roadside
+      markers.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1 &1161908777
 GameObject:
   m_ObjectHideFlags: 0
@@ -18941,12 +19142,12 @@ Transform:
   - {fileID: 1099510808}
   - {fileID: 794468906}
   - {fileID: 1736468253}
+  - {fileID: 1281014630}
   - {fileID: 1506429416}
   - {fileID: 378071190}
-  - {fileID: 1281014630}
   - {fileID: 1160490902}
-  - {fileID: 96028302}
   - {fileID: 374966842}
+  - {fileID: 96028302}
   - {fileID: 277486357}
   - {fileID: 1519988035}
   - {fileID: 1602319026}
@@ -20319,7 +20520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86f783457a9659e41a99dc3147fefdba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86f783457a9659e41a99dc3147fefdba, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20356,66 +20557,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 86f783457a9659e41a99dc3147fefdba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1281014632}
   m_SourcePrefab: {fileID: 100100000, guid: 86f783457a9659e41a99dc3147fefdba, type: 3}
 --- !u!4 &1281014630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 86f783457a9659e41a99dc3147fefdba, type: 3}
   m_PrefabInstance: {fileID: 1281014629}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1285111402
+--- !u!1 &1281014631 stripped
 GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 86f783457a9659e41a99dc3147fefdba, type: 3}
+  m_PrefabInstance: {fileID: 1281014629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1281014632
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1285111403}
-  - component: {fileID: 1285111404}
-  m_Layer: 0
-  m_Name: EnvironmentCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1285111403
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285111402}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.3665012, z: -0, w: 0.9304176}
-  m_LocalPosition: {x: 0, y: 0.9168578, z: 0}
-  m_LocalScale: {x: 0.9999999, y: 1, z: 0.9999999}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1736468253}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1285111404
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285111402}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_GameObject: {fileID: 1281014631}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.420719, y: 1.8337163, z: 6.4207172}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Roadblock
+    explanation: This roadblock is managed by the local council to restrict access
+      to unsafe or closed roads. The council is responsible for ensuring it is correctly
+      positioned and maintained.
+    councilOwned: 1
+    category: Road Infrastructure
+    description: A temporary road safety barrier used to block vehicle access and
+      warn drivers of roadworks, hazards or closures.
+    locationDescription: Positioned on a suburban road near an intersection, preventing
+      vehicles from entering a restricted section of the street.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Roadblocks protect drivers, pedestrians and workers by restricting
+      access to hazardous areas, construction zones and temporarily closed roads.
+    responsibilityDetails: For council-managed road closures, the local council or
+      its authorised contractors are responsible for installing, inspecting and removing
+      roadblocks. Other road authorities may manage barriers on major roads.
+    interestingFact: Roadblocks often feature reflective orange and white markings
+      to make them more visible to drivers, particularly at night or in poor weather.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1001 &1285643182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21619,6 +21808,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1703140250350740813, guid: 13971c94fa30daf4da53af7aab167819, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137144958060515257, guid: 13971c94fa30daf4da53af7aab167819, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
     - target: {fileID: 5621066812500138819, guid: 13971c94fa30daf4da53af7aab167819, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -21627,8 +21824,17 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7677147712935287907, guid: 13971c94fa30daf4da53af7aab167819, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7913630671452907184, guid: 13971c94fa30daf4da53af7aab167819, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7817530483516962767, guid: 13971c94fa30daf4da53af7aab167819, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1143209172210368660, guid: 13971c94fa30daf4da53af7aab167819, type: 3}
       insertIndex: -1
@@ -24279,13 +24485,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 832783ac41f2d70468c4995bebfabfb7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1506429418}
   m_SourcePrefab: {fileID: 100100000, guid: 832783ac41f2d70468c4995bebfabfb7, type: 3}
 --- !u!4 &1506429416 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 832783ac41f2d70468c4995bebfabfb7, type: 3}
   m_PrefabInstance: {fileID: 1506429415}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1506429417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 832783ac41f2d70468c4995bebfabfb7, type: 3}
+  m_PrefabInstance: {fileID: 1506429415}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1506429418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506429417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1877ad5d817434998122be3923489f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
+  asset:
+    name: Mailbox
+    explanation: This mailbox belongs to a private property. The property owner is
+      responsible for maintaining and repairing it, not the local council.
+    councilOwned: 0
+    category: Residential
+    description: A residential mailbox used to receive letters, notices and other
+      postal deliveries.
+    locationDescription: Located beside the footpath at the edge of a residential
+      property, providing convenient access for postal deliveries.
+    icon: {fileID: 0}
+    question: Who is responsible for maintaining this asset?
+    realWorldPurpose: Mailboxes provide a secure and accessible location for residents
+      to receive letters, bills, official notices and other mail.
+    responsibilityDetails: The property owner is responsible for installing, repairing
+      and maintaining their mailbox. Australia Post delivers mail to the property
+      but does not normally maintain privately owned mailboxes.
+    interestingFact: In Australia, residential mailboxes should clearly display the
+      street number and be easily accessible to postal delivery workers.
+    interactionHint: Press the Interact key to inspect.
 --- !u!1 &1506682838
 GameObject:
   m_ObjectHideFlags: 0
@@ -28781,17 +29027,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: fountain 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6724557997190147330, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7426066240169221863, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1285111403}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7801781885721298013, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1736468255}
+    - targetCorrespondingSourceObject: {fileID: 7801781885721298013, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1736468256}
   m_SourcePrefab: {fileID: 100100000, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
 --- !u!4 &1736468253 stripped
 Transform:
@@ -28816,18 +29061,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
   asset:
-    name: x
-    explanation: x
-    councilOwned: 0
-    category: General
-    description: x
-    locationDescription: 
+    name: Public Fountain
+    explanation: This fountain is a public asset maintained by the local council.
+      The council is responsible for keeping it clean, safe and operational for the
+      community.
+    councilOwned: 1
+    category: Parks & Recreation
+    description: A decorative public fountain that circulates water and enhances
+      the appearance of the surrounding neighbourhood.
+    locationDescription: Located in a grassy public area beside the suburban footpaths,
+      surrounded by residential houses and trees.
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
-    realWorldPurpose: x
-    responsibilityDetails: x
-    interestingFact: x
+    realWorldPurpose: Public fountains improve the appearance of community spaces
+      and create pleasant areas for residents and visitors to enjoy.
+    responsibilityDetails: The local council is responsible for maintaining council-owned
+      fountains, including cleaning, water quality management, pump repairs and ensuring
+      the surrounding area remains safe.
+    interestingFact: Many decorative fountains use recirculating pumps to reuse the
+      same water, reducing the amount of fresh water needed to keep them running.
     interactionHint: Press the Interact key to inspect.
+--- !u!65 &1736468256
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736468254}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.5429006, y: 1.8337163, z: 4.5429006}
+  m_Center: {x: 0, y: 0.9168578, z: 0}
 --- !u!43 &1738542478
 Mesh:
   m_ObjectHideFlags: 0
@@ -29345,6 +29619,68 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1001 &1755828119
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1099510808}
+    m_Modifications:
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.8616829
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.14911
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.3552395
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805498680311678490, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+      propertyPath: m_Name
+      value: MapMarker
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+--- !u!4 &1755828120 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3472600644780218215, guid: 9c3bfa2e027e9bb43bc3dbef43e67936, type: 3}
+  m_PrefabInstance: {fileID: 1755828119}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1763963907
 GameObject:
   m_ObjectHideFlags: 0
@@ -29534,7 +29870,7 @@ PrefabInstance:
       objectReference: {fileID: 1844185778}
     - target: {fileID: 261648540308020173, guid: 8e2915edc7f686a49a6f9fa14b727e53, type: 3}
       propertyPath: timeLimitSeconds
-      value: 120
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2611186104661931674, guid: 8e2915edc7f686a49a6f9fa14b727e53, type: 3}
       propertyPath: m_LocalPosition.x

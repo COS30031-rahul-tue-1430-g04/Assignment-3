@@ -11465,6 +11465,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 666c8a33d0c0a7e418d18fcd157bd15b, type: 3}
   m_PrefabInstance: {fileID: 354143148}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &355324246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 355324247}
+  m_Layer: 0
+  m_Name: Interactable Assets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &355324247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355324246}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1273825339}
+  - {fileID: 1553448922}
+  - {fileID: 901211767}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &356161735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27472,7 +27506,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1601014962}
+    m_TransformParent: {fileID: 355324247}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7c4de574f2dfa024696219f71943db72, type: 3}
       propertyPath: m_LocalScale.x
@@ -27480,15 +27514,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c4de574f2dfa024696219f71943db72, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 73.08084
+      value: 290.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c4de574f2dfa024696219f71943db72, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.34175992
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c4de574f2dfa024696219f71943db72, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20.514984
+      value: 405.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c4de574f2dfa024696219f71943db72, type: 3}
       propertyPath: m_LocalRotation.w
@@ -39928,12 +39962,12 @@ Transform:
   m_GameObject: {fileID: 1273825338}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7072302, z: 0.7069834, w: 0}
-  m_LocalPosition: {x: -21.556076, y: 4.06, z: 18.519867}
-  m_LocalScale: {x: 100.00007, y: 100.000015, z: 100.000015}
+  m_LocalPosition: {x: 161.82352, y: 4.06, z: 444.4862}
+  m_LocalScale: {x: 100.00008, y: 100.000015, z: 100.000015}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1686055}
-  m_Father: {fileID: 2145542311}
+  m_Father: {fileID: 355324247}
   m_LocalEulerAnglesHint: {x: -89.98, y: 180, z: 0}
 --- !u!114 &1273825341
 MonoBehaviour:
@@ -39948,18 +39982,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
   asset:
-    name: Neighbour Judah's House
-    explanation: This house is privately owned by your neighbour Judah.
+    name: Private Residential House
+    explanation: This house is privately owned. The homeowner is responsible for
+      maintaining the property and arranging necessary repairs, rather than the local
+      council.
     councilOwned: 0
-    category: General
-    description: Your neighbour Judah's house.
-    locationDescription: Located at start of city
+    category: Residential
+    description: A privately owned residential house providing accommodation and
+      living space for individuals and families within the rural community.
+    locationDescription: Located within a fenced private property beside a rural
+      dirt road, surrounded by greenery, nearby houses and hills.
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
-    realWorldPurpose: to provide a private home for a household to live in
-    responsibilityDetails: The homeowner, Judah, is responsible for repairs, maintenance
-      and upkeep. The council is not responsible.
-    interestingFact: private houses are usually built from timber, brick or concrete
+    realWorldPurpose: Residential houses provide shelter, security and a comfortable
+      living environment for individuals and families. They protect residents from
+      the weather and support everyday household activities.
+    responsibilityDetails: The homeowner is generally responsible for maintaining
+      the property's roof, walls, plumbing, electrical systems and other private
+      features. Local councils oversee certain building and planning regulations
+      but do not normally maintain privately owned homes.
+    interestingFact: In Australia, houses can be constructed using materials such
+      as timber, brick and concrete. The materials used often depend on local climate,
+      building requirements and design preferences.
     interactionHint: Press the Interact key to inspect.
 --- !u!23 &1273825342
 MeshRenderer:
@@ -41652,7 +41696,7 @@ PrefabInstance:
       objectReference: {fileID: 2010808447}
     - target: {fileID: 261648540308020173, guid: 8e2915edc7f686a49a6f9fa14b727e53, type: 3}
       propertyPath: timeLimitSeconds
-      value: 120
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 2611186104661931674, guid: 8e2915edc7f686a49a6f9fa14b727e53, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47001,12 +47045,12 @@ Transform:
   m_GameObject: {fileID: 1553448921}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 75.643906, y: 5.06, z: 21.119904}
+  m_LocalPosition: {x: 259.0235, y: 5.06, z: 447.08624}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 581842718}
-  m_Father: {fileID: 2145542311}
+  m_Father: {fileID: 355324247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1553448923
 MeshRenderer:
@@ -47078,18 +47122,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAsset
   asset:
-    name: Neighbour Nicks's House
-    explanation: This house is privately owned by your neighbour Nick.
+    name: Private Residential House
+    explanation: This house is privately owned. The property owner is responsible
+      for maintaining the building and arranging necessary repairs, rather than the
+      local council.
     councilOwned: 0
-    category: General
-    description: Your neighbour Nick's house.
-    locationDescription: Located at start of city
+    category: Residential
+    description: A privately owned two-storey residential house that provides accommodation
+      and living space for individuals and families.
+    locationDescription: Located inside a fenced private property beside the main
+      dirt road in the rural neighbourhood, surrounded by greenery and nearby residential
+      houses.
     icon: {fileID: 0}
     question: Who is responsible for maintaining this asset?
-    realWorldPurpose: to provide a private home for a household to live in
-    responsibilityDetails: The homeowner, Judah, is responsible for repairs, maintenance
-      and upkeep. The council is not responsible.
-    interestingFact: private houses are usually built from timber, brick or concrete
+    realWorldPurpose: Residential houses provide shelter, safety and a comfortable
+      living environment for individuals and families. They protect residents from
+      weather and provide space for everyday household activities.
+    responsibilityDetails: The homeowner is generally responsible for maintaining
+      the house, including its roof, walls, plumbing, electrical systems and other
+      private features. Local councils oversee certain planning and building regulations
+      but do not normally maintain privately owned homes.
+    interestingFact: In Australia, homeowners may need building permits for major
+      renovations or structural changes, even though their properties are privately
+      owned.
     interactionHint: Press the Interact key to inspect.
 --- !u!64 &1553448926
 MeshCollider:
@@ -49178,7 +49233,6 @@ Transform:
   - {fileID: 994223104}
   - {fileID: 96831126}
   - {fileID: 1874898974}
-  - {fileID: 901211767}
   - {fileID: 1163881679}
   - {fileID: 432960549}
   - {fileID: 1572924849}
@@ -64184,10 +64238,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1273825339}
   - {fileID: 999676573}
   - {fileID: 2060461146}
-  - {fileID: 1553448922}
   - {fileID: 1420068250}
   - {fileID: 951006587}
   - {fileID: 1974102372}
@@ -64585,6 +64637,7 @@ MeshCollider:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 355324247}
   - {fileID: 1091480388440867023}
   - {fileID: 1169067261}
   - {fileID: 351527053}
