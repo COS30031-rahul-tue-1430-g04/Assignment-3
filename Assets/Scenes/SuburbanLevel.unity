@@ -11564,7 +11564,7 @@ Transform:
   m_LocalScale: {x: 0.99999964, y: 1, z: 0.99999964}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1343783425}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &802729252
 BoxCollider:
@@ -15065,9 +15065,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 890842592}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6571601888481643688, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1099510811}
     - targetCorrespondingSourceObject: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1099510812}
@@ -15077,6 +15074,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1099510814}
+    - targetCorrespondingSourceObject: {fileID: 6571601888481643688, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1099510811}
+    - targetCorrespondingSourceObject: {fileID: 6571601888481643688, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1099510810}
   m_SourcePrefab: {fileID: 100100000, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
 --- !u!4 &1099510808 stripped
@@ -15161,7 +15163,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099510809}
+  m_GameObject: {fileID: 1278251538}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -15182,7 +15184,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099510809}
+  m_GameObject: {fileID: 1278251538}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -15231,13 +15233,8 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099510809}
+  m_GameObject: {fileID: 1278251538}
   m_Mesh: {fileID: 4300000, guid: 06f242e6d0ae1dd4abc5e5ff41c613c1, type: 3}
---- !u!4 &2000000001 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6571601888481611912, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
-  m_PrefabInstance: {fileID: 1099510807}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1100202429
 GameObject:
   m_ObjectHideFlags: 0
@@ -18095,6 +18092,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b64ee4912925ba14f86ef0fe88643d1c, type: 3}
   m_PrefabInstance: {fileID: 1275093016}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1278251538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3351010397087084706, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+  m_PrefabInstance: {fileID: 1099510807}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1278956107
 GameObject:
@@ -25343,9 +25345,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7801781885721298013, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1736468255}
-    - targetCorrespondingSourceObject: {fileID: 7801781885721298013, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1736468256}
   m_SourcePrefab: {fileID: 100100000, guid: 938a37fc0e3a5974b8a96388176b1672, type: 3}
 --- !u!4 &1736468253 stripped
 Transform:
@@ -25390,27 +25389,6 @@ MonoBehaviour:
     interestingFact: Many decorative fountains use recirculating pumps to reuse the
       same water, reducing the amount of fresh water needed to keep them running.
     interactionHint: Press the Interact key to inspect.
---- !u!65 &1736468256
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736468254}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 4.5429006, y: 1.8337163, z: 4.5429006}
-  m_Center: {x: 0, y: 0.9168578, z: 0}
 --- !u!43 &1738542478
 Mesh:
   m_ObjectHideFlags: 0
@@ -25914,7 +25892,7 @@ Transform:
   m_LocalScale: {x: 0.9999999, y: 1, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 84158210}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1763963909
 BoxCollider:
@@ -25967,7 +25945,7 @@ Transform:
   m_LocalScale: {x: 0.9999999, y: 1, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1248133234}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1766490530
 BoxCollider:
@@ -29624,6 +29602,11 @@ CapsuleCollider:
   m_Height: 14.62181
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &2000000001 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6571601888481611912, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+  m_PrefabInstance: {fileID: 1099510807}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2008456578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31101,3 +31084,6 @@ SceneRoots:
   - {fileID: 1439216856}
   - {fileID: 277963349}
   - {fileID: 517204357}
+  - {fileID: 802729251}
+  - {fileID: 1763963908}
+  - {fileID: 1766490529}
